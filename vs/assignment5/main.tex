@@ -1,0 +1,152 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} % Linienbreite anpassen, falls gewünscht
+\renewcommand{\headrule}{
+    \makebox[\textwidth]{\rule{1.0\textwidth}{0.5pt}} 
+}
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.18}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=3cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{\vspace{0.5\baselineskip}Übungsblatt 5}
+\chead{\bfseries{Einführung in Verteilte Systeme\\Sommersemester 2025}}
+\rhead{\vspace{0.5\baselineskip}Werner, 7987847}
+\fancyheadoffset[R]{0cm}
+
+\begin{document}
+\setcounter{section}{5}
+
+\subsection{Kodierung}
+Sie empfangen auf einer NRZI-codierten FDDI-Faser folgendes 4B5B-Signal:
+\begin{verbatim}
+101 0101010101010100001111011100101000100110110101 010
+\end{verbatim}
+\begin{enumerate}[label=\alph*)]
+\item Decodieren Sie das Signal vollständig und bestimmen Sie das empfangene Token. Falls nötig interpretieren Sie “…” in obigen Signal als beliebig lange Folge von “01”. Gehen Sie schrittweise vor, indem Sie zuerst die NRZI-Codierung dekodieren und damit auf die 5B-Darstellung kommen. Dekodieren Sie dann zum 4B Signal unter Verwendung der in der Vorlesung gezeigten Tabelle für die 4B/5B-Kodierung\\\\
+Die NRZI-Dekodierung funktioniert wie folgt:
+\begin{itemize}
+  \item Wechsel $\rightarrow$ 1
+  \item Kein Wechsel $\rightarrow$ 0
+\end{itemize}
+
+Nach dem synchronen Muster (interpretiert als 010101...) beginnt die Nutzinformation und endet vor dem snychronen Muster wieder. Folgendes bleibt als Information übrig (schon in 5 Bit-Gruppen unterteilt):
+\begin{verbatim}
+Code | 11111 | 11111 | 11111 | 11000 | 10001 | 10010 | 11110 | 01101 | 01101 | 11111
+------------------------------------------------------------------------------------
+5B   | Idle  | Idle  | Idle  | Strt1 | Strt2 |   8   |   0   | End1  | End2  | Idle
+                                   Start                    FDDI End delimiter
+Code | 1111 | 1111 | 1111 | 1111 | 1000 | 1000 | 1100 | 1011 | 1100 | 1101 | 1101 | 1111
+4B   |-NONE-|-NONE-|-NONE-|-NONE-| 8    | 8    | D    | B    |-NONE-|-NONE-|-NONE-|-NONE-
+\end{verbatim}
+
+\item Welchen Vorteil hat es eine Kombination aus NRZI- und 4B5B-Kodierung einzusetzen?
+
+Die Kombination aus NRZI und 4B5B bietet folgende Vorteile:
+\begin{itemize}
+  \item 4B5B verhindert lange Nullfolgen
+  \item NRZI stellt sicher, dass die Taktinformationen erhalten bleiben
+\end{itemize}
+\end{enumerate}
+\clearpage
+\subsection{Ethernet Frames}
+Die Ethernet-Paketstruktur soll anhand der unten angegebenen Frames (im Hex-Format) analysiert werden.
+\begin{enumerate}[label=\alph*)]
+\item Identifizieren Sie die einzelnen Felder des Ethernet-Frames bis zum Beginn der Nutzdaten und geben Sie ggf. auch Padding Bytes an. Hinweis: Es fehlt jeweils das CRC- Feld am Ende des Ethernetrahmens.\\\\
+\textbf{Paket 1}:
+\begin{itemize}
+  \item Präambel: \texttt{AA:AA:AA:AA:AA}
+  \item SOF: \texttt{AB}
+  \item Zieladresse: \texttt{00:00:5E:00:01:01}
+  \item Quelladresse: \texttt{00:00:5E:00:01:01}
+  \item EtherType: \texttt{08 00} (IPv4)
+\end{itemize}
+Padding: Notwendig, Frame ist zu kurz (62 Bit).\\\\
+\textbf{Paket 2}:
+\begin{itemize}
+  \item Präambel: \texttt{AA:AA:AA:AA:AA}
+  \item SOF: \texttt{AB}
+  \item Zieladresse: \texttt{FF:FF:FF:FF:FF:FF}
+  \item Quelladresse \texttt{00:13:8F:B5:2C:96}
+  \item EtherType: \texttt{08 06} (ARP)
+\end{itemize}
+Padding: Nicht notwendig, Frame länger als Mindestlänge.
+
+\item Geben Sie (mit Begründung) an, welche Protokolle jeweils auf der nächst höheren Schicht verwendet werden.
+\begin{itemize}
+  \item Paket 1: EtherType = \texttt{08 00} $\Rightarrow$ IPv4, Protokoll = \texttt{06} (TCP) \\
+  $\Rightarrow$: IPv4 $\rightarrow$ TCP
+  \item Paket 2: EtherType = \texttt{08 06} $\Rightarrow$ ARP \\
+  $\Rightarrow$: ARP
+\end{itemize}
+\end{enumerate}
+\vspace*{5mm}
+\textbf{Paket 1}:
+\begin{list}{}{\leftmargin=1cm}
+\item
+\begin{verbatim}
+AA AA AA AA AA AA AA AB 00 00 5E 00 01 01 00 40 95 33 C7 A3 08 00 45 00
+00 28 41 EE 40 00 80 06 7A AF 86 3C 4D 21 3E 1B 2C BA 04 7E 02 2A A0 3D
+A0 DE 77 4D 66 31 50 10 F6 53 56 0B 00 00
+\end{verbatim}
+\end{list}
+\vspace*{5mm}
+\textbf{Paket 2}:
+\begin{list}{}{\leftmargin=1cm}
+\item
+\begin{verbatim}
+AA AA AA AA AA AA AA AB FF FF FF FF FF FF 00 13 8F B5 2C 96 08 06 00 01
+08 00 06 04 00 01 00 13 8F B5 2C 96 86 3C 4D 07 00 00 00 00 00 00 86 3C
+4D D2 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+\end{verbatim}
+\end{list}
+\end{document}
