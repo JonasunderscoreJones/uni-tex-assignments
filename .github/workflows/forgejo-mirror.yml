@@ -38,8 +38,6 @@ jobs:
 
           git remote add github "$GITHUB_REPO_URL"
 
-          git pull
-
           # Push all branches without deleting any remote branch
           git push github refs/heads/*:refs/heads/*
 
