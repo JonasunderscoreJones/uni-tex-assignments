@@ -1,0 +1,78 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{PDB\\Sommersemester 2024}
+\chead{\bfseries{Übungsblatt 3}\\}
+\rhead{7987847\\Jonas Werner}
+
+\begin{document}
+\section*{Aufgabe 1}
+\subsection*{a)}
+
+Das ER-Diagramm beschreibt den Tabelleneitrag einer Liga.\\
+$Mannschaft = ({{Spieltermin}}, {Name})$\\
+$dom(Spieltermin) = date$
+
+\subsection*{b)}
+
+Das ER-Diagramm beschreibt einen Personalausweis.\\
+$Person = ({Name(Vorname, Nachname), Adresse(Straße, Nummer, Ort)}, {PersonID})$\\
+$dom(Adresse) = char(30) \times int x\times char(30)$
+
+\subsection*{c)}
+
+Das ER-Diagramm beschreibt ein Szenario einer Arztpraxis wo Medikamente verschrieben werden.\\
+$verschreibt = ((Ärzt*in, Medikament, Patient*in), (Datum))$\\
+$grad(verschreibt) = 3$\\
+$comp(verschreibt, (Ärzt*in, Medikament, Patient*in)) = $
+
+\section*{2}
+\subsection*{a)}
+1. Es gibt keinee Unique ID: Zwei Zeilen können exakt gleich sein\\
+2. Telefonnummer ist nicht einheitlich: Vorwalen, Schreibweisen, ...\\
+3. Name ist nicht einheitlich: Namen pro Telefonnummer, Abkürzungen
+\subsection*{b)}
+1. Es kann eine ID Spalte eingeführt werden um jedem Eintrag eine eine eindeutige Zahl zuzuweisen.\\
+2. Es kann eine Vorwahl-Spalte eingeführt werden und die Telefonnummer ohne Leerzeichen also $int$ zu speichern.\\
+3. Name in Vor- und Nachname spalten und keine Abürzungen erlauben. Nur ein Name pro Eintrag.
+\end{document}
