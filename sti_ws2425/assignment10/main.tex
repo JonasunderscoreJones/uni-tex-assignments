@@ -1,0 +1,157 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Stochastik für die Informatik\\Wintersemester 2024/2025}
+\chead{\bfseries{Übungsblatt 10}\\}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+\begin{document}
+\setcounter{section}{10}
+\subsection{Unabhängigkeit und Korrelation bei Normalverteilung}
+Sei $X = (X_1, X_2)$ zweidimensional Gauß-verteilt. Weiter seien die Randverteilungen gegeben als $X_1 \sim \mathcal{N}(0,2)$ und $X_2 \sim \mathcal{N}(3,5)$, sowie die Varianz $\mathbb{V}[2X_1+X_2]=\alpha \geq 0$. Für welche Werte $\alpha$ sind $X_1$ und $X_2$ unabhängig?\\\\
+Aus den Randverteilungen können die folgenden Erwartungswerte und Varianzen abgelesen werden:\\
+$X \sim N(0,2) \Rightarrow E[X] = 0$ und $V(X_1) = 2$\\
+$X \sim N(3,5) \Rightarrow E[X] = 3$ und $V(X_1) = 5$\\\\
+Somit gilt: $\mathbb{V}[2 \cdot X_1 + X_2] = \mathbb{V}[2 \cdot X_1] + 2 cov(2 \cdot X_1, X_2) + \mathbb{V}[X_2]$\\
+\hspace*{4.2cm}$= 2^2 \cdot \mathbb{V}[X_1] + 2 \cdot 2 \cdot cov(X_1, X_2) + \mathbb{V}[X_2]$\\
+\hspace*{4.2cm}$= 4 \cdot 2 + 4 \cdot cov(X_1, X_2) + 5$\\
+\hspace*{4.2cm}$= 4 \cdot cov(X_1, X_2) + 13$\\\\
+Gegeben aus der Vorlesung ist: 
+\begin{itemize}
+    \item $X_1$ und $X_2$ sind genau dann unabhängig, wenn gilt: $cov(X_1, X_2) = 0$.
+\end{itemize}
+Wir setzen nun $0$ un den obigen vereinfachten Term ein und Formen um:\\\\
+$V(2 \cdot X_1 + X_2) = 4 \cdot 0 + 13$. Der gesuchte Wert von $\alpha$ ist gleich $\mathbb{V}[2 \cdot X_1 + X_2]$ und ist demnach:\\\\
+$\alpha = \mathbb{V}[2 \cdot X_1 + X_2] = 13$.
+\\\\
+\subsection{Transformation der Normalverteilung}
+Die Körpergröße der Studentinnen beim Kurs Stochastik für die Informatik sein normalverteilt mit Erwartungswert 166cm und Standardabweichung 5cm.\\\\
+(a) Mit welcher Wahrscheinlichkeit ist eine Studentin bei diesem Kurs größer als 176cm?\\\\
+\(\mu = 166 \quad \sigma = 5 \quad \sigma^2=25\)\\
+Körpergröße \(X \sim \mathcal{N}(166,25)\)\\
+\(\mathbb{P}(X>176)=1-\mathbb{P}(X\leq 176)=1-\mathbb{P}\left(\frac{X-\mu}{\sigma}\leq \frac{176-\mu}{\sigma}\right)=1-\mathbb{P}\left(\frac{X-166}{5}\leq \frac{176-166}{5}\right)= 1-\mathbb{P}\left(\frac{X-166}{5}\leq 2\right)\)\\
+\textcolor{gray}{NR: $Y:=\frac{x-166}{5}$ normalverteilt}\\
+\(=1-\mathbb{P}(Y\leq 2)=1-0,9772=0,0228\)\\\\
+(b) Wie ist die Durchschnittsgröße einer Gruppe von $k$ zufällig gewählten Studentinnen verteilt? Sie dürfen dazu annehmen, dass die Körpergrößen aller Studetinnen unabhängig voneinander sind.\\\\
+Seien \(X_i,\. i=1,\dots,k\) die Körpergrößen von $k$ zufällig ausgewählten Studentinnen\\
+\(\Rightarrow X_i \sim \mathcal{N}(166, 25) \forall i \in \{1, \dots, k\}\)\\
+Wir definieren: \(\widetilde{X} = \sum\limits^k_{i=1}X_i\sim \mathcal{N}(166\cdot k,25\cdot k)\)\\
+\hspace*{2,8cm}\(\Rightarrow \frac{1}{k}\cdot \sum\limits^k_{i=1} X_i = \frac{\widetilde{X}}{k}\)\\\\
+\hspace*{2,8cm}\(\mathbb{E}\left[\frac{\widetilde{X}}{k}\right]=\mathbb{E}\left[\frac{1}{k}\cdot \sum\limits^k_{i=1}X_i\right]=\frac{1}{k}\ \mathbb{E}\left[\sum\limits^k_{i=1}X_i\right]=\frac{1}{k} \cdot \sum\limits^k_{i=1} \mathbb{E}\left[X_i\right] = \frac{1}{k} \cdot \sum\limits^k_{i=1} 166_i = \frac{1}{k} \cdot 166_i \cdot k = 166_i\)\\\\
+\(\Rightarrow \mathbb{E}\left[\frac{\widetilde{X}}{k}\right]=166 \Rightarrow \widetilde{X}\) hat den selben Erwartungswert wie $X_i$.\\
+\(\Rightarrow \mathbb{V}\left[\frac{\widetilde{X}}{k}\right]=\mathbb{V}\left[\frac{1}{k}\cdot \sum\limits^k_{i=1} X_i\right]=\frac{1}{k^2} \cdot \mathbb{V}\left[\sum\limits^k_{i=1}X_i\right]=\frac{1}{k^2}\cdot \sum\limits^k_{i=1} \mathbb{V}\left[X_i\right]=\frac{1}{k^2}\cdot k \cdot 25 = \frac{25}{k}\)\\\\
+Auch die Durchschnittsgröße \(\frac{\widetilde{X}}{k}\) ist normalverteilt mit \(\mathcal{N}\left[166, 25\right]\).\\\\
+(c) Sie gruppieren die Studentinnen nun zufällig in zwölf 10er Gruppen und bestimmen die Durchschnittsgrößen der Gruppen. Wie wahrscheinlich ist es, dass die Durchschnittsgrößen von allen Gruppen im Bereich zwischen 161cm und 171cm liegen?\\\\
+Durchschnittsgröße einer der 10 Gruppen: \(\frac{\widetilde{X}}{10} \sim \mathcal{N}\left[166, \frac{25}{10}\right]\)\\\\
+\(\mathbb{P}\left(161 \leq X_{10} \leq 171\right) \Rightarrow \Phi_{0,1}\left(\frac{171-166}{\sqrt{2,5}}\right)-\Phi_{0,1}\left(\frac{161-166}{\sqrt{2,5}}\right)=0,9992-(1-0,9992)=0,9992-0,0008=0,9984\)\\\\
+Durchschnittsgröße aller 10 Gruppen: \(\prod\limits^{12}_{i=1}\mathbb{P}(161 \leq X_i \leq 171)=(0,9984)^(12)\approx 0,98097\)
+\subsection{}
+Seien $X$ und $Y$ Zufallsvariablen, deren gemeinsame Dichte gegeben ist durch
+\[f(x,y)=\begin{cases}
+\frac{\vert xy^2\vert}{12}, & \text{für } x \in [-2,2],y \in [-1,2],\\
+0 & \text{sonst.}    
+\end{cases}\]\\\\
+(a) Berechnen Sie $E[X]$.\\\\
+Für unsere Dichtefunktion ist der Erwartungswert $E[X] = \int\limits^2_{-2} \int\limits^2_{-1} x \cdot f(x,y) \, dy \,  dx$\\
+Eingesetzt ergibt sich: $E[X] = \int\limits^2_{-2} \int\limits^2_{-1} x \cdot \frac{\left| xy^2\right|}{12} \, dy \, dx$\\
+\hspace*{3.57cm}$= \frac{1}{12} \cdot \int\limits^2_{-2} \int\limits^2_{-1} x \cdot \left| xy^2\right| \, dy \, dx$\\
+\hspace*{3.57cm}$= \frac{1}{12} \cdot \int\limits^2_{-2} x \cdot \left| x \right| \int\limits^2_{-1} y^2 \, dy \, dx$\\
+\hspace*{3.57cm}$= \frac{1}{12} \cdot \int\limits^2_{-2} x \cdot \left| x \right| \cdot \left[ \frac{1}{3} \cdot y^3\right]^2_{-1} \, dx$\\
+\hspace*{3.57cm}$= \frac{1}{12} \cdot \int\limits^2_{-2} x \cdot \left| x \right| \cdot \left( \frac{1}{3} \cdot 2^3 - \frac{1}{3} \cdot (-1)^3 \right) \, dx$\\
+\hspace*{3.57cm}$= \frac{1}{12} \cdot \int\limits^2_{-2} x \cdot \left| x \right| \cdot 3 \, dx$\\
+\hspace*{3.57cm}$= \frac{3}{12} \cdot \int\limits^2_{-2} x^2 \, dx$\\
+\hspace*{3.57cm}$= \frac{3}{12} \cdot \left( \int\limits^0_{-2} -x^2 \, dx + \int\limits^2_0 x^2 \, dx \right)$\\
+\hspace*{3.57cm}$= \frac{3}{12} \cdot \left( \left[- \frac{1}{3} x^3 \right]^0_{-2} + \left[ \frac{1}{3} x^3 \right]^2_0 \right)$\\
+\hspace*{3.57cm}$= \frac{3}{12} \cdot \left( \frac{1}{3} 0^3 - \frac{1}{3} (-2)^3 + \frac{1}{3} 2^3 - \frac{1}{3} 0^3 \right)$\\
+\hspace*{3.57cm}$= \frac{3}{12} \cdot \left( 0 - \frac{8}{3} + \frac{8}{3} - 0 \right)$\\
+\hspace*{3.57cm}$= \frac{3}{12} \cdot 0 = 0.$\\\\
+(b) Sind $X$ und $Y$ unabhängig?\\\\
+X und Y sind unabhänging, wenn gilt $f(x,y) = f(x) \cdot f(y)$.\\
+$\Rightarrow f(x) = \int\limits^2_{-1} f(x,y) \, dy = \int\limits^2_{-1} \frac{\left| xy^2 \right|}{12} \, dy$\\
+\hspace*{1.25cm}$= \frac{\left| x \right|}{12} \cdot \int\limits^2_{-1} y^2 \, dy = \frac{\left| x \right|}{12} \cdot \left[ \frac{1}{3}y^3 \right]$\\
+\hspace*{1.25cm}$= \frac{\left| x \right|}{12} \cdot \left( \frac{1}{3}2^3 - \frac{1}{3}(-1)^3 \right) = \frac{\left| x \right|}{12} \cdot \left( \frac{8}{3} - \left( - \frac{1}{3} \right) \right) = \frac{\left| x \right|}{12} \cdot 3 = \frac{3 \cdot \left| x \right|}{12} = \frac{\left| x \right|}{4}$\\
+$\Rightarrow f(y) = \int\limits^2_{-2} f(x,y) \, dx = \int\limits^2_{-2} \frac{\left| xy^2 \right|}{12} \, dx$\\
+\hspace*{1.25cm}$= \frac{y^2}{12} \cdot \int\limits^2_{-2} \left| x \right| \, dx = \frac{y^2}{12} \left[ \frac{1}{2} x^2 \right]^2_{-2}$\\
+\hspace*{1.25cm}$= \frac{y^2}{12} \cdot \left( \int\limits^0_{-2} - \left| x \right| \, dx + \int\limits^2_0 \left| x \right| \, dx \right)$\\
+\hspace*{1.25cm}$= \frac{y^2}{12} \cdot \left( \left[ - \frac{1}{2}x^2 \right]^0_{-2} + \left[ \frac{1}{2}x^2 \right]^2_0 \right)$\\
+\hspace*{1.25cm}$= \frac{y^2}{12} \cdot \left( - \frac{1}{2}0^2 - \frac{1}{2}(-1)^2 + \frac{1}{2}2^2 - \frac{1}{2}0^2 \right)$\\
+\hspace*{1.25cm}$= \frac{y^2}{12} \cdot \left( 0 + 2 + 2 - 0 \right) = ´\frac{y^2}{12} \cdot 4 = \frac{4 y^2}{12} = \frac{y^2}{3}$\\\\
+Nun kann eingesetzt werden:\\
+$\Rightarrow f(x,y) = f(x) \cdot f(y)$\\
+$\Leftrightarrow \frac{\left| x \cdot y^2 \right|}{12} = \frac{\left| x \right|}{4} \cdot \frac{y^2}{3} = \frac{\left| x \cdot y^2 \right|}{12}$\\
+Somit wurde gezeigt, dass X und Y unabhängig sind.
+\\\\
+\subsection{Maximum-Likelihood-Methode}
+Ein Experiment besteht darin die Anzahl der Versuche zu zählen, bis eine unfaire Münze Kopf zeigt (dieser erfolgreiche Versuch wird mitgezählt). Bei 10 Wiederholungen wurden folgende Anzahlen beobachtet\\
+\[3\quad 6\quad 1\quad 4\quad 1\quad 2\quad 1\quad 1\quad 1\quad 4\]\\
+Die unbekannte Erfolgswahrscheinlichkeit für einen einzelnen Münzwurf sei $p$.\\\\
+(a) Ermitteln Sie einen Schätzer für den Parameter $p$ mittels der Maximum-Likelihood-Methode und geben Sie die Schätzung an.\\\\
+Wahrscheinlichkeitsfunktion: \((1-p)^{x-1}\cdot p\)\\\\
+Likelihood-Funktion: \(\prod\limits^n_{i=1}(1-p)^{x_i}\cdot p\)\\
+log-Likelihood-Funktion: \(ln\left(\prod\limits^n_{i=1}(1-p)^{x_i.-1}\cdot p\right)\)\\\\
+\hspace*{3,53cm}\(\Rightarrow \sum\limits^n_{i=1} ln(1-p)^{x_i-1}+\sum\limits^n_{i=1}ln(p) = \sum\limits^n_{i=1}(x_i-1)(ln(1-p))+\sum\limits^n_{i=1}ln(p)\)\\\\
+\hspace*{3,57cm}\(=n \cdot ln(p)+ln(1-p)\cdot \sum\limits^n_{i=1}x_i-1 = n \cdot \frac{1}{p}+\frac{1}{1-p}\cdot \sum\limits^n_{i=1}x_i-1 \cdot (-1)=\frac{n}{p}-\frac{\sum\limits^n_{i=1}x_i-1}{1-p}\)\\\\
+\hspace*{3,57cm}\textcolor{gray}{Wir bestimmen $\sum\limits^n_{i=1}x_i-1 = X$}\\\\
+\hspace*{3,53cm}\(\Rightarrow \frac{n}{p} - \frac{X}{1-p} \overset{!}{=} 0 \Rightarrow \frac{n}{p} = \frac{X}{1-p} \Rightarrow \frac{n\cdot 1-p)}{p} = X \Rightarrow \frac{n-np}{p}=X \Rightarrow n-np = xp\)\\
+\hspace*{3,53cm}\(\Rightarrow n = Xp + np \Rightarrow \frac{n}{X+n} = p\)\\\\
+Einsetzen: \(\frac{10}{14+10}=\frac{10}{24}=\frac{5}{12}\approx 0,4167\)\\\\
+Der Parameter $p$ beträgt ca. 0,4167.\\\\
+(b) Schätzen Sie damit den Anteil der Experimente, in denen die Münze höchstens drei mal geworfen werden muss.\\\\
+Wir suchen die Wahrscheinlichkeit, für $x\leq 3$ mit $p=\frac{5}{12}$ und $x>0$:\\\\
+\(\mathbb{P}(x\leq 3)= \mathbb{P}(x=1)+\mathbb{P}(x=2)+\mathbb{P}(x=3)=(1-p)^0\cdot p + (1-p)^1\cdot p + (1-p)^2\cdot 3\)\\
+\hspace*{1,45cm}\(=\frac{5}{12}+\frac{7}{12}\cdot \frac{5}{12} + \left(\frac{7}{12}\right)^2\cdot \frac{5}{12}= \frac{5}{12}+\frac{35}{144}+\frac{245}{1728}=\frac{1385}{1728}\approx 0,801\)\\\\
+Bei ca. 80,1\% der Experimente muss die Münze höchstens drei mal geworfen werden.
+% \subsection{Knobelaufgabe}
+% Um sich die Zeit vor Heiligabend zu verkürzen versucht Max $\pi$ zu approximieren. Dazu verteilt er unabhängig und gleichmäßig $N$ Streichhölzer, welche 5cm lang sind, auf einem Dielenfußboden (z.B. indem er sie einzeln und wahrlos in die Luft wirft). Die Dielen haben eine Breite von 16cm. Anschließend bestimmt er nun die Anzahl $X$ der Nadeln, die mehr als eine Diele berühren und behauptet, dass $\frac{5N}{8X}$ eine gute Approximation für $\pi$ sei. Stimmt das für die Größe $N$?\\
+% \textit{Hinweis:} Bestimmen Sie, die Wahrscheinlichkeit, für das Ereignis, dass eine Nadel mehr als eine Diele berührt . Die zufälligen Größen $\Psi$ und $H$ in der Skizze könnten Ihnen dabei helfen.
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.4\linewidth]{Aufgabe5.png}
+% \end{figure}
+\end{document}

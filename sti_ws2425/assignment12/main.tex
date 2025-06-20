@@ -1,0 +1,197 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+\usepackage{enumitem}
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage{hyperref}
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Stochastik für die Informatik\\Wintersemester 2024/2025}
+\chead{\bfseries{Übungsblatt 12}\\}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+\begin{document}
+\setcounter{section}{12}
+\subsection{$\mathcal{X}^2$-Verteilung}
+Seien $\mathcal{X}_1 \sim \mathcal{N}(0,1)$ und $\mathcal{X}_2 \sim \mathcal{N}(0,2.25)$ unabhängige Zufallsvariablen. Geben Sie den numerischen Wert der Wahrscheinlichkeit $\mathbb{P}(4X^2_2 \leq 4.5-9X^2_1)$ an.\\
+\textit{Hinweis}: in Excel/LibreOﬃce (englische Version) gibt die Funktion \texttt{CHISQ.DIST(x,n,1)} die Wahrscheinlichkeit $\mathbf{P}(X \leq x)$ für eine $\mathcal{X}^2$-verteilte Zufallsvariable $X$ mit Parameter $n$.\\\\
+Gegeben:
+\begin{itemize}
+    \item Ungleichung: $4X^2_2 \leq 4.5-9X^2_1$
+    \item Die \textbf{unabhängigen} standardnormalverteilten Zufallsvariablen $\mathcal{X}_1 \sim \mathcal{N}(0,1)$ und $\mathcal{X}_2 \sim \mathcal{N}(0,2.25)$
+\end{itemize}]
+Gesucht:
+\begin{itemize}
+    \item $\mathbb{P}(4X^2_2 \leq 4.5-9X^2_1)$
+    \item Zunächst:
+    \begin{itemize}
+        \item Quantil $x$
+    \end{itemize}
+\end{itemize}
+In unserer Ungleichung $4X^2_2 \leq 4.5-9X^2_1$ können wir folgendes \textit{Substituieren}:\\
+\[\mathcal{X}_2 \text{ zu } 1.5Z \text{ mit } Z \sim \mathcal{N}(0,1)\]
+Somit wird $4X^2_2 \leq 4.5-9X^2_1$ zu $4(1.5Z)^2 \leq 4.5-9X^2_1$\\
+\hspace*{3.57cm}$= 4 \cdot 2.25Z^2 + 9X_1^2 \leq 4.5$\\
+\hspace*{3.57cm}$= 9Z^2 + 9X_1^2 \leq 4.5 \qquad\qquad\qquad\qquad \vert :9$\\
+\hspace*{3.57cm}$= Z^2 + X_1^2 \leq 0.5$\\\\
+Sowohl $\mathcal{X}_1$ als auch $\mathbb{Z}$ sind standardnormalverteilt und unabhängig. Somit haben wir 2 Freiheitsgrade und die Summe der \textit{Chi-Quadrat Verteilung} ist gegeben durch:
+\[\mathcal{X}_1^2 + \mathbb{Z}^2 \sim \mathcal{X}^2(2)\]
+Somit ist die Ungleichung:\\
+\[\mathcal{X}_1^2 + \mathbb{Z}^2 \leq 0.5 \Rightarrow \mathcal{X}^2 \leq 0.5\]
+$\Rightarrow \mathbb{P}(\mathcal{X}^2) \leq 0.5$\\\\
+Damit haben wir die folgenden Werte für unsere LibreOffice-Funktion gefunden:\\
+\begin{itemize}[label=\(\rightarrow\)]
+    \item Quantil $x = 0.5$
+    \item Freiheitsgrade $n = 2$
+    \item Kumulativität $cum = 1$
+\end{itemize}
+Eingesetzt in die LibreOffice-Formel \texttt{CHISQ.DIST(x, n, cum)} ergibt sich dann:\\\\
+\texttt{CHISQ.DIST(0.5, 2, 1)} $\approx 0.221$.
+\subsection{Konfidenzbereiche der Binomialverteilung}
+Der Hersteller eines neuen Medikaments behauptet, die Heilungswahrscheinlichkeit des Medikaments betrage mindestens $p_\ast = 0.9$. Um diese Behauptung zu prüfen, wird dieses Medikament in einer Studie mit 300 Personen getestet. Sei $X$ die Anzahl der Behandlungserfolge.\\\\
+(a) Welche Konfidenzintervalle sind hier geeignet, um eine solche Bahuaptung zu stützen oder zu zerlegen?\\\\
+Gesucht ist ein unteres Konfidenzintervall für den Anteil \( p \) konstruieren, um die Behauptung, dass \( p \geq 0.9 \) ist zu überprüfen.
+
+Aus der Vorlesung wissen wir, dass für ein einseitiges unteres Konfidenzintervall bei einem Anteilswert die Formel gilt:
+\[
+\text{Untere Grenze} = \hat{p} - z_{\alpha} \cdot \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}
+\]
+\begin{itemize}
+    \item \(\hat{p}\): Stichprobenanteil (z.~B. aus Teil (b): \( \hat{p} = 0.8667 \))
+    \item \( z_{\alpha} \): Kritischer Wert der Standardnormalverteilung für das Signifikanzniveau \( \alpha \). 
+      \begin{itemize}
+          \item Bei \( \alpha = 0.04 \) (96\%-KI): \( z_{0.04} \approx -1.75 \).
+          \item Den Wert können wir aus der Standardnormalverteilungstabelle ablesen: Fläche \( 1 - \alpha = 0.96 \).
+      \end{itemize}
+    \item \( n \): Stichprobenumfang (\( n = 300 \)).
+\end{itemize}
+Nun müssen wir das Ergebnis noch interpretieren:
+\begin{itemize}
+    \item Liegt die untere Grenze \textbf{über} \( 0.9 \), unterstützt dies die Behauptung \( p \geq 0.9 \).
+    \item Liegt sie \textbf{unter} \( 0.9 \), ist die Behauptung statistisch fragwürdig.
+\end{itemize}
+(b) Angenommen, die Studie lieferte 260 Behandlungserfolge. Widerspricht das Ergebnis der Behauptung des Herstellers? Nutzen Sie das Niveau $\alpha = 0.04$ zur Berechnung des Konfidenzintervalls.\\\\
+Wir stelle die Hypothesen auf:
+\[
+H_0: p \geq 0.9 \quad \text{(Nullhypothese)} \qquad \text{und} \qquad H_1: p < 0.9 \quad \text{(Alternativhypothese)}
+\]
+
+\subsubsection*{Schritt 2: Teststatistik berechnen}
+Die Teststatistik (z-Wert) kann mit der folgenden Formel aus der Vorlesung berechnet werden:
+\[
+z = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1 - p_0)}{n}}}
+\]
+\begin{itemize}
+    \item \( p_0 = 0.9 \): der behauptete Anteil von der Hypothese \( H_0 \).
+    \item \( \hat{p} = \frac{260}{300} \approx 0.8667 \): der beobachtete Anteil.
+    \item Die Werte werden eingesetzt:
+    \[
+    z = \frac{0.8667 - 0.9}{\sqrt{\frac{0.9 \cdot 0.1}{300}}} = \frac{-0.0333}{\sqrt{0.0003}} \approx \frac{-0.0333}{0.0173} \approx -1.92
+    \]
+\end{itemize}
+Nun bestimmen wir die wichtigen bzw. kritischen Werte:
+\begin{itemize}
+    \item Das Signifikanzniveau: \( \alpha = 0.04 \).
+    \item Ein Einseitiger Test: Kritischer Wert \( z_{0.04} \approx -1.75 \) (aus der Tabelle).
+\end{itemize}
+Nun die Testentscheidung:
+\[
+\text{Vergleich: } z_{\text{berechnet}} = -1.92 \quad vs. \quad z_{\text{kritisch}} = -1.75
+\]
+\begin{itemize}
+    \item Weil folgendes gilt: \( -1.92 < -1.75 \), liegt die Teststatistik im Ablehnungsbereich.
+    \item Die Schlussfolgerung: Die Daten widersprechen der Behauptung \( p \geq 0.9 \).
+\end{itemize}
+Wir müssen nun noch die Vorraussetzungen überprüfen:\\
+Die Normalapproximation gilt, weil:
+\[
+n \cdot p_0 = 300 \cdot 0.9 = 270 \geq 10 \quad \text{und} \quad n \cdot (1 - p_0) = 300 \cdot 0.1 = 30 \geq 10
+\]
+
+\subsection{Konfidenzbereiche der Normalverteilung}
+Die Anzahl der Bäckereien in einzigen Bezirken von West-Berlin in 1988 wurde wie folgt gegeben:\\\\
+\begin{tabular}{c|c|c|c|c|c|c|c|c}
+    Bezirk & Kreuzbg. & Wedding & Tiergarten & Neukölln & Spandau & Charl. & Temp. & Reinick. \\
+    \hline
+    Anzahl & 78 & 83 & 65 & 98 & 82 & 65 & 61 & 68 \\
+\end{tabular}\\\\
+(a) Zuerst werden diese als normalverteilt angenommen mit unbekanntem Erwartungswert und unbekannter Varianz. Bestimmen Sie ein Konfidenzintervall für $\mu$ zum Niveau $\alpha = 0.04$. \href{https://planetcalc.com/5017/}{Berechnung 0,98 Quantil}\\\\
+\(\bar{\mu}= \frac{600}{8}=75\qquad \alpha = 0,04 \qquad a = 0,02\)\\
+\(\sigma^2=\frac{1}{8-1}\sum\limits^8_{i=1}(x_i-\bar{\mu})^2 = \frac{(78-75)^2+(83-75)^2+(65-75)^2+(98-75)^2+(82-75)^2+(65-75)^2+(61-75)^2+(68-75)^2}{8-1}\)\\
+\(= \frac{9+64+100+529+49+100+196+49}{7}=\frac{1096}{7}\)\\\\
+\(J=\left[\sigma^2\frac{n-1}{\mathcal{X}^2_{n-1,1-\alpha/2}}, \sigma^2\frac{n-1}{\mathcal{X}^2_{n-1,\alpha/2}}\right]\)\\
+\hspace*{0.3cm}\(\Rightarrow \left[75-\sqrt{\frac{\frac{1096}{7}}{8}}\bar{\mu}_{7,\, 0,98}; 75 + \sqrt{\frac{\frac{1096}{7}}{8}}\bar{\mu}_{7,\, 0,98}\right]= \left[75-\sqrt{\frac{\frac{1096}{7}}{8}}\cdot 2,5168; 75 + \sqrt{\frac{\frac{1096}{7}}{8}}\cdot 2,5168\right] = \left[63,87;86,13\right]\)\\\\
+(b) Anschließend werden diese als normalverteilt angenommen mit bekanntem Erwartungswert 77. Bestimmen Sie ein Konfidenzintervall für $\sigma^2$ zum Niveau $\alpha = 0.02$.\\\\
+\(\bar{\mu}=77 \qquad \alpha = 0,02\)\\
+\(\sigma^2=\frac{1}{8-1}\sum\limits^8_{i=1}(x_i-\bar{\mu})^2 =\frac{(78-77)^2+(83-77)^2+(65-77)^2+(98-77)^2+(82-77)^2+(65-77)^2+(61-77)^2+(68-77)^2}{8-1}\)\\
+\(=\frac{1+36+144+441+25+144+256+81}{7}=\frac{1128}{7}\)\\
+\(J=\left[\sigma^2\frac{n-1}{\mathcal{X}^2_{n-1,1-\alpha/2}}, \sigma^2\frac{n-1}{\mathcal{X}^2_{n-1,\alpha/2}}\right]\)\\
+\hspace*{0.3cm}\(\Rightarrow \left[\frac{1128}{7}\cdot \frac{7}{\bar{\mu}^2_{7,\,0,99}}; \frac{1128}{7}\cdot \frac{7}{\bar{\mu}^2_{7,\,0,01}}\right]=\left[\frac{1128}{18,475}; \frac{1128}{1,238}\right]=[61,055;911,147]\)\\\\
+\subsection{\textit{t}-Test}
+Aus einer Herde von Milchkühen wurden 14 Kühe ausgewählt und die Menge ihrer abgegebenen Milch in Kilogramm in einer Woche aufgezeichnet. Heraus kamen
+\begin{center} \(169.6\qquad142.0\qquad103.3\qquad111.6\qquad123.4\qquad143.5\qquad155.1\)\\
+\(101.7\qquad170.7\qquad113.2\qquad130.9\qquad146.1\qquad169.3\qquad155.5\)
+\end{center}
+Welche sinnvollen Annahmen sollten Sie an die Verteilung stellen? Was lässt sich über die Behauptung, die Milchproduktion liegt über 120kg pro Woche, aussagen?\\\\
+Wir nehmen an, dass die Daten normalverteilt ist. Die Kühe sind also unabhängig voneinander.\\
+Wir nutzen:
+Nullhypothese (\( H_0 \)): Die Milchproduktion ist im Schnitt 120 kg (\( \mu = 120 \)).\\
+Alternativhypothese (\( H_1 \)): Die Milchproduktion liegt über 120 kg (\( \mu > 120 \)).\\\\
+Mittelwert: \( \bar{x} = \frac{1935.9}{14} \approx 138.28 \) kg
+Standardabweichung: \( s \approx 25.67 \) kg\\\\
+\(t = \frac{138.28 - 120}{25.67 / \sqrt{14}} \approx 2.66\)\\\\
+Kritischer \textit{t}-Wert (bei \( \alpha = 0.05 \)): 1.771\\
+Da \( 2.66 > 1.771 \), lehnen wir \( H_0 \) ab.\\\\
+Die Milchproduktion liegt im Schnitt deutlich über 120 kg pro Woche (\( t(13) = 2.66, p < 0.05 \)).\\\\
+Die Kühe geben im Schnitt mehr als 120 kg Milch pro Woche.\\\\
+\textbf{Hinweise zur Bearbeitung der Aufgaben:}
+\begin{itemize}
+    \item Die Hausaufgabenblätter werden Freitags auf Moodle veröffentlicht und enthalten Hausaufgaben, die in der darauf folgenden Woche entweder \textbf{vor der Vorlesung am Freitag um 12:00} Uhr in Hörsaal V abzugeben sind oder \textbf{vor Freitag 12:00 Uhr} in das Schließfach Ihres Tutors (Robert-Mayer-Straße 6-8, 3. Stock) eingeworfen werden müssen.
+    \item Die Hausaufgaben werden anschließend in den Tutorien der nächsten Woche besprochen.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,203 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\usepackage{amsmath}
+\pagestyle{fancy}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Stochastik für die Informatik\\Wintersemester 2024/2025}
+\chead{\bfseries{Übungsblatt 3}\\}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+
+\begin{document}
+\setcounter{section}{3}
+\subsection{Verteilung und Verteilungsfunktion}
+Die Verteilung einer diskreten Zufallsvariable X ist in der folgenden Tabelle gegeben:\\\\
+\begin{tabular}{c|c c c c}
+    x & -4 & 0 & 4 & 16 \\
+    \hline
+    $p_X(x)$ & $\frac{1}{12}$ & $\frac{1}{2}$ & $\frac{1}{4}$ & $\frac{1}{6}$
+\end{tabular}\\\\
+a) Berechnen und skizzieren Sie die Verteilungsfunktion $F_X(x)$ von $X$.\\\\
+$F_x(-4) = \mathbb{P}(X \geq -4) = \mathbb{P}(-4) = \frac{1}{12}$\\
+$F_x(0) = \mathbb{P}(X \geq 0) = \mathbb{P}(-4) + \mathbb{P}(0) = \frac{1}{12} + \frac{6}{12} = \frac{7}{12}$\\
+$F_x(4) = \mathbb{P}(X \geq 4) = \mathbb{P}(-4) + \mathbb{P}(0) + \mathbb{P}(4) = \frac{1}{12} + \frac{6}{12} + \frac{3}{12} = \frac{10}{12}$\\
+$F_x(16) = \mathbb{P}(X \geq 16) = \mathbb{P}(-4) + \mathbb{P}(0) + \mathbb{P}(4) + \mathbb{P}(16) = \frac{1}{12} + \frac{6}{12} + \frac{3}{12} + \frac{2}{12} = \frac{12}{12} = 1$\\\\
+
+\begin{tikzpicture}
+    % Optional: Helper grid for better alignment (commented out)
+    % \draw[help lines,dashed] (-1,0) grid (10,7);
+
+    % Draw the x-axis
+    \draw (-2.5,0)-- (11.5,0); 
+    
+    % Draw the y-axis
+    \draw[->] (0,-1) -- (0,6); % y-axis from y=-1 to y=2 with an arrow
+
+    % X-axis ticks and labels
+    \foreach \x in {-5,-4,0,4,10,16,20} {
+        \draw (\x / 2,0.1) -- (\x / 2,-0.1) node[below] {\x}; % x-ticks
+    }
+
+    \foreach \y in {0, 1, 7, 10, 12} {
+        \draw (0.1,\y * 0.5) -- (-0.1,\y * 0.5) node[left] {$\frac{\y}{12}$}; % y-ticks with fractions
+    }
+    \draw (-4 / 2,1 / 2) -- (0,1 / 2);
+    \draw (0,7 / 2) -- (4 / 2,7 / 2);
+    \draw (4 / 2,10 / 2) -- (16 / 2,10 / 2);
+    \draw (16 / 2,12 / 2) -- (21 / 2,12 / 2);
+\end{tikzpicture}\\
+\noindent b) Seien $Y := \vert X \vert $ und $Z = (X-Y)^2$. Stellen Sie die Verteilung von $Y$ und von $Z$ in einer Tabelle dar.\\\\
+Wir setzen die Spaltennamen aus der Tabelle in die $Y$ Funktion ein und ersetzen sie:\\
+\begin{tabular}{c|c c c c}
+    x & 2 & 0 & 2 & 4 \\
+    \hline
+    $p_X(x)$ & $\frac{1}{12}$ & $\frac{1}{2}$ & $\frac{1}{4}$ & $\frac{1}{6}$
+\end{tabular}\\\\
+Hier werden die Wahrscheinlichkeiten der Spalten mit gleichen Spaltenziffern addiert:\\
+\begin{tabular}{c|c c c}
+    x & 0 & 2 & 4 \\
+    \hline
+    $p_X(x)$ & $\frac{1}{2}$ & $\frac{1}{3}$ & $\frac{1}{6}$
+\end{tabular}\\\\
+Für die $Z$ Funktion setzen wir die $Y$ Funktion in die $Z$ Funktion ein, um sie nur von $X$ abhängig zu machen. Dann ist $Z = X - \sqrt{|X|}$. Wir setzen dann analog zur $Y$ Funktion die $X$ Werte ein:\\
+\begin{tabular}{c|c c c c}
+    x & 36 & 0 & 4 & 144 \\
+    \hline
+    $p_X(x)$ & $\frac{1}{12}$ & $\frac{1}{2}$ & $\frac{1}{4}$ & $\frac{1}{6}$
+\end{tabular}\\\\
+Dann noch in aufsteigender Reihenfolge sortieren und die Tabellen Zusammenführen:\\
+\begin{tabular}{c|c c c c c}
+    x & 0 & 2 & 4 & 36 & 144 \\
+    \hline
+    $p_Y(x)$ & $\frac{1}{2}$ & $\frac{1}{3}$ & $\frac{1}{6}$ & 0 & 0\\
+    $p_Z(x)$ & $\frac{1}{2}$ & 0 & $\frac{1}{4}$ & $\frac{1}{12}$ & $\frac{1}{6}$\\
+\end{tabular}\\\\
+\subsection{}
+Seien $X$ und $Y$ unabhängige Zufallsvariablen mit $X \sim Ber(p)$ und $Y \sim Ber(q)$ auf dem selben Wahrscheinlichkeitsraum $(\Omega, P)$ mit $p, q \in (0, 1)$. Bestimmen Sie die Verteilung von $Z=(2X-1)(2Y-1)$. Für welche $p$ und $q$ sind $X$ und $Z$ unabhängig?\\\\
+Wir definieren die Zustände:\\
+$X \sim Ber(p) \to \mathbb{P}(X = 1) = p$\\
+$Y \sim Ber(q) \to \mathbb{P}(Y = 1) = p$\\\\
+Daraus folgen die Zustände:\\
+\begin{minipage}[t]{0.45\textwidth}
+    $X \sim Ber(p)$\\
+    $\to \mathbb{P}(X = 1) = p$\\
+    $\to \mathbb{P}(X = 0) = 1 - p$
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    $Y \sim Ber(q)$\\
+    $\to \mathbb{P}(Y = 1) = q$\\
+    $\to \mathbb{P}(Y = 0) = 1 - q$
+\end{minipage}\\\\
+Somit bekommen wir die folgende Wertetabelle:\\
+\begin{tabular}{c|c|c}
+    X & Y & Z\\
+    \hline
+    0 & 0 & 1\\
+    0 & 1 & -1\\
+    1 & 0 & -1\\
+    1 & 1 & 1
+\end{tabular}\\\\
+$\mathbb{P}(Z = 1) = \mathbb{P}(X = 0) \cdot \mathbb{P}(Y = 0) + \mathbb{P}(X = 10) \cdot \mathbb{P}(Y = 1) = p \cdot q + (1 - p) \cdot (1 - q)$\\
+$\mathbb{P}(Z = -1) = \mathbb{P}(X = 0) \cdot \mathbb{P}(Y = 0) + \mathbb{P}(X = 10) \cdot \mathbb{P}(Y = 1) = (1 - p) \cdot q + p \cdot (1 - q)$\\
+Aus der Vorlesung:\\
+$X$ und $Z$ sind unabhängig, wenn $\mathbb{P}(X \cap Z) = \mathbb{P}(X) \cdot \mathbb{P}(Z)$ gilt\\\\
+Wir setzen ein und lösen auf:\\
+$\mathbb{P}(X \cap Z) = \mathbb{P}(X) \cdot \mathbb{P}(Z)$\\
+$p \cdot p = (p \cdot (1 - q) + p \cdot q) \cdot ((1 - p) \cdot (1 - q) + p \cdot q)$\\
+Das Lösen der Gleichung führt zu den folgenden Ergebnissen:\\
+$q = \frac{1}{2}$ und $0 < p < 1$
+\subsection{}
+Ein Berliner Wohnhaus bestehe aus 10 Wohnungen $1,\dots ,10$, deren Miete am Anfang eines Jahres jeweils mit Wahrscheinlichkeit $p$ unabhängig voneinander erhöht wird, wobei $0 < p < 1$.\\\\
+\textbf{Da im Text nicht spezifiziert, nehmen wir an, dass die Wahrscheinlichkeiten $\mathbf{p_1}$ bis $\mathbf{p_{10}}$ alle gleich sind.}\\\\
+(a) Berechnen Sie die Wahrscheinlichkeit, dass die Miete der Wohnung 1 erhöht wird, jedoch die Miete der anderen Wohnungen nicht.\\\\
+Es gibt genau eine Möglichkeit, dass bei Wohnung 1 die Miete erhöht wird und bei keiner anderen, deshalb multiplizieren wir nur die Wahrscheinlichkeiten miteinander:\\
+\(\mathbb{P}(W_1 \cap W_2^c \cap W_3^c \cap W_4^c \cap W_5^c \cap W_6^c \cap W_7^c \cap W_8^c \cap W_9^c \cap W_{10}^c) = p \cdot (p^c)^9\)\\\\
+(b) Sei $X$ die Anzahl der Wohnungen mit erhöhter Miete. Wie ist $X$ verteilt? Begründen Sie ihre Antwort.\\\\
+Wir können die Situation als Urnenmodell ohne Zurücklegen, ohne Beachten der Reihenfolge betrachten.\\
+Dafür berechnen wir zunächst die Wahrscheinlichkeit, dass die Miete bei $X$ Wohnung erhöht wird ($p^X$) und bei $10-X$ Wohnungen nicht erhöht wird ($(p^c)^{10-X}$), dann multiplizieren wird mit dem entsprechenden Binom $\binom{10}{X}$:\\\\
+\begin{tabular}{c|l}
+    $x$ & $p_X(x)$ \\
+    \hline
+    0 & $(p^c)^{10} \cdot \binom{10}{0}$\\
+    1 & $p^1 \cdot (p^c)^9 \cdot \binom{10}{1}$\\
+    2 & $p^2 \cdot (p^c)^8 \cdot \binom{10}{2}$\\
+    3 & $p^3 \cdot (p^c)^7 \cdot \binom{10}{3}$\\
+    4 & $p^4 \cdot (p^c)^6 \cdot \binom{10}{4}$\\
+    5 & $p^5 \cdot (p^c)^5 \cdot \binom{10}{5}$\\
+    6 & $p^6 \cdot (p^c)^4 \cdot \binom{10}{6}$\\
+    7 & $p^7 \cdot (p^c)^3 \cdot \binom{10}{7}$\\
+    8 & $p^8 \cdot (p^c)^2 \cdot \binom{10}{8}$\\
+    9 & $p^9 \cdot (p^c)^1 \cdot \binom{10}{9}$\\
+    10 & $p^{10} \cdot \binom{10}{10}$
+\end{tabular}\\\\
+(c) Berechnen Sie die Wahrscheinlichkeit, dass die Miete von genau zwei Wohnungen erhöht wird.\\\\
+$p^2 \cdot (p^c)^8 \cdot \binom{10}{2}$\\\\
+(d) Berechnen Sie die Wahrscheinlichkeit, dass die Miete der Wohnungen 1 und 8 erhöht wird.\\\\ 
+Jedes Ereignis, wo 1 und 8 erhöht werden:\\\\
+\begin{tabular}{c|l}
+    2 & $p^2 \cdot (p^c)^8 \cdot \binom{8}{0}$\\
+    3 & $p^3 \cdot (p^c)^7 \cdot \binom{8}{1}$\\
+    4 & $p^4 \cdot (p^c)^6 \cdot \binom{8}{2}$\\
+    5 & $p^5 \cdot (p^c)^5 \cdot \binom{8}{3}$\\
+    6 & $p^6 \cdot (p^c)^4 \cdot \binom{8}{4}$\\
+    7 & $p^7 \cdot (p^c)^3 \cdot \binom{8}{5}$\\
+    8 & $p^8 \cdot (p^c)^2 \cdot \binom{8}{6}$\\
+    9 & $p^9 \cdot (p^c)^1 \cdot \binom{8}{7}$\\
+    10 & $p^{10} \cdot \binom{8}{8}$
+\end{tabular}
+\hspace*{2cm}\(p^2 = p^2 \sum\limits^8_{k=0}\binom{8}{k}\cdot p^k \cdot (p^c)^{8-k}\), denn $\sum\limits^8_{k=0}\binom{8}{k}\cdot p^k \cdot (p^c)^{8-k}=1$
+\subsection{}
+Hans und Franz schießen abwechselnd auf eine Torwand. Wer als erstes trifft gewinnt. Es ist bekannt, dass Hans mit Wahrscheinlichkeit $\frac{1}{2}$ trifft und Franz mit Wahrscheinlichkeit $\frac{1}{3}$. Berechnen Sie die Wahrscheinlichkeiten das Franz gewinnt, wenn er anfängt.\\\\
+\textit{Die folgende Formel gilt für k = Anzahl der Runden:}\\
+\(\sum\limits^{k+1}_{k=1} (\frac{2}{3}\cdot \frac{1}{2})^{k-1} \cdot \frac{1}{3}\)\\\\
+Modellieren Sie das Ganze mit einer Zufallsvariable $X$, die angibt, wie oft beide zusammen auf die Torwand schießen.\\\\
+Da die Variablen, dass Hans und Franz nicht treffen $\frac{2}{3}$ und $\frac{1}{2}$ sich zu der Wahrscheinlichkeit ausmultiplizieren, dass Franz trifft $\frac{2}{3}\cdot \frac{1}{2}=\frac{1}{3}$ und wir uns nur die Wahrscheinlichkeit anschauen, dass Franz gewinnt, können wir die Wahrscheinlichkeit wie folgt nach $X$ modellieren:\\
+$\forall x \in \mathbb{N}:$ $\frac{1}{3}^{\lceil \frac{X}{2} \rceil}$\\\\
+Sei weiter $Y := \lceil \frac{X}{2} \rceil$. Was beschreibt die Zufallsvariable $Y$?\\\\
+Die Variable $Y$ beschreibt die aktuelle Rundenzahl, in der sich Hans und Franz befinden.\\\\
+Zeigen Sie, dass die Verteilung von $Y$ gedächtnislos ist, d.h., dass 
+\[\mathbb{P}(Y >k+n \vert Y >k)=\mathbb{P}(Y >n)\]
+für jedes $k\in \mathbb{N}$ und $n\in \mathbb{N}_0$  gilt. \textit{Hinweis:} Es ist $\lceil r\rceil := min\{n \in \mathbb{N}:n\geq r\}$.\\\\
+Die Formel sagt aus, dass die ausgeführten Versuche und die noch benötigten Versuche unabhängig voneinander sind. Das können wir jedoch schon aus der Geometrischen Reihe schlussfolgern die erneute Angabe ist somit unnötig.
+\end{document}

@@ -1,0 +1,163 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Stochastik für die Informatik\\Wintersemester 2024/2025}
+\chead{\bfseries{Übungsblatt 6}\\}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+\begin{document}
+\setcounter{section}{6}
+\subsection{}
+Eine faire Münze wird zwölfmal geworfen. Sei $X_i \in \{0,1\}$ für $i\in\{1,\dots,12\}$ die Indikatorfunktion für Kopf im $i$-ten Wurf, i.e. $X_i = 1$ genau dann, wenn die Münze im $i$-ten Wurf Kopf zeigt.\\
+Seien $Z= \sum^{12}_{i=1} X_i$ und $W = 12 X_1$.\\
+Berechnen Sie $\mathbb{E}Z$, $\mathbb{E}W$, $\mathbb{V} Z$ und $\mathbb{V} W$. Vergleichen Sie $\mathbb{E}Z$ mit $\mathbb{E}W$ und $\mathbb{V} Z$ mit $\mathbb{V} W$.\\\\
+\(\mathbb{E}Z = \mathbb{E}\left(\sum^{12}_{i=1} X_i\right)= \mathbb{E}(X_1)+ \mathbb{E}(X_2)+ \mathbb{E}(X_3)+ \mathbb{E}(X_4)+ \mathbb{E}(X_5)+ \mathbb{E}(X_6)+ \mathbb{E}(X_7)+ \mathbb{E}(X_8)+ \mathbb{E}(X_9)+ \mathbb{E}(X_{10})+ \mathbb{E}(X_{11})+ \mathbb{E}(X_{12})= 12 \cdot (0 \cdot \frac{1}{2} + 1 \cdot \frac{1}{2}) = 6\\\\
+\mathbb{E}W=\sum\limits^\cdot_{k\in X(\Omega)}k \cdot [X=k]\Rightarrow\sum\limits^\cdot_{k \in X(\Omega)} \mathbb{E}(12 X_i) = k \cdot [X=k] \Rightarrow 12 \cdot \sum\limits^\cdot_{k \in X(\Omega)} \mathbb{E}(X_i) = k \cdot [X=k]\\
+\Rightarrow 12 \cdot \mathbb{E}(X_i) = 12 \cdot (0 \cdot [X=0]  + 1 \cdot [X=1]) = 12 \cdot (0 \cdot \frac{1}{2} + 1 \cdot \frac{1}{2}) = 12 \cdot \frac{1}{2}=6\\\\
+\mathbb{V}Z = \mathbb{E}[\sum^{12}_{i=1} X_i] = \mathbb{V}[X_1 + X_2 + \dots + X_{12}]= \mathbb{V}[X_1] + \mathbb{V}[X_2] + \dots +\mathbb{V}[X_{12}] = 12 \cdot \frac{1}{2}(1-\frac{1}{2})= 12 \cdot \frac{1}{4}=3\\
+\textcolor{gray}{\mathbb{V}[X+Y]=\mathbb{V}[X]+\mathbb{V}[Y]}\\
+\textcolor{gray}{Bernoulli \quad \mathbb{V}[p] = p(1-p)}\\\\
+\mathbb{V}W=\mathbb{E}[12 X_1]=12^2\mathbb{V}[X_1]=144\cdot \frac{1}{2}(1-\frac{1}{2})=144 \cdot \frac{1}{4}=36\\
+\textcolor{gray}{\mathbb{V}[aX]=a\cdot\mathbb{V}[X]}\\
+\textcolor{gray}{Bernoulli \quad \mathbb{V}[p] = p(1-p)}\)\\\\
+Da die Wahrscheinlichkeit für Kopf und Zahl fair also gleich sind, ergeben $\mathbb{E}W$ und $\mathbb{E}Z$ die gleichen Wahrscheinlichkeiten.\\
+Für $\mathbb{V}W$ mit einer direkt proportionalen Konstante werden die Wahrscheinlichkeiten addiert, während $\mathbb{V}Z$ mit Bernoulli-Verteilung am Quadrat des Faktors skaliert wird. Durch die unterschiedlichen Berechnungen erhalten wir die Differenz der Ergebnisse.
+\subsection{}
+Sei $X$ eine Poisson-verteilte Zufallsvariable mit Parameter $\lambda>0$. Berechnen Sie $\mathbb{E} (X\vert X \geq 1)$.\\\\
+$\mathbb{E}(X \vert X \geq 1) = \frac{\mathbb{E}[X \cdot 1_{\{X \geq 1\}}]}{\mathbb{P}(X \geq 1)}$\\
+Die Indikatorfunktion $1_{\{x \geq 1\}}$ ist 1 wenn die Bedingung $X \geq 1$ erfüllt ist, ansonsten ist der Term gleich 0\\
+$\Rightarrow \mathbb{P}(X \geq 1) = 1 - \mathbb{P}(X = 0) = 1 - \text{e}^{-\lambda}$\\
+$\Rightarrow \mathbb{E}[X \cdot 1_{\{X \geq 1\}}] = \mathbb{E}[X] - \mathbb{E}[X \cdot 1_{\{X = 0\}}]$\\
+$\Leftrightarrow \mathbb{E}[X] - \mathbb{E}[X \cdot 1_{\{X = 0\}}] = \lambda$ weil für $X = 0$ ist $X \cdot 1_{\{X = 0\}} = 0$\\
+Jetzt setzen wir die Formel zusammen und setzen ein:\\
+$\Rightarrow \mathbb{E}(X \vert X \geq 1) = \frac{\mathbb{E}[X]}{\mathbb{P}(X \geq 1)} = \frac{\lambda}{1 - \text{e}^{-\lambda}}$\\
+Somit ist $\mathbb{E}(X \vert X \geq 1) = \frac{\lambda}{1 - \text{e}^{-\lambda}}$.
+\clearpage
+\subsection{Unabhängigkeit und Unkorreliertheit}
+$X$ und $Y$ seien unabhängige Bernoulli-verteilte Zufallsvariablen mit Parameter $p= 1/2$.\\
+Zeigen Sie, dass $X+ Y$ und $\vert X-Y \vert$ abhängig, aber unkorreliert sind.\\\\
+\begin{tabular}{ll}
+    $X, Y \sim Bernoulli (\frac{1}{2})$ & $\mathbb{E}[X]=\mathbb{E}[Y]=\frac{1}{2}$ \\
+    $X+Y$ & $\mathbb{E}[X+Y]=\mathbb{E}[X] +\mathbb{E}[Y]=\frac{1}{2}+\frac{1}{2}=1$\\
+    $\vert X-Y \vert$ & $\mathbb{E}[\vert X - Y\vert]=\frac{1}{2}$
+\end{tabular}\\\\
+\(cov[X+Y, \vert X-Y\vert]- \mathbb{E}[X+Y]\cdot \mathbb{E}[\vert X-Y]=0\)\\\\
+% #9F19E0
+% #E01969
+% #E019E0
+\begin{tabular}{c|c c c|c}
+\diagbox{B}{A} & 0 & 1 & 2 & $\mathbb{P}(A=a)$ \\ \hline
+0 & \textcolor[HTML]{E019E0}{$\sfrac{1}{4}$} & 0 & \textcolor[HTML]{E01969}{$\sfrac{1}{4}$} & $\sfrac{1}{2}$ \\
+1 & 0 & \textcolor[HTML]{9F19E0}{$\sfrac{1}{2}$} & 0 & $\sfrac{1}{2}$ \\ \hline
+$\mathbb{P}(B=b)$ & $\sfrac{1}{4}$ & $\sfrac{1}{2}$ & $\sfrac{1}{4}$ & 1\\
+\end{tabular}
+\hspace*{1cm}
+\begin{tabular}{c|c|c}
+    $X$ & $Y$ & $A$\\
+    \hline
+    0 & 0 & \textcolor[HTML]{E019E0}{0}\\
+    0 & 1 & \textcolor[HTML]{9F19E0}{1}\\
+    1 & 0 & \textcolor[HTML]{9F19E0}{1}\\
+    1 & 1 & \textcolor[HTML]{E01969}{2}\\
+\end{tabular}
+\hspace*{1cm}
+\begin{tabular}{c|c|c}
+    $X$ & $Y$ & $B$ \\
+    \hline
+    0 & 0 & \textcolor[HTML]{E019E0}{0}\\
+    0 & 1 & \textcolor[HTML]{9F19E0}{1}\\
+    1 & 0 & \textcolor[HTML]{9F19E0}{1}\\
+    1 & 1 & \textcolor[HTML]{E01969}{0}\\
+\end{tabular}\\\\\\
+\(\mathbb{E}[A=1, B=0]=0\neq \frac{1}{2}\cdot \frac{1}{2}= \mathbb{P}[A=1]\cdot \mathbb{P}[B=0]\)\\
+Somit sind A und B zwar unkorreliert, aber nicht unabhängig, also abhängig.
+\subsection{Momente der Zipf-Verteilung}
+Sei $X$ zipfverteilt mit Parameter $\alpha >1$.\\\\
+(a) Für welche Werte von $\alpha$ ist $\mathbb{E}(X^2)$ endlich?\\
+Bestimmen Sie $\mathbb{V}(X) = \mathbb{E}(X^2)-\mathbb{E}(X)^2$, falls $\mathbb{E}(X^2)$ endlich ist.\\\\
+Gegeben sind:\\
+$\Rightarrow \mathbb{E}[X] = \sum_{k \in X(\Omega)}^{\infty} k \cdot \mathbb{P}(X = k)$\\
+$\Rightarrow \mathbb{P}(X = k) = \frac{k^{-\alpha}}{Z_N(\alpha)}$\\\\
+Daraus folgt:\\
+$\Rightarrow \mathbb{E}[X] = \sum_{k \in X(\Omega)}^{\infty} k \cdot \mathbb{P}(X = k) = \sum_{k \in X(\Omega)}^{\infty} k \cdot \frac{k^{-\alpha}}{Z_N(\alpha)} = \frac{1}{Z(\alpha)} \cdot \sum_{k \in X(\Omega)}^{\infty} k \cdot k^{-\alpha}\\
+= \frac{1}{Z(\alpha)} \cdot \sum_{k \in X(\Omega)}^{\infty} \frac{k}{k^\alpha} = \frac{1}{Z(\alpha)} \cdot Z(\alpha - 1) = \frac{Z(\alpha - 1)}{Z(\alpha)}$\\\\
+Analog dazu gilt:\\
+$\Rightarrow \mathbb{E}[X^2] = \sum_{k \in X(\Omega)}^{\infty} k^2 \cdot \mathbb{P}(X = k) = \sum_{k \in X(\Omega)}^{\infty} k^2 \cdot \frac{k^{-\alpha}}{Z_N(\alpha)} = \frac{1}{Z(\alpha)} \cdot \sum_{k \in X(\Omega)}^{\infty} k^2 \cdot k^{-\alpha}\\
+= \frac{1}{Z(\alpha)} \cdot \sum_{k \in X(\Omega)}^{\infty}k^{2 -\alpha} = \frac{1}{Z(\alpha)} \cdot Z(\alpha - 2) = \frac{Z(\alpha - 2)}{Z(\alpha)}$\\\\
+$\sum_{k \in X(\Omega)}^{\infty}k^{2 -\alpha} = \sum_{k \in X(\Omega)}^{\infty}\frac{1}{k^{\alpha - 2}}$ ist eine harmonische Reihe. Eine harmonische Reihen $\sum_{n = 1}^\infty \frac{1}{n^k}$ konvergiert für $k > 1$.\\\\
+Unsere Reihe konvergiert demnach für $\alpha - 2 > 1 \Leftrightarrow \alpha > 3$.\\
+Somit ist $\mathbb{E}[X^2]$ endlich, wenn die Reihe konvergiert, für $\alpha \in \mathbb{N}:\alpha > 3$\\\\
+Wir setzen ein:\\
+$\mathbb{E}[X^2] - \mathbb{E}[X]^2 = \frac{Z(\alpha - 2)}{Z(\alpha)} - \left( \frac{Z(\alpha - 1)}{Z(\alpha)}\right)^2 = \frac{Z(\alpha - 2)}{Z(\alpha)} -\frac{Z(\alpha - 1)^2}{Z(\alpha)^2}$
+\clearpage
+\noindent (b) Für festes $\alpha$, bestimmen Sie die Menge 
+\[M_\alpha := {\beta >0: E[X^\beta] <\infty}\]
+und berechnen Sie $E[X^\beta]$ für $\beta \in M_\alpha$.\\\\
+Ähnlich wie bei der a) kann hier folgendes umgeformt werden:\\
+$\mathbb{E}[X^\beta] = \sum_{k = 1}^\infty k^\beta \cdot \mathbb{P}(X = k) = \sum_{k = 1}^\infty k^\beta \cdot \frac{k^{-\alpha}}{Z(\alpha)} = \frac{1}{Z(\alpha)} \cdot \sum_{k = 1}^\alpha \frac{k^\beta}{k^\alpha} = \frac{1}{Z(\alpha)} \cdot \sum_{k = 1}^\infty \frac{1}{k^{\alpha - \beta}}$\\
+Hier haben wir erneut eine harmonische Reihe. Die Reihe konvergiert für $\alpha - \beta > 1 \Leftrightarrow \alpha > \beta + 1$\\
+$\Rightarrow 0 < \beta + 1 < \alpha$\\\\
+Unsere Menge sieht somit wie folgt aus:\\
+$M_\alpha := \{0 < \beta + 1 < \alpha\}$ für ein konstantes $\alpha$\\\\
+Wir setzen fertig ein:\\
+$\mathbb{E}[X^\beta] = \frac{1}{Z(\alpha)} \cdot \sum_{k = 1}^\infty \frac{1}{k^{\alpha - \beta}} = \frac{1}{Z(\alpha)} \cdot Z(\alpha - \beta) = \frac{Z(\alpha - \beta)}{Z(\alpha)}$\\\\
+\subsection{}
+Sei X geometrisch verteilt mit Parameter $p\in (0,1)$ und $Y$ unabhängig von $X$ poisson-verteilt mit Parameter $1/p$. Sei $f : \mathbb{R}^2 \to \mathbb{R}$ mit $f(x,y) = (x-y)^2$ gegeben. Zeigen Sie, dass die Wahrscheinlichkeit, dass $Y$ um mehr als $1 /p$ von $\mathbb{E} (f(X,Y))$ abweicht, kleiner kleiner gleich $p$ ist.\\
+\textit{Hinweis}: Sie dürfen die Formel für die Varianz der Poisson-Verteilung und der Geometrischen-Verteilung aus der Vorlesung benutzen.\\\\
+\(X \sim Geo(p) \Rightarrow \mathbb{P}[x=k]=(1-p)^{k-1}; \quad \mathbb{E}[X]=\frac{1}{p}; \quad \mathbb{V}[X]=\frac{1-p}{p^2}\\
+Y \sim Poi(\frac{1}{p})\Rightarrow \mathbb{P}[Y=k]=\frac{(\frac{1}{p})^k}{k!}e^{-\frac{1}{p}}; \quad \mathbb{E}[Y]=\frac{1}{p}; \quad \mathbb{V}[Y]=\frac{1}{p}\\\\
+\text{Z.Z. } \mathbb{P}\left(\vert Y-\frac{1}{p}\vert > \sqrt{\mathbb{E}[f(x,y)]}\right)\leq p \quad \text{Spiegelt Chebyshev-Ungleichung wieder:}\\
+\mathbb{P}(\vert Y -\mathbb{E}[Y]\vert \geq c)\leq \frac{\mathbb{V}(Y)}{c^2} \quad \text{wir setzen } \sqrt{\mathbb{E}[f(x,y)]} = c\\\\
+\mathbb{V}[A]=\mathbb{E}[A^2]-\mathbb{E}[A]^2\\
+\mathbb{V}[x]= \mathbb{E}[x^2]-\mathbb{E}[x]^2 \Rightarrow \mathbb{E}[x^2] = \mathbb{V}[x]+\mathbb{E}[x]^2 \Rightarrow \frac{1-p}{p^2}+\frac{1}{p^2}= \frac{2-p}{p^2}=\mathbb{E}[x^2]\\
+\mathbb{V}[y] = \mathbb{E}[y^2]-\mathbb{E}[y]^2 \Rightarrow \mathbb{E}[y^2] = \mathbb{V}[y]+\mathbb{E}[y]^2 \Rightarrow \frac{1}{p}+\left(\frac{1}{p}\right)^2=\frac{1}{p}+\frac{1}{p^2}=\frac{p}{p^2}\frac{1}{p^2}= \frac{p+1}{p^2}= \mathbb{E}[y^2]\\\\
+\mathbb{E}[f(x,y)]=\mathbb{E}[(X-Y)^2] = \mathbb{E}[x^2 -2xy+y^2]=\mathbb{E}[x^2]-2\mathbb{E}[xy]+\mathbb{E}[y^2]=\mathbb{E}[x^2]-2\mathbb{E}[x]\mathbb{E}[y]+\mathbb{E}[y^2]\\\\
+c = \sqrt{\mathbb{E}[f(x,y)]}\Rightarrow c = \sqrt{\frac{1}{p^2}}=\frac{1}{p}\\\\
+\mathbb{P}(\vert Y - \mathbb{E}[y]\vert > c) \leq \frac{\mathbb{V}[y]}{c^2}\Rightarrow \mathbb{P}\left(\vert Y - \frac{1}{p}\vert  > \sqrt{\mathbb{E}[f(x,y)]}\right)\leq \frac{\frac{1}{p}}{\left(\frac{1}{p}\right)^2} \Rightarrow \mathbb{P}\left(\vert Y - \frac{1}{p}\vert  > \sqrt{\frac{1}{p^2}}\right)\leq \frac{\frac{1}{p}}{\frac{1}{p^2}} \\
+\Rightarrow \mathbb{P}\left(\vert Y - \frac{1}{p}\vert  > \frac{1}{p}\right)\leq p\)\\\\
+Da die Chebyshev-Ungleichung erfüllt ist, gilt \( \mathbb{P}\left(\vert Y-\frac{1}{p}\vert > \sqrt{\mathbb{E}[f(x,y)]}\right)\leq p\).
+\end{document}

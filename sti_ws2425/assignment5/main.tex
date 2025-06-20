@@ -1,0 +1,162 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Stochastik für die Informatik\\Wintersemester 2024/2025}
+\chead{\bfseries{Übungsblatt 5}\\}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+
+\begin{document}
+\setcounter{section}{5}
+\subsection{}
+Es seien $X$ und $Y$ zwei Zufallsvariablen mit gemeinsamer Verteilung gegeben durch\\
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{c|c c c c}
+         \diagbox{X}{Y} & 1 & 2 & 3 & 4 \\ \hline
+         1 & $\sfrac{1}{10}$ & $\sfrac{1}{10}$ & $\sfrac{1}{5}$ & $\sfrac{3}{10}$ \\
+         2 & 0 & $\sfrac{1}{10}$ & $\sfrac{1}{5}$ & 0 \\
+    \end{tabular}
+\end{table}\\
+(a) Berechnen Sie die Wahrscheinlichkeit der Ereignisse $X= Y$ und $3X >Y$.\\\\
+\(\mathbb{P}(X=Y)=\mathbb{P}(X=Y=1)+\mathbb{P}(X=Y=2)=\sfrac{1}{10}+\sfrac{1}{10}=\sfrac{1}{5}\\
+\mathbb{P}(3X>Y)=\mathbb{P}(X=1, Y=1)+\mathbb{P}(X=2, Y=1)+ \mathbb{P}(X=1, Y=1) + \mathbb{P}(X=2, Y=2)\\
+=\sfrac{1}{10}+ \sfrac{1}{10}+\sfrac{1}{10}+\sfrac{1}{5}=\sfrac{1}{2}\)\\\\
+(b) Bestimmen Sie die Randverteilungen $\mathbb{P}(X= \cdot)$ und $\mathbb{P}(Y= \cdot)$ von $X$ und $Y$.\\
+\begin{table}[ht]
+\centering
+\begin{tabular}{c|c c c c|c}
+\diagbox{X}{Y} & 1 & 2 & 3 & 4 & $(X=\cdot)$\\ \hline
+    1 & $\sfrac{1}{10}$ & $\sfrac{1}{10}$ & $\sfrac{1}{5}$ & $\sfrac{3}{10}$ & $\sfrac{7}{10}$ \\
+    2 & 0 & $\sfrac{1}{10}$ & $\sfrac{1}{5}$ & 0 & $\sfrac{3}{10}$\\
+    \hline
+    $(Y=\cdot)$ & $\sfrac{1}{10}$ & $\sfrac{1}{5}$ & $\sfrac{2}{5}$ & $\sfrac{3}{10}$ & \textbf{1}\\
+\end{tabular}
+\end{table}\\
+(c) Bestimmen Sie die bedingten Verteilungen $\mathbb{P}(X= \cdot \vert Y = 2)$ und $\mathbb{P}(Y= \cdot\vert X = 1)$.\\\\
+\(\mathbb{P}(X=x \vert Y=y)=\frac{\mathbb{P}(X=x, Y=y)}{\mathbb{P}(Y=y)}\)\\\\
+$\mathbb{P}(X= \cdot \vert Y = 2) = \mathbb{P}(X= 1 \vert Y = 2) + \mathbb{P}(X= 2 \vert Y = 2) = \frac{\mathbb{P}(X=1, Y=2)}{\mathbb{P}(Y=2)}+\frac{\mathbb{P}(X=2, Y=2)}{\mathbb{P}(Y=2)}\\
+= \frac{\sfrac{1}{10}}{\sfrac{2}{10}}+\frac{\sfrac{1}{10}}{\sfrac{2}{10}}=\sfrac{1}{2}+\sfrac{1}{2}=1$\\\\
+\(\mathbb{P}(Y= \cdot\vert X = 1) = \mathbb{P}(Y=1,X=1)+\mathbb{P}(Y=2 \vert X=1) + \mathbb{P}(Y=3,X=1)+\mathbb{P}(Y=4 \vert X=1)\\
+= \frac{\mathbb{P}(Y=1 \vert X=1)}{\mathbb{P}((X=1)}+\frac{\mathbb{P}(Y=2, X=1)}{\mathbb{P}((X=1)}+ \frac{\mathbb{P}(Y=3 \vert X=1)}{\mathbb{P}((X=1)}+\frac{\mathbb{P}(Y=4, X=1)}{\mathbb{P}((X=1)}=\frac{\sfrac{1}{10}}{\sfrac{7}{10}}+\frac{\sfrac{1}{10}}{\sfrac{7}{10}}+\frac{\sfrac{2}{10}}{\sfrac{7}{10}}+\frac{\sfrac{3}{10}}{\sfrac{7}{10}}=1\)\\\\
+(d) Sind $X$ und $Y$ unabhängig?\\\\
+\(\mathbb{P}(X=1)\cdot \mathbb{P}(Y=1)= \sfrac{1}{10}\cdot \sfrac{7}{10}=\sfrac{7}{100} \neq \sfrac{1}{10}=\mathbb{P}(X=1, Y=1)\)\\
+$X$ und $Y$ sind nicht abhängig, das die Formel $\mathbb{P}(X=x, Y=y) = \mathbb{P}(X=x) \cdot \mathbb{P}(Y=y)$ bei $X=1$ und $Y=1$ nicht zutrifft. Die Formel muss für eine Unabhängigkeit von Variablen bei allen möglichen Belegungen von $X$ und $Y$ zutreffen.\\\\
+(e) Berechnen Sie $\mathbb{E}X$, $\mathbb{E}Y$, $\mathbb{V}(X)$ und $\mathbb{V}(Y)$.\\\\
+\(\mathbb{E}X = \sum\limits_{k \in X(\Omega)}^\cdot k \cdot \mathbb{P}(X=k) \Rightarrow 1 \cdot \mathbb{P}(X=1)+2\cdot \mathbb{P}(X=2)=\sfrac{7}{10}+2\cdot \sfrac{3}{10}=\sfrac{13}{10}=1,3\\\\
+\mathbb{E}Y = \sum\limits_{k \in Y(\Omega)}^\cdot k \cdot \mathbb{P}(Y=k) \Rightarrow 1 \cdot \mathbb{P}(Y=1)+2\cdot \mathbb{P}(Y=2)+3 \cdot \mathbb{P}(Y=3)+4\cdot \mathbb{P}(Y=4)\\
+=\sfrac{1}{10}+2\cdot \sfrac{1}{5}+3\cdot\sfrac{2}{5}+ 4\cdot\sfrac{3}{10}= \sfrac{1}{10}+\sfrac{4}{10}+\sfrac{12}{10}+ \sfrac{12}{10} = \sfrac{29}{10}=2,9\\\\
+\mathbb{V}X= \mathbb{E}[X^2]-\mathbb{E}[X]^2= 1,9-1,69=0,21\\
+\textcolor{gray}{\text{NR: }\mathbb{E}[X^2]=1^2 \cdot \mathbb{P}(X=1)+2^2\cdot \mathbb{P}(X=2)=\sfrac{7}{10}+4\cdot \sfrac{3}{10}=\sfrac{19}{10}=1,9}\\
+\textcolor{gray}{\mathbb{E}[X]^2= 1,3^2=1,69}\\\\
+\mathbb{V}Y=\mathbb{E}[Y^2]-\mathbb{E}[Y]^2= 9,3-8,41=0,89\\
+\textcolor{gray}{\text{NR: } \mathbb{E}[Y^2] = 1^2\cdot \mathbb{P}(Y=1)+2^2\cdot \mathbb{P}(Y=2)+3^2\cdot\mathbb{P}(Y=3)+4^2\cdot\mathbb{P}(Y=4)}\\
+\textcolor{gray}{=\sfrac{1}{10}+4\cdot \sfrac{1}{5}+9\cdot \sfrac{2}{5}+16\cdot\sfrac{3}{10}=\sfrac{1}{10}+\sfrac{8}{10}+\sfrac{36}{10}+\sfrac{48}{10}=\sfrac{93}{10}=9,3}\\
+\textcolor{gray}{\mathbb{E}[Y]^2=2,9^2=8,41}\)
+\subsection{Chuck a luck}
+Bei diesem Würfelspiel setzt ein Spieler 1 Euro gegen die Bank: Der Spieler wählt eine Zahl $a$ zwischen 1 und 6 und würfelt mit drei Würfeln. Zeigt keiner der Würfel die Augenzahl $a$, so verliert der Spieler, andernfalls erhält er je Würfel, der $a$ zeigt, einen Euro (seinen Einsatz bekommt er nicht noch extra zurück). Sei $X$ der Gewinn des Spielers bei einem solchen Spiel.\\\\
+(a) Berechnen Sie $p_X$ und $\mathbb{E}X$.\\\\
+\(p_X:= a^{X+1}\cdot (a^c)^{3-(X+1)}\cdot \binom{3}{X+1}\\
+p_{-1}=(a^c)^3\cdot \binom{3}{0}=(\frac{5}{6})^3\cdot \binom{3}{0}=\frac{125}{216}\\
+p_0=a\cdot (a^c)^2\cdot\binom{3}{1}=\frac{1}{6}\cdot (\frac{5}{6})^2\cdot\binom{3}{1}=3\cdot\frac{25}{216}=\frac{75}{216}\\
+p_1=a^2\cdot a^c \cdot \binom{3}{2}=(\frac{1}{6})^2\cdot \frac{5}{6}\cdot \binom{3}{2}=3\cdot \frac{5}{216}= \frac{15}{216}\\
+p_2=a^3\cdot \binom{3}{3}=(\frac{1}{6})^3\cdot \binom{3}{3}=\frac{1}{216}\\\\
+\mathbb{E}X = \sum\limits_{k \in X(\Omega)}^\cdot k \cdot \mathbb{P}(X=k) \Rightarrow -1\cdot \mathbb{P}(X=-1)+0\cdot \mathbb{P}(X=0)+1\cdot \mathbb{P}(X=1)+2 \cdot \mathbb{P}(X=2)\\
+=-\frac{125}{216}+0+\frac{15}{215}+\frac{2}{216}=-\frac{108}{216}\approx -0,5\)\\\\
+(b) Ist das Spiel fair? Wenn nein, wie hoch müsste der Einsatz sein, damit das Spiel fair wird?\\
+\textit{Ein Spiel wird als fair bezeichnet, der erwartete Gewinn null ist.}\\\\
+Das Spiel ist nicht fair, da der erwartete Gewinn bei $-50 ct$ liegt.\\\\
+Für einen erwarteten Gewinn von Null stellen wir folgende Formel für $(b=Einsatz)$ auf:\\
+\(-b\cdot\frac{125}{216}+(1-b)\cdot\frac{75}{215}+(2-b)\cdot \frac{15}{216}+(3-b)\cdot\frac{1}{216}=0\\
+\frac{-125b}{216}+\frac{75-75b}{216}+\frac{30-15b}{216}+\frac{3-b}{216}=0 \\
+\frac{108-216b}{216}=0\\
+108=216b\\
+0,5=b\\\)
+Mit einem Einsatz von $50ct$ haben wir ein faires Spiel.
+\clearpage
+\noindent\subsection{}
+Berechnen Sie für $p\in(0,1)$
+\[\lim\limits_{n\to\infty}\sum\limits^n_{k=1}\binom{n-1}{k-1}(1-p)^{n-k}p^k\]
+ohne den Binomischen Lehrsatz zu verwenden.\\\\
+Allgemein gilt: $\binom{n}{k} = \frac{n!}{k! \cdot (n-k)!} \Rightarrow \binom{n - 1}{k - 1} = \frac{(n-1)!}{(k-1)!\cdot ((n-1)-(k-1))!}=\frac{(n-1)!}{(k-1)!\cdot(n-1-k+1)!}=\frac{(n - 1)!}{(k - 1)! \cdot (n - k)!}$\\\\
+$\Rightarrow \lim\limits_{n \to \infty} \sum\limits_{k = 1}^{n} \frac{(n - 1)!}{(k - 1)! \cdot (n - k)!} \cdot (1 - p)^{n - k} \cdot p^k$\\\\
+Wir substituieren $k = i + 1$:\\
+$\Rightarrow \lim\limits_{n \to \infty} \sum\limits_{i = 0}^{n - 1} \frac{(n - 1)!}{i! \cdot ((n - (i + 1)!} \cdot (1 - p)^{n - (i + 1)} \cdot p^{i + 1}$\\
+$= \lim\limits_{n \to \infty} p \cdot \sum\limits_{i = 0}^{n - 1} \frac{(n - 1)!}{i! \cdot ((n - 1) - i)!} \cdot (1 - p)^{n - i - 1} \cdot p^i$\\
+$\Rightarrow \sum\limits^{n-1}_{i=0}\frac{(n-1)!}{i!\cdot((n-1)-i)!}=\sum\limits_{i = 0}^{n - 1} \binom{n - 1}{i}$ ist die Summe aller Wahrscheinlichkeiten einer Binomialverteilung und ist immer $= 1$.\\\\
+Daher gilt:\\
+$\Rightarrow \sum\limits_{i = 0}^{n - 1} \binom{n - 1}{i} = 1$\\
+$\Rightarrow \lim\limits_{n \to \infty} p \cdot \sum\limits_{i = 0}^{n - 1} \binom{n - 1}{i} \cdot (1 - p)^{n - i - 1} \cdot p^i$\\
+$\Rightarrow \lim\limits_{n\to\infty} p \cdot 1 \cdot (1 - p)^{n - i - 1} \cdot p^i$\\
+$= \lim\limits_{n \to \infty} p \cdot 1 = p$\\\\
+Die Rücksubstitution ist hier nicht mehr notwendig, da wir keine i's mehr im Ergebnisterm haben.
+\subsection{Poissonverteilung}
+Seien $X\sim Poi(\lambda)$ und $Y\sim Poi(\mu)$ unabhängig. Berechnen Sie $\mathbb{E} [\frac{1}{1+X+Y}]$.\\\\
+\(\textcolor{gray}{Z=X+Y \sim Poi(c) \text{ mit }c:=\lambda + \mu} \\
+\mathbb{E}[\frac{1}{1+Z}]= \sum\limits_{Z\in Z(\Omega)} \frac{1}{1+Z} \cdot \mathbb{P}(\mathbb{Z}= \cdot) = \sum\limits_{k=0}^\infty \frac{1}{1+k} \cdot \frac{c^k}{k!}e^{-c} = e^{-c} \sum\limits^\infty_{k=0} \frac{c^k}{(k+1)!}\cdot \frac{c}{c}= \frac{e^{-c}}{c}\sum\limits^\infty_{k=0}\frac{c^{k+1}}{(k+1)!}= \frac{e^{-c}}{c}\sum\limits^\infty_{k=1}\frac{c^k}{k!}= \frac{e^{-c}}{c}\left(\sum\limits^\infty_{k=1}\frac{c^k}{k!}+\frac{c^0}{0!}\cdot\frac{c^0}{0!}\right) = \frac{e^{-c}}{c}\left(\sum\limits^\infty_{k=0}\frac{c^k}{k!}-1\right)=\frac{e^{-c}}{c}(e^c-1)=\frac{1-e^{-c}}{c}=\frac{1-e^{\lambda+\mu}}{\lambda+\mu}\\
+\\
+\)
+\clearpage
+\noindent\subsection{Geometrische Verteilung \textit{KLAUSURAUFGABE!!!}}
+Seien $S\sim Geom(p)$ und $T \sim Geom(q)$ unabhängig mit $0 < p,q \leq 1$. Sei $U$ das Minimum der beiden, also $U(\omega) = min\{S(\omega),T(\omega)\}$. Berechnen Sie $\mathbb{E}[U]$.\\\\
+$S \sim \text{Geom}(p), \quad T \sim \text{Geom}(q), \quad \text{mit} \quad P(S, T) = P(S) \cdot P(T).$\\\\
+$S\sim Geom(p)\Rightarrow\mathbb{P}(S=\omega)=(1-p)^{\omega-1}\cdot p\\
+\hspace*{2,1cm}\Rightarrow\mathbb{P}(S>\omega)=(1-p)^\omega$\\
+$T\sim Geom(q)\Rightarrow\mathbb{P}(T=\omega)=(1-q)^{\omega-1}\cdot q\\
+\hspace*{2,1cm}\Rightarrow\mathbb{P}(T>\omega)=(1-q)^\omega$\\\\
+\(U(\omega)=min\{S(\omega),T(\omega)\}\\
+\mathbb{P}(U=\omega)= \mathbb{P}(S=\omega,T>\omega)+\mathbb{P}(S>\omega,T=\omega)+\mathbb{P}(S=\omega,T=\omega)\\
+=\mathbb{P}(S=\omega)\cdot \mathbb{P}(T>\omega)+\mathbb{P}(S>\omega)\cdot\mathbb{P}(T=\omega)+\mathbb{P}(S=\omega)\cdot\mathbb{P}(T=\omega)\\
+= (1-p)^{\omega-1}\cdot p\cdot(1-q)^\omega+ (1-q)^{\omega-1}\cdot q\cdot(1-p)^\omega+(1-p)^{\omega-1}\cdot p\cdot(1-q)^{\omega-1}\cdot q\\
+= (1-p)^{\omega-1}\cdot p\cdot(1-q)^{\omega-1} \cdot (1-q)+ (1-q)^{\omega-1}\cdot q\cdot(1-p)^{\omega-1} \cdot (1-p)+(1-p)^{\omega-1}\cdot p\cdot(1-q)^{\omega-1}\cdot q\\
+= ((1-p)\cdot (1-q))^{\omega-1}\cdot p\cdot(1-q)+ ((1-p)\cdot (1-q))^{\omega-1}\cdot q \cdot (1-p)+((1-p)\cdot (1-q))^{\omega-1}\cdot p\cdot q\\
+= ((1-p)\cdot (1-q))^{\omega-1}\cdot (q \cdot (1-p)+q \cdot (1-p)+p\cdot q)\\
+= (1-p-q+pq)^{\omega-1}\cdot(p-pq+q-pq+pq)\\
+= (1-(p+q-pq))^{\omega-1}\cdot (p+q-pq) \Rightarrow\) Geometrische Reihe\\\\
+$\mathbb{E}(\text{Geometrische Reihe})=\frac{1}{p}$\\
+\hspace*{2.1cm} $\Rightarrow p\ \hat{=}\ p+q-pq \Rightarrow \mathbb{E}(U)=\frac{1}{p+q-pq}$
+\end{document}

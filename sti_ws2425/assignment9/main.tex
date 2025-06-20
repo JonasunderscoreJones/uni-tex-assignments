@@ -1,0 +1,173 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Stochastik für die Informatik\\Wintersemester 2024/2025}
+\chead{\bfseries{Übungsblatt 9}\\}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+\begin{document}
+\setcounter{section}{9}
+\subsection{}
+Seine $Y_1,Y_2,\dots$ unabhängig und Poisson-verteilt mit Parameter $\lambda>0$. Sei
+\[X_k := \begin{cases}
+    1 & \text{falls } Y_k \geq 1\\
+    0 & \text{sonst.}
+\end{cases}\]\\
+Bestimmen Sie (mit Begründung)
+\[\lim\limits_{n\to\infty} \frac{1}{n} \sum\limits^n_{k=1}X_k.\]\\
+Aus der gegebenen Verteilung wissen wir, dass nur $X_k=1$ oder $X_k=0$ möglich sind (analog zu Indikatorfunktion)\\
+\(\mathbb{P}(X_k=0)=\mathbb{P}(Y_k<1)=\mathbb{P}(Y_k=0)=e^{-\lambda}\)\\
+\(\mathbb{P}(X_k=1)=\mathbb{P}(Y_k\geq 1)=1-\mathbb{P}(Y_k=0)=1-\frac{e^{-\lambda}\cdot\lambda^0}{0!}=1-e^{-\lambda}\)\\\\
+Nach dem Gesetz der großeb Zahlen konvergiert die Summe $\lim\limits_{n\to\infty}\frac{1}{n}\sum\limits^n_{k=1}X_k$ gegen den Erwartungswert von $X_k$.\\\\
+Erwartungswert:\\
+\(\mathbb{E}[X_k]=\sum\limits_{i \in X(\Omega)}i\cdot \mathbb{P}(X_k=i)=0\cdot \mathbb{P}(X_k=0)+1\cdot \mathbb{P}(X_k=1)=\mathbb{P}(X_k=1)=1-e^{-\lambda}\)\\\\
+Es gilt also: \(\lim\limits_{n\to\infty} \frac{1}{n} \sum\limits^n_{k=1}X_k\)
+\subsection{}
+Auf seinem Weg zur Arbeit muss Herr Mustermann jeden morgen erst auf den Zug und später nochmal auf einen Bus warten. Die Wartezeiten auf den Zug beziehungsweise Bus sind unabhängig von einander und exponentialverteilt mit Parametern $\lambda_1$ und $\lambda_2$, wobei $\lambda_1 \neq \lambda_2$ ist. Bestimmen Sie die Verteilungsfunktion der Gesamtwartezeit sowie den Erwartungswert der kürzeren Wartezeit.\\
+\textit{Hinweis}: Sie dürfen die Faltungsformel für stetige Zufallsvariablen mit Dichte verwenden, die besagt, dass die Dichte der Summe von zwei unabhängigen Zufallsvariablen $X$ und $Y$ gegeben ist durch\\
+\[f_{X+Y}(z) = \int_\mathbb{R} f_X(x)f_Y(z-x)dx\]\\
+Wir bestimmen $X$ und $Y$ als Variablen für die Wartezeit von Bus / Bahn, $Z := X+Y$. Gesucht ist die Verteilung von Z.\\\\
+\(f_Z(z) = f_{X+Y}(z)=\int_\mathbb{R}f_X(x)f_Y(z-x)dx\)\\\\
+\(\int^0_{-\infty}f_X(x)f_Y(z-x)dx+\int^\infty_0f_X(x)f_Y(z-x)dx\)\\
+\textcolor{gray}{NR: $\int^0_{-\infty}f_X(x)f_Y(z-x)dx = 0 \Rightarrow f_Z(z)=0$ für $u \leq 0$}\\
+\(\int^\infty_0f_X(x)f_Y(z-x)dx+0=\int^\infty_0\lambda_1e^{-\lambda_2x}\lambda_2e^{-\lambda_2(z-x)}dx=\lambda_1\lambda_2e^{-\lambda_2z}\int^z_0e^{-\lambda_1x}e^{\lambda_2x}dx\)\\
+\textcolor{gray}{NR: $e^{-\lambda_2(z-x)}=e^{-\lambda_2z}e^{(-\lambda) (-x)}\quad e^{(-\lambda)(-x)}=e^{\lambda_2x}$}\\
+\(\lambda_1\lambda_2e^{-\lambda_2z}\int^z_0e^{x(\lambda_2-\lambda_1)}dx=\lambda_1\lambda_2e^{-\lambda_2z}\left[\frac{1}{\lambda_2-\lambda_1}\cdot e^{x(\lambda_2-\lambda_1}\right]^z_0=\lambda_1\lambda_2e^{-\lambda_2z}\left(\frac{1}{\lambda_2-\lambda_1}\cdot e^{z(\lambda_2-\lambda_1)}-\frac{1}{\lambda_2-\lambda1}\right)\)\\
+\(\frac{\lambda_1\lambda_2}{\lambda_2-\lambda_1}\cdot e^{-\lambda_2z}\left(e^{z(\lambda_2-\lambda_1)}-1\right)=\frac{\lambda_1\lambda_2}{\lambda_2-\lambda_1}\left(e^{-\lambda_1z}-e^{-\lambda_2z}\right)\) für $z>0$\\\\
+Verteilungsfunktion:\\\\
+\(F_Z(x)=\int^z_{-\infty}f_Z(x)dx=\frac{\lambda_1\lambda_2}{\lambda_2-\lambda_1}\int^z_0e^{-\lambda_1x}-e^{-\lambda_2x}dx\)\\
+\(=\frac{\lambda_1\lambda_2}{\lambda_2-\lambda_1}\left[-\frac{1}{\lambda_1}\cdot e^{-\lambda_1x}-\left(-\frac{1}{\lambda_2}\cdot e^{-\lambda_2x}\right)\right]^z_0=\frac{\lambda_1\lambda_2}{\lambda_2-\lambda_1}\cdot\left(-\frac{1}{\lambda_1}\cdot e^{-\lambda_1z}-\left(-\frac{1}{\lambda_2}\cdot e^{-\lambda_2z}\right)-\left(\frac{1}{\lambda_1}-\frac{1}{\lambda_2}\right)\right)\)\\
+\(=\frac{\lambda_2}{\lambda_2-\lambda_1}\cdot \left(-\frac{\lambda_1}{\lambda_1}\cdot e^{-\lambda_1z}\right)+\frac{\lambda_1}{\lambda_2-\lambda_1}\cdot \left(\frac{\lambda_2}{\lambda_2}\cdot e^{-\lambda_2z}\right)-\frac{\lambda_2}{\lambda_2-\lambda_1}-\frac{\lambda_1}{\lambda_2-\lambda_1}\)\\
+\textcolor{gray}{NR: $-\frac{\lambda_1\lambda_2}{\lambda_2-\lambda_1}\cdot \left(-\frac{1}{\lambda_1}+\frac{1}{\lambda_2}\right)=-\frac{\lambda_2}{\lambda_2-\lambda_1}\cdot(+1)+\left(-\frac{\lambda_1}{\lambda_2-\lambda_1}\right)\cdot(-1)=+\frac{\lambda_2}{\lambda_2-\lambda_1}-\frac{\lambda_1}{\lambda_2-\lambda_1}$}\\
+\(\frac{\lambda_2}{\lambda_2-\lambda_1}\cdot \left(-e^{-\lambda_1z}\right)+\frac{\lambda_1}{\lambda_2-\lambda_1}\cdot \left(e^{-\lambda_2z}-1\right)=\frac{\lambda_1}{\lambda_2-\lambda_1}\cdot\left(e^{-\lambda_2z}-1\right)-\frac{\lambda_2}{\lambda_2-\lambda_1}\cdot \left(e^{-\lambda_1z}-1\right)\)\\\\
+Wir bestimen außerdem $Y:=min\{W_1,W_2\}$ als die kürzere Wartezeit. Wir suchen $\mathbb{E}[Y]$\\
+Verteilungsfunktion von \(Y = \mathbb{P}(Y>y)=\mathbb{P}(W_1>y,W_2>y)=\mathbb{P}(W_1>y)\cdot \mathbb{P}(W_2>y)=e^{-\lambda_1y}\cdot e^{-\lambda_2y}=e^{-(\lambda_1+\lambda_2)y}\Rightarrow F_Y(y)=1-\mathbb{P}(Y>y)=1-e^{-(\lambda_1+\lambda_2)y}\)\\
+$Y$ ist mit Parameter $(\lambda_1+\lambda_2)$ exponentialverteilt $\Rightarrow \mathbb{E}[Y]=\frac{1}{\lambda_1+\lambda_2}$
+\subsection{}
+Die Lebensdauer einer Tischlampe (gegeben in Jahren) ist exponentialverteilt zum Parameter $\lambda > 0$. Die Lebensdauer, einer Badezimmerlampe ist exponentialverteilt zum Parameter $\delta > 0$ und unabhängig von der Lebensdauer der Tischlampe. Bestimmen Sie die Wahrscheinlichkeit, dass die Tischlampe vor der Badezimmerlampe kaputt geht.\\
+\textit{Hinweis}: Bestimmen Sie die gemeinsame Dichte und stellen Sie die gesuchte Wahrscheinlichkeit als Erwartungswert da.\\\\
+\textcolor{gray}{Aus der Vorlesung ist gegeben: \textit{Exponentialverteilung} mit $f(x) = \lambda \cdot e^{- \lambda \cdot x}$}\\
+Wir definieren $X_B \sim Exp(\delta)$ für die Lebensdauer der Badezimmerlampe und analog dazu $X_T \sim Exp(\lambda)$ für die Lebensdauer der Tischlampe.\\\\
+Somit lassen sich die folgenden Dichtefunktionen herleiten:\\\\
+\(f_B(Xx_B) = \begin{cases}
+    0 & \text{für } x_B < 0\\
+    \delta \cdot e^{- \delta \cdot x_B} & \text{für } x_B \geq 0
+\end{cases}\)\\\\
+\(f_T(x_T) = \begin{cases}
+    0 & \text{für } x_T < 0\\
+    \lambda \cdot e^{- \lambda \cdot x_T} & \text{für } x_T \geq 0
+\end{cases}\)\\\\
+Die gemeinsame Dichtefunktion ist dann:\\\\
+\(f(x_B, x_T) = f(x_B) \cdot f(x_T) = \begin{cases}
+    0 & \text{für } x_B, x_T < 0\\
+    \delta \cdot e^{- \delta \cdot x_B} \cdot \lambda \cdot e^{- \lambda \cdot x_T} & \text{für } x_B, x_T \geq 0
+\end{cases}\)\\\\
+Nun können wir die Wahrscheinlichkeit, dass die Lebensdauer der Badezimmerlampe vor der, der Tischlampe endet.\\\\
+$\mathbb{P}(X_B < X_T) = \int\limits_0^\infty \lambda \cdot e^{- \lambda \cdot x_B} \int\limits_{x_B}^{\infty} \delta \cdot e^{- \delta \cdot x_T} dx_B\ dx_T$\\
+$= \int\limits_0^{\infty} \int\limits_{x_B}^{\infty} \lambda \cdot \delta \cdot e^{- \delta \cdot x_B} \cdot e^{- \lambda \cdot x_T} dx_B\ dx_T$\\
+$= \int\limits_0^\infty \delta \cdot e^{- \delta \cdot x_B} \cdot \left[- e^{ - \lambda \cdot x_T}\right]_0^{x_B} dx_B$\\
+$= \int\limits_0^\infty \delta \cdot e^{- \delta \cdot x_B} \left(- e^{- \delta \cdot x_B} - (- e)^{- \lambda \cdot 0}\right) dx_B$\\
+$= \int\limits_0^\infty \delta \cdot e^{- ´\delta \cdot x_B} \cdot \left(- e^{- \lambda \cdot x_B}\right) + \delta \cdot e^{- \delta \cdot x_B} dx_B$\\
+$= \int\limits_0^\infty \delta \cdot e^{- x_B \cdot (\delta + \lambda)} + \delta \cdot e^{- \delta \cdot x_B} dx_B$\\
+$= \left[\frac{\delta}{\lambda + \delta} \cdot e^{- x_B \cdot (\delta + \lambda)} - e^{- \delta + 1}\right]_0^\infty$\\
+$= 0 - \frac{\delta}{\lambda + \delta} + 1$\\
+$= 1 - \frac{\delta}{\lambda + \delta}$
+$= \frac{\delta + \lambda}{\delta + \lambda} - \frac{\delta}{\lambda + \delta}$\\
+$= \frac{\lambda}{\delta + \lambda}$
+\subsection{Unabhängigkeit und Unkorreliertheit}
+Sei eine X und Z unabhängig, $X$ standardnormalverteilt und $Z$ gleichverteilt auf $\{-1, 1\}$. Zeigen Sie, dass $X$ und $Y := ZX$ zwar unkorreliert, jedoch nicht unabhängig sind.\\\\
+\(f_X(t)=\frac{1}{\sqrt{2\pi}}\cdot e^{-\frac{t^2}{2}} \quad f_Z(t)=
+\begin{cases}
+    0 & \text{für }t<-1\\
+    \frac{1}{2} & \text{für } -1\leq t \leq 1\\
+    0 & \text{für } t\geq 1
+\end{cases}\)\\\\
+\(Y:=ZX\)\\\\
+z.Z. $X$ und $Y:=ZX$ sind unkorreliert aber abhängig\\\\
+Korrelation:\\\\
+\(\mathbb{E}[X]\cdot \mathbb{E}[Y]=\mathbb{E}[X]\cdot \mathbb{E}[X\cdot Z]=\mathbb{E}[X]\cdot \mathbb{E}[X]\cdot \mathbb{E}[Z]=0\)\\\\
+\(\mathbb{E}[X\cdot Y]=\mathbb{E}[X\cdot X \cdot Z]=\mathbb{E}[X^2\cdot Z]=\mathbb{E}[X^2\cdot Z_{\{Z=+1\}}]+\mathbb{E}[X^2\cdot Z_{\{Z=-1\}}]=\frac{1}{2}\cdot\mathbb{E}[X^2]-\frac{1}{2}\cdot \mathbb{E}[X^2]=0\)\\
+\textcolor{gray}{NR: \(\mathbb{E}[Z_{\{Z=\pm 1\}}]=\begin{cases}
+    1 & \text{für } Z=\pm 1\\
+    0 & \text{sonst.}
+\end{cases}\)}\\\\
+Abhängigkeit:\\\\
+Da $Y:=ZX$ und $Z\in \{-1,1\}:$\\
+\(Y = \begin{cases}
+    X & \text{falls } Z=1\\
+    -X & \text{falls } Z=-1
+\end{cases}\)\\\\
+\(\mathbb{P}(Y=X\vert X=x)=\frac{1}{2}, \quad \mathbb{P}(Y=-X\vert X=x)=\frac{1}{2}\)\\
+\(\mathbb{P}(Y=X\vert X=x) \neq \mathbb{P}(Y=y)\)\\\\
+Für \(X=0\Rightarrow Y=0 \Rightarrow \) gemeinsame Verteilung kann unter gegebenen Bedingungen nicht skizziert werden $\Rightarrow$ abhängig.
+\subsection{}
+Maria wirft an jedem Werktag eine faire Münze. Falls die Münze Kopf zeigt, geht sie in die Mensa zum Mittagessen, sonst nicht. Falls sie in die Mensa geht, wirft sie einen fairen Würfel, und falls der Würfel 6 zeigt, isst sie Pizza zum Mittagessen, sonst nicht. Berechnen Sie die Wahrscheinlichkeit des folgenden Ereignis mit einer geeinigten Approximation:\\
+Maria isst an weniger als 6 von 100 aufeinanderfolgenden Werktagen Pizza zum Mittagessen in der Mensa.
+Verwenden Sie keine 1/2-Korrektur. Begründen Sie, dass die Approximation gut ist.\\\\
+Wir definieren:\\
+$M$: Münze zeigt Kopf \hspace*{1cm}$W$: Würfel zeigt 6 \hspace*{1cm}$X$: $M$ und $W$ $\Rightarrow$ Maria isst Pizza\\\\
+\(M/\Omega):=\{0,1\} \quad \mathbb{P}(M=1)=\frac{1}{2}\)\\\\
+\(W(\Omega):= \{1,2,3,4,5,6\}\quad \mathbb{P}(W=6)=\frac{1}{6}\)\\\\
+\(X(\Omega):=\{0,1\}\quad \mathbb{P}(X=1)=\mathbb{P}(M=1)\cdot \mathbb{P}(W=6)=\frac{1}{2}\cdot \frac{1}{6}=\frac{1}{12}\)\\\\
+\(Y \sim Bin\left(100,\frac{1}{2}\right)\): Menge an Pizzen pro 100 Tage\\\\
+\(n=100, p=\frac{1}{12}, (1-p)=\frac{11}{12}\)\\\\
+Wir bestimmen für $\mathbb{P}(a \leq z \leq b)$ den Intervall $[0,5]$, da wir $\mathbb{P}(z<6)$ suchen $\Rightarrow \mathbb{P}(0 \leq z \leq 5)$\\\\
+\(\mathbb{P}(0\leq z \leq 5) \approx \phi_{0,1}\left(\frac{b-np}{\sqrt{np(1-p)}}\right)-\phi_{0,1}\left(\frac{a-np}{\sqrt{np(1-p)}}\right)= \phi_{0,1}\left(\frac{5-\frac{100}{12}}{\sqrt{\frac{100}{12}\cdot \frac{11}{12}}}\right)-\phi_{0,1}\left(\frac{0-\frac{100}{12}}{\sqrt{\frac{100}{12}\cdot \frac{11}{12}}}\right)\)\\\\
+\(\approx \phi_{0,1}\left(\frac{-3,\overline{3}}{2,7638}\right)-\phi_{0,1}\left(\frac{-8,\overline{3}}{2,7638}\right)= \phi_{0,1}(-1,2061)-\phi_{0,1}(-3,0152)= (1-\phi_{0,1}(-1,2061))-(1-\phi_{0,1}(-3,0152))\)\\
+\textcolor{gray}{NR: $\phi_{0,1}(-1,2061)=0,88493 \quad \phi_{0,1}(-3,0152) = 0,99869$}\\
+\((1-0,88493)-(1-0,99869)=0,11507-0,00131 = 0,11376 \approx 11,4\%\)\\\\
+Wir können Approximation nutzen, da $np\geq 5$ und $n(1-p)\geq 5$ erfüllt sind: $\frac{100}{12}=8,\overline{3} \geq 5,\, \frac{1100}{12}=91,\overline{6}\geq 5$
+\end{document}
+Sitze jetzt in Winterjacke auf der Terasse mit laptop, hope this helps...
+schau aber, dass du jetzt nicht noch krank wirst, sie ist es echt nicht wert, dass du wegen so einem scheiß den urlaub krank bist
+
+ja ich geh wieder rein wenns mir besser geht und kalt isses momentan nicht, meine Winterjacke hält gut warm, im good
+
+frage mich echt, was dieses mädel denkt
+bzw ob sie überhaupt denkt

@@ -1,0 +1,130 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Stochastik für die Informatik\\Wintersemester 2024/2025}
+\chead{\bfseries{Übungsblatt 3}\\}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+
+\begin{document}
+\setcounter{section}{4}
+\subsection{}
+Es seien $X$ und $Y$ zwei Zufallsvariablen mit gemeinsamer Verteilung $p_{X,Y}$ gegeben durch\\
+\begin{table}[ht]
+\centering
+\begin{tabular}{c|c c c c}
+\diagbox{x}{y} & 1 & 2 & 3 & 4 \\ \hline
+1 & $\sfrac{2}{8}$ & 0 & $\sfrac{1}{4}$ & $\sfrac{1}{8}$ \\
+4 & 0 & $\sfrac{1}{8}$ & $\sfrac{1}{4}$ & 0 \\
+\end{tabular}
+\end{table}\\
+Berechnen Sie die Wahrscheinlichkeit der folgenden Ereignisse
+\begin{center}
+  \hfill (a) $X = Y$, \hfill (b) $X \leq Y$, \hfill (c) $X < Y$, \hfill (d) $Y + X$ ist gerade. \hfill
+\end{center}
+Bestimmen und skizzieren Sie die Verteilungsfunktion der Zufallsvariablen $Z := X \cdot Y$.
+\subsubsection*{(a) $X = Y$}
+$\mathbb{X = Y} = \mathbb{P}(X = Y = 1) + \mathbb{P}(X = Y = 2) = \frac{2}{8} + \frac{1}{8} = \frac{3}{8}$
+\subsubsection*{(b) $X \leq Y$}
+$\mathbb{P}(X \leq Y) = \mathbb{P}(X = Y = 1) + \mathbb{P}((X = 1) \cap (Y = 1)) + \mathbb{P}(X = Y = 2) + \mathbb{P}((X = 1) \cap (Y = 1)) + \\
+\mathbb{P}((X = 1) \cap (Y = 3)) + \mathbb{P}((X = 2) \cap (Y = 3)) + \mathbb{P}((X = 1) \cap (Y = 4)) + \mathbb{P}((X = 2) \cap (Y = 3)) + \\
+\mathbb{P}((X = 2) \cap (Y = 4)) = \frac{2}{8} + 0 + \frac{1}{8} + \frac{1}{4} + \frac{1}{4} + \frac{1}{8} + 0 = 1$
+\subsubsection*{(c) $X < Y$}
+$\mathbb{P}(X < Y) = \mathbb{P}(X \leq Y) - \mathbb{X = Y = 1} - \mathbb{P}(X = Y = 2) = 1 - \frac{2}{8} - \frac{1}{8} = \frac{5}{8}$
+\subsubsection*{(d) $Y + X$}
+$\mathbb{P}((X + Y) \mod 2 = 0) = \mathbb{P}(X = Y = 1) + \mathbb{P}(X = Y = 2) + \mathbb{P}((X = 1) \cap (Y = 3)) +\\
+\mathbb{P}((X = 2) \cap (Y = 4)) = \frac{2}{8} + \frac{1}{8} + \frac{1}{4} + 0 = \frac{5}{8}$
+\subsection{}
+Ein Flugzeug auf der Langstrecke von Berlin nach New York habe 298 Sitzplätze. Typischerweise erscheinen von den Personen, die einen Flug auf dieser Strecke buchen, etwa 3\% nicht rechtzeitig.\\
+Angenommen alle Plätze seien gebucht.\\\\
+(a) Wie groß ist die Wahrscheinlichkeit, dass höchstens 2, 5 oder 10 Plätze nicht besetzt sind?\\\\
+\(\sum\limits^x_{k=0} (0,03)^k\cdot (0,97)^{298-k} \cdot \binom{298}{k}\\
+\text{für }x=2 :\sum\limits^2_{k=0} (0,03)^k\cdot (0,97)^{298-k} \cdot \binom{298}{k} \approx 0,006005 \approx 0,6\%\\\\
+\text{für }x=5 :\sum\limits^5_{k=0} (0,03)^k\cdot (0,97)^{298-k} \cdot \binom{298}{k} \approx 0,115669 \approx 11,6\%\\\\
+\text{für }x=10 :\sum\limits^{10}_{k=0} (0,03)^k\cdot (0,97)^{298-k} \cdot \binom{298}{k} \approx 0,715004 \approx 71,5\%\)
+\clearpage 
+\noindent(b) Um mit weniger leeren Plätzen zu fliegen, möchte die Fluggesellschaft mehr Buchungen als zur Verfügung stehende Plätze zulassen. Wieviele zusätzliche Tickets kann sie verkaufen, sodass mit einer Wahrscheinlichkeit von mindestens 95\% alle erscheinenden Passagiere mitfliegen können?\\
+$Hinweis$: Schauen sie sich die Verteilungsfunktion für verschiedene Anzahlen von Buchungen an.\\\\
+Aus Aufgabe 2.a  haben wir zwar die Wahrscheinlichkeiten für 2, 5 und 10 fehlende Passagiere gegeben, hier benötigen wir jedoch nicht die Wahrscheinlichkeit, dass höchstens $x$ Passagiere bei 298 Tickets fehlen, sondern, dass genau die Anzahl an Leuten fehlt, für die zu viele Tickets verkauft wurden.\\
+Wir wissen, dass bei 298 verkauften Tickets die Wahrscheinlichkeiten zwischen 2 und 5 fehlenden Passagieren für unsere Fragestellung gut in Betracht kommen könnten. Da wir die höchste Anzahl an Tickets suchen, die verkauft werden können und mit einer Wahrscheinlichkeit von mindestens 95\% alle Passagiere, die pünktlich erschienen sind mitfliegen sollen, beginnen wir mit 4 Tickets zu viel.
+Dafür berechnen wir:\\\\
+Für 4 Tickets zu viel ziehen wir alle Möglichkeiten ab, die nicht eintreten dürfen, also, dass höchstens 3 Leute zu spät kommen:\\
+\(1-\sum\limits^3_{k=0}(0,03)^k\cdot (0,97)^{301-k} \cdot \binom{301}{k} \approx 0.980535 \geq 95\%\)\\\\
+Die Wahrscheinlichkeit bei 4 Tickets zu viel liegt bei über 95\%, wir berechnen aber trotzdem noch die Wahrscheinlichkeit für 5 Tickets zu viel, da wir die maximale Anzahl an mehrverkäuflichen Tickets suchen:
+\(1 -\sum\limits^4_{k=0}(0,03)^k\cdot (0,97)^{302-k} \cdot \binom{302}{k} \approx 0.949502 \leq 95\%\)\\\\
+Die Fluggesellschaft kann vier weitere Tickets verkaufen und mit einer Wahrscheinlichkeit von über 95\% können alle Passagiere, die erscheinen auch mitfliegen.
+\subsection{}
+Die Anzahl der Studierenden, die eine Sprechstunde für Stochastik für Informatiker besuchen, ist poissonverteilt mit Parameter $\lambda > 0$. Diese Studierende studieren jeweils mit Wahrscheinlichkeit $p$ unabhängig voneinander Informatik, wobei $p \in (0, 1)$.\\\\
+(a) Bestimmen Sie die Wahrscheinlichkeit, dass genau $k$ Informatikstudierende zur Sprechstunde kommen, falls insgesamt $n$ Studierende zur Sprechstunde kommen, für $k, n \in \mathbb{N}_0$.\\\\
+X ist die Anzahl an Studierenden in der Sprechstunde\\
+Y ist die Anzahl der Studierenden, welche die Sprechstunde besuchen, Poisson-verteilt\\
+Aus der Vorlesung ist bekannt, dass $\mathbb{P}(Y = n) = \frac{\lambda^n}{n!}\cdot e^{-\lambda}$\\
+Analog gilt $\mathbb{P}(X = k) = \frac{\lambda^k}{k!}\cdot e^{-\lambda}$\\
+Außerdem gilt aus der Vorlesung: $\mathbb{P}(X = k\ |\ Y = n) = \binom{n}{p} \cdot p^\lambda \cdot (1 - p)^{n - k}$\\
+$\mathbb{P}(X = k\ |\ Y = n) = \frac{\mathbb{P}((X = k) \cap (Y = n))}{\mathbb{P}(Y = n)} = \frac{ \mathbb{P}(Y = n) \cdot \mathbb{P}(X = k\ |\ Y = n)}{\mathbb{P}(Y = n)} = \frac{\sfrac{\lambda^n}{n!}\cdot e^{-\lambda} \cdot \binom{n}{p} \cdot p^\lambda \cdot (1 - p)^{n - k}}{\sfrac{\lambda^n}{n!} \cdot e^{-\lambda}} = \binom{n}{p} \cdot p^\lambda \cdot (1 - p)^{n - k}$\\
+Daraus folgt dann:\\
+$\mathbb{P}(X = k\ |\ Y = n) =
+\begin{cases}
+    \text{$\binom{n}{p} \cdot p^\lambda \cdot (1 - p)^{n - k}$} & \text{, } k \leq n \\
+    \text{0} & \text{, } k > n
+\end{cases}$\\
+Das liegt daran, dass das Ergebnis nur Sinn ergibt, wenn $k \leq n$ ist, weil nicht mehr Studenten Die Sprechstunde besuchen, als in der Sprechstunde sein können. Die Wahrscheinlichkeit für  $k > n$ ist daher 0.
+\\\\
+(b) Wie ist die Anzahl der Informatikstudierenden bei der Sprechstunde verteilt? Geben Sie die Verteilung dieser Zufallsvariable explizit an.
+\subsection{Zipf-Verteilung}
+In einem Land gibt es abzählbar unendlich viele Städte die durchnummeriert sind mit den Zahlen {1,2,3...}. Die Wahrscheinlichkeit, dass ein zufällig ausgewählter Bewohner des Landes in Stadt $k$ lebt, sei gegeben durch $\frac{k-2}{\sfrac{\pi^2}{6}}$.\\\\
+(a) Berechnen Sie die Wahrscheinlichkeit, dass ein zufällig ausgewählter Bewohner in einer der Städte {5,6,7,8,...} lebt.\\
+X ist die Stadt in der der zufällig ausgewählte Bewohner lebt.
+$\mathbb{P}(X \geq 5) = 1 - \mathbb{P}(X \leq 4)$\\
+$\mathbb{P}(X \leq 4) = \sum^4_{k=1} \frac{k^{-2}}{\sfrac{\pi^2}{6}} = \frac{205}{24 \cdot \pi^2}$\\
+$\Rightarrow{} \mathbb{P}(X \geq 5) = 1 - \mathbb{P}(X \leq 4) = 1 - \frac{205}{24 \cdot \pi^2} \approx 0.1345$\\
+Die Wahrscheinlichkeit, dass ein zufällig ausgewählter Bewohner in einer der Städte 5,6,7,8,... lebt, liegt bei 13.45\%.\\\\
+(b) Berechnen Sie die Wahrscheinlichkeit, dass zwei zufällig und unabhängig voneinander ausgewählte Bewohner in der selben Stadt wohnen.\\\\
+$Hinweis$: Sie können die Gleichungen $\sum^{\infty}_{k=1}k^{-2} = \sfrac{\pi^2}{6} $ und $ \sum^{\infty}_{k=1} k^{-4} = \sfrac{\pi^4}{90}$ verwenden.\\
+Wir definieren X und Y als die Städte in denen die beiden zufällog ausgewählten Bewohner leben.\\\\
+$\mathbb{P}(X = Y) = \mathbb{P}(X = 1, Y = 1) + \mathbb{P}(X = 2, Y =2) + \dots = \sum^\infty_{k=1} \mathbb{P}(X = Y = k) = \sum^\infty_{k=1} \mathbb{P}(X = k) \cdot \mathbb{P}(Y = k) = \sum^\infty_{k=1} \left(\frac{k^{-2}}{\sfrac{\pi^2}{6}}\right)^2 = \sum^\infty_{k=1} \left(\frac{6}{\pi^2 k^2}\right)^2 = \sum^\infty_{k=1} \frac{36}{\pi^4k^4} = \frac{36}{\pi^4} \cdot \sum^\infty_{k=1} k^{-4} = \frac{36}{\pi^4} \cot \frac{\pi^4}{90} = \frac{36}{90} = \frac{2}{5}$
+\end{document}

@@ -1,0 +1,280 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Stochastik für die Informatik\\Wintersemester 2024/2025}
+\chead{\bfseries{Übungsblatt 7}\\}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+\begin{document}
+\setcounter{section}{7}
+\subsection{}
+Gegeben seien zwei Zufallsvariablen $X$ und $Y$ mit $Cov(X, Y ) = \frac{1}{12}$. Vervollständigen Sie die folgende Tabelle:\\\\
+% #9F19E0
+% #E01969
+% #E019E0
+\begin{tabular}{c|c c|c}
+\diagbox{X}{Y} & 0 & 1 & $\mathbb{P}(X=x)$ \\ \hline
+0 & \textcolor[HTML]{DD6BED}{$\sfrac{1}{3}$} & \textcolor[HTML]{FF0046}{$\sfrac{1}{6}$} & \textcolor[HTML]{F56BC1}{$\sfrac{1}{2}$}\\
+1 & \textcolor[HTML]{FF1FB1}{$\sfrac{1}{6}$} & $\sfrac{1}{3}$ & \textcolor[HTML]{B176FA}{$\sfrac{1}{2}$}\\ \hline
+$\mathbb{P}(Y=y)$ & $\sfrac{1}{2}$ & \textcolor[HTML]{7149FF}{$\sfrac{1}{2}$} & \textcolor[HTML]{B800FA}{$1$}\\
+\end{tabular}\\\\\\
+\(\mathbb{P}(Y=\cdot) = \textcolor[HTML]{B800FA}{1}\\\\
+\mathbb{P}(Y=\cdot) = \mathbb{P}(Y=0)+\mathbb{P}(Y=1) = 1 \Rightarrow \mathbb{P}(Y=1)=\mathbb{(Y=\cdot)} - \mathbb{P}(Y=0)= \mathbb{P}(Y=1)\\
+\Rightarrow \mathbb{P}(Y=1)=1-\sfrac{1}{2}=\textcolor[HTML]{7149FF}{\sfrac{1}{2}}\)\\\\
+\(\mathbb{P}(Y=1) = \mathbb{P}(Y=1,X=0)+\mathbb{P}(Y=1,X=1)\Rightarrow \mathbb{P}(Y=1,X=0)=\mathbb{P}(Y=1)-\mathbb{P}((Y=1,X=1)\\
+\Rightarrow \sfrac{1}{2} - \sfrac{1}{3}=\textcolor[HTML]{FF1FB1}{\sfrac{1}{6}}\)\\\\
+\(cov(X,Y)=\mathbb{E}(X\cdot Y)-\mathbb{E}(X)\cdot \mathbb{E}(Y) = \sfrac{1}{12} \Rightarrow \sfrac{1}{12} = \sfrac{1}{2}-\mathbb{E}[Y]\cdot \sfrac{1}{3} \Rightarrow \mathbb{E}[Y]\cdot \sfrac{1}{3} = \sfrac{1}{2}-\sfrac{1}{12} \Rightarrow \mathbb{E}[Y] \cdot \sfrac{1}{3} = \sfrac{4}{12}-\sfrac{1}{12} = \sfrac{1}{4} \Rightarrow \mathbb{E}[X] = \frac{\sfrac{1}{4}}{\sfrac{1}{2}}= \sfrac{1}{2}\\
+\textcolor{gray}{\mathbb{E}(X \cdot Y)= 0\cdot 0 \cdot \mathbb{P}(X=0, Y=0)+ 0 \cdot 1 \cdot \mathbb{P}(X=0,Y=1)+ 1 \cdot 0 \cdot \mathbb{P}(X=1,Y=0)+1 \cdot 1 \cdot \mathbb{P}(X=1,Y=1)=\sfrac{1}{3}}\\
+\textcolor{gray}{\mathbb{E}[X]=0\cdot \mathbb{P}(X=0)+1 \cdot \mathbb{P}(X=1)=\mathbb{P}(X=1)=\sfrac{1}{2}}\\
+\mathbb{E}[Y] = 0 \cdot \mathbb{P}(Y=0)+ 1 \cdot \mathbb{P}(Y=1)=\mathbb{P}(Y=0)=\textcolor[HTML]{B176FA}{\sfrac{1}{2}}\)\\\\
+\(\mathbb{P}(X=\cdot)=\mathbb{P}(X=0)+\mathbb{P}(X=1)=1 \Rightarrow \mathbb{P}(X=0)=\mathbb{P}(X=\cdot)-\mathbb{P}(X=1)=1 \Rightarrow 1- \sfrac{1}{2} = \textcolor[HTML]{F56BC1}{\sfrac{1}{2}}\)\\\\
+\(\mathbb{P}(Y=1)= \mathbb{P}(X=0,Y=1)+\mathbb{P}(X=1,Y=1) \Rightarrow \mathbb{P}(X=0,Y=1)=\mathbb{P}(Y=1)-\mathbb{P}(X=1,Y=1)  \Rightarrow \sfrac{1}{2}-\sfrac{1}{3}= \textcolor[HTML]{FF0046}{\sfrac{1}{6}}\)\\\\
+\(\mathbb{P}(Y=0)= \mathbb{P}(X=0,Y=0)+\mathbb{P}(X=1,Y=0) \Rightarrow \mathbb{P}(X=0,Y=0)=\mathbb{P}(Y=0)-\mathbb{P}(X=1,Y=0)  \Rightarrow \sfrac{1}{2}-\sfrac{1}{6}= \textcolor[HTML]{DD6BED}{\sfrac{1}{3}}\)
+% Randverteilung: \(\mathbb{P}(X = \cdot, Y=\cdot) = \textcolor[HTML]{B800FA}{1}\)\\\\
+% gegeben: \(\mathbb{P}(X=0, Y=\cdot)= \sfrac{1}{2} \Rightarrow \mathbb{P}(X=1, Y=\cdot)=1-\mathbb{P}(X=0,Y=\cdot)=1-\frac{1}{2}=\textcolor[HTML]{7149FF}{\sfrac{1}{2}}\)\\\\
+% \(cov(X,Y) = \mathbb{E}[X\cdot Y] - \mathbb{E}[X]\mathbb{E}[Y]\\
+% \Rightarrow \sfrac{1}{3}-\mathbb{E}[X]\mathbb{E}[Y] = \sfrac{1}{12}\\
+% \Rightarrow \sfrac{4}{12} -\sfrac{1}{12}= \mathbb{E}[X]\mathbb{E}[Y] = \sfrac{3}{12}=\sfrac{1}{4}\\
+% \Rightarrow \mathbb{E}[X] \cdot \sfrac{1}{2} = \sfrac{3}{12}\\
+% \Rightarrow \mathbb{E}[X] = \frac{\sfrac{3}{12}}{\sfrac{1}{2}} = \sfrac{6}{12}=\sfrac{1}{2}\\
+% \Rightarrow \mathbb{P}(X=1)\cdot \sfrac{1}{2}=\sfrac{1}{4}\\
+% \Rightarrow \mathbb{P}(X=1)=\textcolor[HTML]{B176FA}{\sfrac{1}{2}}\)\\\\
+% \(\mathbb{E}[A]=\sum\limits^\cdot_{k\in X(\Omega)}k\cdot \mathbb{P}(A=k)\\
+% \mathbb{E}[X \cdot Y]= 0\cdot \mathbb{P}[X=0, Y=0] + 1 \cdot \mathbb{P}[X=1,Y=1] = \mathbb{P}[X=1,Y=1]=\textcolor[HTML]{DD6BED}{\sfrac{1}{3}}\\
+% \mathbb{E}[X]= 0 \cdot \mathbb{P}(X=0) + 1 \cdot \mathbb{P}(X=1) = \mathbb{P}(X=1)=\sfrac{1}{2}\\
+% \mathbb{P}[Y]= 0 \cdot \mathbb{P}(Y=0)+1\cdot \mathbb{P}(Y=1) = \sfrac{1}{3}\)
+\subsection{Kovarianz}
+Seien X und Z unabhängig mit derselben Verteilung und $Y:= X-Z$. Berechnen Sie $cov(X, Y )$ und $corr(X, Y )$.\\\\
+\(cov(X,Y)=cov(X,X-Z)=cov(X,X) - cov(X,Z) = var(x) - cov(X,Z)\\
+cov((X,Z)=0 \Rightarrow cov(X,Y) = var(X)\)\\\\
+\(corr((X,Y) \frac{cov(X,Y)}{\sqrt{\mathbb{V}(X)\cdot \mathbb{V}(Y)}}\\
+\mathbb{V}(Y)= \mathbb{V}(X-Z) = \mathbb{V}(X) - 2cov(X,Z) + \mathbb{V}(Z) = \mathbb{V}(X) + \mathbb{V}(Z) \quad \textcolor{gray}{\Rightarrow cov(X,Y)=0}\\
+corr(X,Y) = \frac{\mathbb{V}(X)}{\sqrt{\mathbb{V}(X)\cdot (\mathbb{V}(X)+\mathbb{V}(Z))}} = \frac{\mathbb{V}(X)}{\sqrt{\mathbb{V}(X)\cdot \mathbb{V}(X)+ \mathbb{V}(X) \cdot \mathbb{V}(Z))}}=\frac{\mathbb{V}(X)}{\sqrt{\mathbb{V}(X)\cdot \mathbb{V}(X)+ \mathbb{V}(X) \cdot \mathbb{V}(X))}}=\frac{\mathbb{V}(X)}{\sqrt{2 \cdot \mathbb{V}(X)^2}}=\frac{\mathbb{V}(X)}{\mathbb{V}(X)\sqrt{2}}= \frac{1}{\sqrt{2}}\\
+\textcolor{gray}{\mathbb{V}(X)=\mathbb{V}(Z)}\)
+\subsection{Kovarianz}
+Seien $X$, $Y$ und $Z$ Zufallsvariablen auf $(\Omega, P)$ mit positiver Varianz und seien $a, b \in \mathbb{R}$.\\\\
+(a) Zeigen Sie: $cov(aX + bY, Z) = a\, cov(X, Z) + b\,  cov(Y, Z)$.\\\\
+Aus der Vorlesung gilt: $cov(X,Y) = \mathbb{E}[X \cdot Y] - \mathbb{E}[X]\cdot \mathbb{E}[Y]$\\
+$\Rightarrow cov(a \cdot X + b \cdot Y, Z) = \mathbb{E}[(a \cdot X + b \cdot Y) \cdot Z] - \mathbb{E}[a \cdot X + b \cdot Y] \cdot \mathbb{E}[Z]$\\
+Außerdem gilt: $\mathbb{E}[a \cdot X] = a \cdot \mathbb{X}$ und $\mathbb{E}[X + Y] = \mathbb{E}[X] + \mathbb{E}[Y]$\\
+Somit gilt: $\mathbb{E}[a \cdot X + b  \cdot Y] = a \cdot \mathbb{E}[X] + b \cdot \mathbb{E}[Y]$\\
+$\Rightarrow \mathbb{E}[(a \cdot X + b \cdot Y) \cdot Z] = a \cdot \mathbb{E}[X \cdot Z] + b \cdot \mathbb{E}[Y \cdot Z]$\\
+Eingesetzt ergibt das dann:\\
+$\Rightarrow cov(a \cdot X + b \cdot Y, Z) = a \cdot \mathbb{E}[X \cdot Z] - b \cdot \mathbb{E}[Y \cdot Z] - ((a \cdot \mathbb{E}[X] + b \cdot \mathbb{E}[Y]) \cdot \mathbb{E}[Z])$\\
+\hspace*{3.57cm}$= a \cdot \mathbb{E}[X \cdot Z] + b \cdot \mathbb{E}[Y \cdot Z] - a \cdot \mathbb{E}[X] \cdot \mathbb{E}[Z] - b \cdot \mathbb{E}[Y] \cdot \mathbb{E}[Z]$\\
+\hspace*{3.57cm}$= a \cdot \mathbb{E}[X \cdot Z] - a \cdot \mathbb{E}[X] \cdot \mathbb{E}[Z] + b \cdot \mathbb{E}[Y \cdot Z] - b \cdot \mathbb{E}[Y] \cdot \mathbb{E}[Z]$\\
+\hspace*{3.57cm}$= a \cdot (\mathbb{E}[X \cdot Z] - \mathbb{E}[X] \cdot \mathbb{E}[Z]) + b \cdot (\mathbb{E}[Y \cdot Z] - \mathbb{E}[Y] \cdot \mathbb{E}[Z])$\\
+\hspace*{3.57cm}$= a \cdot cov(X, Z) + b \cdot cov(Y, Z)$\\
+\hspace*{3,57cm}$= cov(a \cdot X, b \cdot Z)$
+\\\\
+(b) Zeigen Sie, dass für unabhängige Zufallsavriablen $X$ und $Y$ gilt, dass $\mathbb{E}[XY ] = \mathbb{E}[X]\mathbb{E}[Y ]$\\
+und folgern Sie daraus $cov(X, Y ) = 0$.\\\\
+Aus der Vorlesung wissen wir:\\
+$\mathbb{E}[X] = \int\limits_{-\infty}^\infty t \cdot fx(t)dt$\\
+\(\mathbb{E}[Y] = \int\limits_{-\infty}^\infty t \cdot fy(t)dt\\
+\mathbb{E}[X]\mathbb{E}[Y] = \left(\int\limits_{-\infty}^\infty t \cdot fx(t)dt\right) \cdot \left(\int\limits_{-\infty}^\infty t \cdot fy(t)dt\right)\)\\\\
+\(\mathbb{E}[XY] = \int\limits^\infty_{-\infty}\int\limits^\infty_{-\infty}xy\, f_{X,Y}(x,y)dx\, dy\)\\\\
+Da $X$ und $Y$ unabhängig sind, können wir $f_{X,Y}(x,y)=f_X(x)\, f_Y(y)$\\\\
+\(\mathbb{E}[XY] = \int\limits^\infty_{-\infty}\int\limits^\infty_{-\infty} xy \, f_X (x)\, f_Y\, dx\, dy \Rightarrow \left(\int\limits_{-\infty}^\infty t \cdot fx(t)dt\right) \cdot \left(\int\limits_{-\infty}^\infty t \cdot fy(t)dt\right) = \mathbb{E}[XY]\)\\\\
+\(cov(X,Y)= \mathbb{E}[XY]-\mathbb{E}[X]\mathbb{E}[Y]\)\\
+Wir haben im ersten Schritt bewiesen, dass \(\mathbb{E}[XY]=\mathbb{E}[X]\mathbb{E}[Y]\). Setzen wir dies ein, kommen wir auf:\\
+\(cov(X,Y)=0\)
+\clearpage
+\subsection{Momente der Gleichverteilung}
+Die Zufallsvariablen $U$ sei gleichverteilt auf $[a, b]$, wobei $a, b \in \mathbb{R}, a < b$. Berechnen Sie $\mathbb{E}[U ]$ und
+$\mathbb{E}[U^2]$ und $\mathbb{V}[U]$.\\
+\textit{Hinweis}: Sie sollten die binomische Formel
+\[(a-b)^3= a^3-3a^2b + 3ab^2-b^3\] verwenden.\\\\
+\(f_U(u)=\begin{cases}
+        0 & \text{für } x<a\\
+        \frac{1}{b-a} & \text{für } a \leq x < b\\
+        0 & \text{für } x \geq b\\
+\end{cases}\)\\
+\(\mathbb{P}(a\leq x \leq b)= \int\limits^b_af_x(t)dt, \quad \mathbb{E}[X]= \int\limits^b_a t\cdot f_x(t)dt\)\\
+\(\mathbb{E}[U] = \int\limits^b_a u\cdot f_U(u)du = \int\limits^b_a u\cdot \frac{1}{b-a} du = \frac{1}{b-a}\int^b_a udu  = \frac{1}{b-a}\left[\frac{u^2}{2}\right]^b_a= \frac{(b-a)^2}{2}\cdot \frac{1}{b-a}= \frac{(b-a)\cdot (b+a)}{2}\frac{1}{b-a} = \frac{b-a}{2}\)\\\\
+\(\mathbb{E}[U^2]=\int\limits^b_a u^2 f_U(u)\, du = \int\limits^b_a u^2\cdot \frac{1}{b-a}\, du = \frac{1}{b-a}\left[\frac{u^3}{3}\right]^b_a=\frac{(b-a)^3}{3}\cdot \frac{1}{b-a}= \frac{(b-a)^2}{3} \)\\\\
+\(\mathbb{V}[U]= \mathbb{E}[U]^2-\mathbb{E}[U]^2 = \frac{(b-a)^2}{3} - \left(\frac{1}{b-a}\right)^2=\frac{(b-a)^2}{3} - \frac{1}{(b-a)^2} = \frac{(b-a)^4}{3(b-a)^2}-\frac{3}{3(b-a)^2}=\frac{(b-a)^4-3}{3(b-a)^2}\)
+\subsection{}
+Seien $X$, $Y$, $M$ unabhängige Zufallsvariablen mit $X \sim \mathcal{U}[0, 2]$, $Y \sim\mathcal{U}[2, 4]$ und $M\sim Bern(1/2)$.
+Wir definieren $Z := M\cdot X + (1-M )\cdot Y$.\\\\
+(a) Berechnen Sie die Verteilungsfunktion $F_Z$ und die Dichte $f_Z$ von $Z$ und skizzieren Sie diese.\\\\
+$\Leftrightarrow X \sim \mathcal{U}[0,2]$\\
+$\Leftrightarrow Y \sim \mathcal{U}[2,4]$\\
+$\Leftrightarrow M \sim Bern(1/2)$\\\\
+Wobei $\mathcal{U}$ für die Gleichverteilung und $Bern$ für die Bernoulliverteilung steht,\\
+mit $Z = M \cdot X + (1 - M) \cdot Y$.\\\\
+Aus der Vorlesung kennen wir die allgemeine Funktionsgleichung der Verteilung für eine Gleichverteilung $V \sim U[a,b]$:\\\\
+\(F_V(v)=\begin{cases}
+        0 & \text{für } x<a\\
+        \frac{v - a}{b-a} & \text{für } a \leq x < b\\
+        1 & \text{für } x \geq b\\
+\end{cases}\)
+\clearpage
+\noindent Die Verteilungsfunktionen für $X \sim U[0,2]$ bzw. $Y \sim U[2,4]$ sind dann:\\\\
+\[
+\begin{array}{c}
+F_X(x) = \begin{cases}
+        0 & \text{für } x < 0 \\
+        \frac{x}{2} & \text{für } 0 \leq x < 2 \\
+        1 & \text{für } x \geq 2 \\
+\end{cases} \\
+\end{array}
+\quad
+\begin{array}{c}
+\text{bzw.} \quad
+F_Y(y) = \begin{cases}
+        0 & \text{für } y < 2 \\
+        \frac{y - 2}{2} & \text{für } 2 \leq y < 4 \\
+        1 & \text{für } y \geq 4 \\
+\end{cases}
+\end{array}
+\]\\
+Nun können wir aus der Formel die beiden Fälle von $M \sim Bern(1/2)$ mit jeweils der Wahrscheinlichkeiten $\mathbb{P}(M = 1) = \mathbb{P}(M = 2) = \frac{1}{2}$ entnehmen:\\\\
+$M = 0 \Rightarrow Z = Y \sim U[2,4]$\\
+$M = 1 \Rightarrow Z = X \sim U[0,2]$\\\\
+Somit können wir die beiden Verteilungsfunktionen kombinieren, durch:\\\\
+$F_Z(z) = \frac{1}{2} \cdot F_X(z) + \frac{1}{2} \cdot F_Y(z)$\\\\
+\hspace*{1cm}\(= \frac{1}{2} \cdot \left( \begin{cases}
+        0 & \text{für } z < 0 \\
+        \frac{z}{2} & \text{für } 0 \leq z < 2 \\
+        1 & \text{für } z \geq 2 \\
+\end{cases}\right) + \frac{1}{2} \cdot \left( \begin{cases}
+        0 & \text{für } z < 2 \\
+        \frac{z - 2}{2} & \text{für } 2 \leq z < 4 \\
+        1 & \text{für } z \geq 4 \\
+\end{cases} \right)\)\\\\\\
+\hspace*{1cm}\(= \begin{cases}
+        0 \cdot \frac{1}{2} & \text{für } z < 2 \\
+        \frac{z}{2} \cdot \frac{1}{2} & \text{für } 2 \leq z < 4 \\
+        \frac{z - 2}{2} \cdot \frac{1}{2} & \text{für } 2 \leq z < 4 \\
+        1 \cdot \frac{1}{2} & \text{für } z \geq 4 \\
+\end{cases}\)\\\\\\
+\hspace*{1cm}\(= \begin{cases}
+        0 \cdot & \text{für } z < 0 \\
+        \frac{z}{4} & \text{für } 0 \leq z < 2 \\
+        \frac{z - 2}{4} & \text{für } 2 \leq z < 4 \\
+        1 & \text{für } z \geq 4 \\
+\end{cases}\)\\\\
+Die Dichtefunktion ist die Ableitung der Verteilungsfunktion:\\\\
+$f_Z(z) = F_Z(z) \cdot \frac{d}{dz}$\\\\
+\(\Rightarrow f_Z(z) = F_Z'(z) = \begin{cases}
+        0 \cdot \frac{d}{dz} & \text{für } z < 0 \\
+        \frac{z}{4} \cdot \frac{d}{dz} & \text{für } 0 \leq z < 2 \\
+        \frac{z - 2}{4} \cdot \frac{d}{dz} & \text{für } 2 \leq z < 4 \\
+        1 \cdot \frac{d}{dz} & \text{für } z \geq 4 \\
+\end{cases}\)\\\\
+\hspace*{2.77cm}\(= \begin{cases}
+        0 & \text{für } z < 0 \\
+        \frac{1}{4} & \text{für } 0 \leq z < 2 \\
+        \frac{1}{4} & \text{für } 2 \leq z < 4 \\
+        0 & \text{für } z \geq 4 \\
+\end{cases}\)\\\\\\
+\(\Rightarrow f_Z(z) = \begin{cases}
+        0 & \text{für } z < 0 \\
+        \frac{1}{4} & \text{für } 0 \leq z < 4 \\
+        0 & \text{für } z \geq 4 \\
+\end{cases}\)\\\\\\
+Der Graph der Verteilungsfunktion sieht wie folgt aus:\\
+\begin{tikzpicture}
+
+    % Draw the x-axis
+    \draw (-2.5,0) -- (11.5,0); 
+    
+    % Draw the y-axis
+    \draw[->] (0,-1) -- (0,6.5);
+
+    % X-axis ticks and labels
+    \foreach \x in {-1, 1, 2, 3, 4} {
+        \draw (\x / 2 * 5,0.1) -- (\x / 2 * 5,-0.1) node[below] {\x}; % x-ticks
+    }
+
+    \foreach \y in {0.25, 0.5, 0.75, 1} {
+        \draw (0.1,\y * 6) -- (-0.1,\y * 6) node[left] {\y}; % y-ticks with fractions
+    }
+    \draw[green, thick] (-2.5,0) -- (2.5,0);
+    \draw[green, thick] (2.5, 0) -- (10,6);
+    \draw[green, thick] (10,6) -- (11.5,6);
+\end{tikzpicture}\\
+Der Graph der Dichtefunktion sieht wie folgt aus:\\
+\begin{tikzpicture}
+
+    % Draw the x-axis
+    \draw (-2.5,0) -- (11.5,0); 
+    
+    % Draw the y-axis
+    \draw[->] (0,-1) -- (0,6.5);
+
+    % X-axis ticks and labels
+    \foreach \x in {-1, 1, 2, 3, 4} {
+        \draw (\x / 2 * 5,0.1) -- (\x / 2 * 5,-0.1) node[below] {\x}; % x-ticks
+    }
+
+    \foreach \y in {0.25, 0.5, 0.75, 1} {
+        \draw (0.1,\y * 6) -- (-0.1,\y * 6) node[left] {\y}; % y-ticks with fractions
+    }
+    \draw[green, thick] (-2.5,0) -- (2.5,0);
+    \draw[green, thick] (2.5, 1.5) -- (10,1.5);
+    \draw[green, thick] (10,0) -- (11.5,0);
+\end{tikzpicture}
+\clearpage
+\noindent(b) Berechnen Sie $Cov(X, Z)$ und $Corr(X, Z)$.\\\\
+\(\mathbb{E}[X]=\int\limits^2_0 x\, f_X(x) \, dx = \int\limits^2_0 x\, \frac{1}{2}\, dx = \left[\frac{x^2}{4}\right]^2_0=\frac{4}{4}-0=1\)\\
+\(\mathbb{E}[Y]=\int\limits^4_2 x\,f_Y(y)\, dy = \int\limits^4_2 y\, \frac{1}{2}\, dy = \left[\frac{y^2}{4}\right]^4_2 = \frac{16}{4}-\frac{4}{4}=\frac{12}{4}=3\\
+\mathbb{E}(Z) = \frac{1}{2}\cdot 1 + \frac{1}{2}\cdot 3 = 2\\
+\mathbb{E}[Z]\frac{1}{2}\)\\
+\(\mathbb{E}[XZ]=\mathbb{E}[X(M\cdot X + (1 -M)\cdot Y] = \mathbb{E}[MX^2+(1-M)XY] = \mathbb{E}[MX^2]+\mathbb{E}[(1-M)XY]=\mathbb{E}[MX^2]+\mathbb{E}[XY-MXY]=\mathbb{E}[MX^2]+\mathbb{E}[XY] \mathbb{E}[MXY]=\mathbb{E}[M]\mathbb{E}[X^2]+\mathbb{E}[X]\mathbb{E}[Y]-\mathbb{E}[X]\mathbb{E}[Y]\mathbb{E}[M]\quad \leftarrow \) $M$, $X$, $Y$ sind unabhängig voneinander.\\
+\(\mathbb{E}[X^2]=\int\limits^2_0 x^2\, f_X(x)\, dx = \int\limits^2_0 x^2\, \frac{1}{2}\, dx = \left[\frac{x^3}{6}\right]^2_0 = \frac{8}{6} -0=\frac{4}{3}\)\\
+\(\mathbb{E}[XZ]= \mathbb{E}[M]\mathbb{E}[X^2]+\mathbb{E}[X]\mathbb{E}[Y]-\mathbb{E}[X]\mathbb{E}[Y]\mathbb{E}[M] = \frac{1}{2}\cdot\frac{4}{3}+1\cdot 3 - 1\cdot 3\cdot \frac{1}{2}= \frac{2}{3}+3-\frac{3}{2}=\frac{13}{6}\)\\\\
+Wir setzen ein:\\
+\(cov(X,Z)=\mathbb{E}[XZ]-\mathbb{E}[X]\mathbb{E}[Z]=\frac{13}{6}-1\cdot 2 = \frac{13}{6}-\frac{12}{6}=\frac{1}{6}\)\\\\
+\(corr(X,Z)=\frac{cov(X,Z)}{\sqrt{\mathbb{V}(X)\mathbb{V}(Z)}}\\\mathbb{V}(X)=\mathbb{E}[X^2]-\mathbb{E}[X]^2 = \frac{4}{3}-1^2=\frac{1}{3}\\\\
+\mathbb{V}(Z)=\mathbb{E}[Z^2]-\mathbb{E}[Z]^2\\
+\mathbb{E}[Z^2]=\int\limits^4_0 z^2\, fz_Z(z)\, dz=\int\limits^4_0z^2\frac{1}{4}\, dz = \frac{1}{12} \left[2^3\right]^4_0=\frac{64}{12}=\frac{16}{3}\\
+\mathbb{V}(Z)=\frac{16}{3}-2^2=\frac{16}{3}-\frac{12}{3}=\frac{4}{3}\)\\\\
+Wir setzen ein:\\
+\(corr(X,Z)=\frac{\sfrac{1}{6}}{\sqrt{\sfrac{1}{3}\cdot \sfrac{4}{3}}}=\frac{\sfrac{1}{6}}{\sqrt{\sfrac{4}{9}}}=\frac{\sfrac{1}{6}}{\sfrac{2}{3}}=\frac{1}{4}\)
+\end{document}
