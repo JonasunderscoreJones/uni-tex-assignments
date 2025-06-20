@@ -51,7 +51,7 @@ jobs:
       - name: capture all PDFs as artifacts
         uses: https://code.forgejo.org/forgejo/upload-artifact@v4
         with:
-          name: compiled-pdfs
+          name: compiled-pdfs.zip
           path: '**/*.pdf'
           if-no-files-found: error
 
