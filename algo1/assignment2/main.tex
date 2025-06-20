@@ -1,0 +1,317 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{ALGO-1\\Sommersemester 2024}
+\chead{\bfseries{Übungsblatt 2}\\}
+\rhead{7987847\\Jonas Werner}
+
+\begin{document}
+\section*{Aufgabe 2.1}
+Verwenden Sie das Mastertheorem, um das Wachstum folgender rekursiver Funktionen T (n) asym-
+ptotisch exakt zu bestimmen. Es kann angenommen werden, dass T (1) konstant und n eine Potenz
+von b ist.
+\subsection*{a)}
+\[ T(n) = 4 \cdot T\left(\frac{n}{2}\right) + n \log^2 n \]
+
+Daraus lassen sich folgende Werte ablesen:
+\begin{itemize}
+    \item $a = 4$
+    \item $b = 2$
+    \item $t(n) = n \log^2 n$
+    \item $2 > k > 1$
+\end{itemize}
+
+Damit berechnen wir:
+\[ \log_b a = \log_2 4 = 2 > k = 1 \]
+
+Daraus folgt:
+\[
+\Rightarrow \text{Es tritt Fall (a) ein.}
+\]
+
+Somit gilt die folgende Gleichung:
+\[ T(n) = \theta\left(n^{\log_{b}a}\right) = \theta\left(n^2\right)\]
+
+
+
+\subsection*{b)}
+\[ T(n) = 3 \cdot T\left(\frac{n}{9}\right) + \sqrt{12n} \]
+
+Daraus lassen sich folgende Werte ablesen:
+\begin{itemize}
+    \item $a = 3$
+    \item $b = 9$
+    \item $t(n) = \sqrt{12n}$
+    \item $k = \frac{1}{2}$
+\end{itemize}
+
+Damit berechnen wir:
+\[ \log_b a = \log_9 3 = \frac{1}{2} = k = \frac{1}{2} \]
+
+Daraus folgt:
+\[
+\Rightarrow \text{Es tritt Fall (b) ein.}
+\]
+
+Somit gilt die folgende Gleichung:
+\[ T(n) = \theta\left(n^{\log_{b}a} \cdot \log_{b}n \right) = \theta\left(n^{\frac{1}{2}} \cdot  \log_{9}n \right) =  \theta\left(\sqrt{n} \cdot  \log_{9}n \right)\]
+
+
+
+\subsection*{c)}
+\[ T(n) = 64 \cdot T\left(\frac{n}{16}\right) + n\sqrt[4]{n} \]
+
+Daraus lassen sich folgende Werte ablesen:
+\begin{itemize}
+    \item $a = 64$
+    \item $b = 16$
+    \item $t(n) = n \sqrt[4]{n}$
+    \item $k = 1$
+\end{itemize}
+
+Damit berechnen wir:
+\[ \log_b a = \log_2 4 = \frac{3}{2} > k = 1 \]
+
+Daraus folgt:
+\[
+\Rightarrow \text{Es tritt Fall (a) ein.}
+\]
+
+Somit gilt die folgende Gleichung:
+\[ T(n) = \theta\left(n^{\log_{b}a}\right) = \theta\left(n^{\frac{3}{2}}\right)\]
+
+
+
+\subsection*{d)}
+\[ T(n) = 4 \cdot T\left(0.99n\right) + 1.01n \]
+
+Daraus lassen sich folgende Werte ablesen:
+\begin{itemize}
+    \item $a = 4$
+    \item $b = \frac{1}{0.99}$
+    \item $t(n) = 1.01n$
+    \item $k = 1$
+\end{itemize}
+
+Damit berechnen wir:
+\[ \log_b a = \log_{\frac{1}{0.99}} 4 \approx 137.935 > k = 1 \]
+
+Daraus folgt:
+\[
+\Rightarrow \text{Es tritt Fall (a) ein.}
+\]
+
+Somit gilt die folgende Gleichung:
+\[ T(n) = \theta\left(n^{\log_{b}a}\right) = \theta\left(n^{\log_{(\frac{1}{0.99})}4}\right) \approx \theta\left(n^{137.935}\right)\]
+
+\break
+
+\section*{Aufgabe 2.2}
+Wir betrachten den folgenden Algorithmus für eine ganzzahlige Eingabe $n > 0$:
+\begin{verbatim}
+    x = 0;
+    for (i = 1; i <= n; i++) {
+        for (j = 1; j <= f(i); j++) {
+            x = x + 1;
+        }
+    }
+\end{verbatim}
+
+Bestimmen Sie für jede der folgenden Funktionen $f(i)$ den Wert der Variable $x$ nach Ende des
+Algorithmus exakt.
+
+\subsection*{a)}
+$f(i) = \frac{c}{n}$ für ein $c \in  \mathbb{N}$.
+
+$x = \mathlarger{\mathlarger{\sum}}_{i=0}^{n}\frac{c}{n} = c \cdot \frac{n}{n} = c$
+
+\subsection*{b)}
+$f(i) = \binom{n}{i}$
+
+$x = \mathlarger{\mathlarger{\sum}}_{i = 1}^{n} \frac{n!}{(n - i) \cdot i!} = 2^n - 1$ weil $\mathlarger{\mathlarger{\sum}}_{i = 0}^{n} \frac{n!}{(n - i) \cdot i!} = 2^n$ und $\binom{n}{0} = 1$
+
+\subsection*{c)}
+$f(i) = \frac{n}{3^i}$
+
+$x = \mathlarger{\mathlarger{\sum}}_{i = 1}^{\log{n}}\frac{n}{3^i} = n \cdot \mathlarger{\mathlarger{\sum}}_{i = 1}^{\log{n}}\frac{1}{3^i}$
+
+
+\break
+\section*{Aufgabe 2.3}
+Geben Sie für folgende rekursive Gleichungen eine $geschlossene Form$ an und beweisen Sie deren
+Korrektheit mittels Induktion.\\
+
+\subsection*{a)}
+$T(2) = 2, T(n) = T(n - 2) + n$ für $n = 2k, k \in \mathbb{N}, k > 1$\\
+
+$T(n) = T(n - 2) + n = n + (n - 2) + (n - 4) + ... + 2 = 2 + 4 + 6 + ... + n$
+
+$\mathlarger{\mathlarger{\sum}}_{i = 1}^{n/2}2i = 2 \cdot \mathlarger{\mathlarger{\sum}}_{i = 1}^{n/2}i = 2 \cdot \frac{1}{2} \cdot \frac{n}{2} \cdot \left(\frac{n}{2} + 1\right) = \frac{n \cdot \left(n + 2\right)}{4}$\\
+
+\begin{proof}[\unskip\nopunct]
+Beweis durch Vollständige Induktion:\\
+
+Induktionsanfang ($k = 2$):
+
+$T(n) = T(2k) \Rightarrow T(2 \cdot 2) = \frac{4 \cdot \left(4 + 2\right)}{4} = 6$\\
+
+Induktionsvorraussetzung:
+
+$T(n) = \frac{n \cdot \left(n + 2\right)}{4}$, $T(2) = 2$\\
+
+Induktionsschritt ($k \Rightarrow k + 1$):
+
+$T(2\cdot(k + 1)) = 2 \cdot \mathlarger{\mathlarger{\sum}}_{i = 1}^{(2k + 2)/2}i = 2 \cdot \left(\mathlarger{\mathlarger{\sum}}_{i = 1}^{k}i + (2k + 2)\right) = \frac{2k \cdot \left(2k + 2\right)}{4} + 2k + 2 = \frac{2k \cdot \left(2k + 2\right)}{4} + \frac{8k + 8}{4} = \frac{(2k)^2 + 4k + 8k + 12}{4} = \frac{(2k + 2)(2k + 4)}{4}$
+
+\end{proof}
+
+\subsection*{b)}
+$T(2) = 2, T(n) = 2 \cdot T(\sqrt{n})$ für $n = 2^{2^k}, k \in \mathbb{N}, k > 0$\\
+
+$T(n) = 2 \cdot T(\sqrt{n} = 2 \cdot T\left(2^{2^{k - 1}}\right) = 2 \cdot ... \cdot T\left(2^{2^{k - k}}\right) = 2^k \cdot T(2) = 2^{k + 1}$
+
+\begin{proof}[\unskip\nopunct]
+Beweis durch Vollständige Induktion:\\
+
+Induktionsanfang ($k = 1$):
+
+$T(n) = 2^{2 + 1} = 8$\\
+
+Induktionsvorraussetzung:
+
+$T(n) = 2^{k + 1}$, $T(2) = 2$\\
+
+Induktionsschritt ($k \Rightarrow k + 1$):
+
+$T(k + 1) = T\left(2^{2^{k + 2}}\right) = 2 \cdot  T\left(2^{2^{k + 1}}\right) = 2 \cdot 2^{k + 1} = 2^{k + 2}$
+
+\end{proof}
+
+\subsection*{c)}
+$T(1) = 1, T(n) = n \cdot T(\frac{n}{2})$, für $n = 2^k, k \in \mathbb{N}, k > 0$\\
+
+$T\left(2^k\right) = 2^k \cdot T\left(2^{k-1}\right) = 2^k \cdot 2^{k - 1} \cdot T\left(2^{k - 2}\right) = 2^k \cdot 2^{k - 1} \cdot ... \cdot 2^{k - k} = \frac{k(k + 1)}{2} \cdot T(1) = \frac{k(k + 1)}{2}$
+
+\begin{proof}[\unskip\nopunct]
+Beweis durch Vollständige Induktion:\\
+
+Induktionsanfang ($k = 1$):
+
+$T(n) = \frac{k1(1 + 1)}{2} = 1$\\
+
+Induktionsvorraussetzung:
+
+$T(2^k) = 2^{\left(\frac{k(k + 1)}{2}\right)}$, $T(2) = 2$\\
+
+Induktionsschritt ($k \Rightarrow k + 1$):
+
+$T(k + 1) = T\left(2^{k + 1}\right) = 2^{k + 1} \cdot T(2^k) = 2^k \cdot 2^{\left(\frac{k(k + 1)}{2}\right)} = 2^{\left(\frac{k(k + 1)}{2}\right) + (k + 1)} = 2^{\left(\frac{k(k + 1) + 2k + 2}{2}\right)} = 2^{\left(\frac{k^2 + 3k + 2}{2}\right)} = 2^{\left(\frac{(k + 1)(k + 2)}{2}\right)}$
+
+\end{proof}
+
+
+
+\break
+\section*{Aufgabe 2.4}
+Wir betrachten die folgenden Funktionen.
+\begin{figure}[H]  % This forces the figure to appear exactly here in the document
+  \begin{subfigure}[b]{0.4\textwidth}
+    \begin{verbatim}
+    
+        int mod(int x, int y) {
+            while(x >= y)
+                x = x - y;
+
+            return x;
+        }
+
+    \end{verbatim}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.4\textwidth}
+    \begin{verbatim}
+    int ggT(int a, int b) {
+        if(a == 0) {
+            return b;
+        } else {
+            return ggT(mod(b, a), a);
+        }
+    }
+    \end{verbatim}
+  \end{subfigure}
+\end{figure}
+\subsection*{a)}
+Begründen Sie, warum $ggT$ für positive ganze Zahlen $a$ und $b$ terminiert.\\
+
+Nach jedem Rekursionsaufruf ist $b > a$ und die Reihenfolge der beiden Zahlen wird vertauscht, sodass nach dem jeweils nächsten Rekursionsschritt wieder $b > a$ wird, aber mit vertauschten Werten, sodass beide Werte kleiner werden bis einer der beiden gleich 0 wird. Dann endet die Rekursion.
+
+\subsection*{b)}
+Zeigen Sie, dass $a + (b \mod{a}) \leq \frac{2}{3} \cdot (a + b)$, falls $0 < a \leq b.$\\
+
+Sei $r = b \mod a$\\
+$\Rightarrow b = ka + r$ für $k \geq 1$
+
+\begin{align*}
+a + r &\leq \frac{2}{3} \cdot (a + b) \\
+a + r &\leq \frac{2}{3} \cdot ((k + 1)a + r)\\
+3a + 3r &\leq 2(k + 1)a + 2r\\
+0 &\leq 2ka − (a + r)\\
+0 &\leq 2ka − 2a
+\end{align*}
+
+Da $k \geq 1$ gilt die Ungleichung und $a + (b \mod{a}) \leq \frac{2}{3} \cdot (a + b)$ ist bewiesen.
+
+
+\subsection*{c)}
+Bestimmen Sie die Worst-Case-Laufzeit $T(n)$ der Funktion $ggT$. Definieren Sie dafür zunächst
+die Variable $n$ in Abhängigkeit von $a$ und $b$ und stellen Sie eine Rekursionsgleichung auf.\\
+
+Beim Aufruf mit $mod(n, 1)$ wird die mod-Funktion n viele Schritte machen, weil in jeder Schleifenausführung $n - 1$ gerechnet wird, bis $n < 1$, also gleich 0 ist.
+
+\subsection*{d)}
+In Aufgabenteil $b)$ haben wir $a \leq b$ vorausgesetzt. Ändert sich $T(n)$ wenn wir $a \leq b$ nicht
+mehr fordern? Begründen Sie Ihre Antwort.\\
+
+Wenn $a \leq b$ nicht mehr vorrausgesetzt ist, also $a > b$ sein kann, so wird die mod-Funktion mit $a > b$ aufgerufen und die while-Schleife direkt übersprungen weil die $a = y, b = x$ und die Vorraussetzung des Schleifenaufrufs $x >= y$ nicht erfüllt ist. Somit kommt ein Rekursionsaufruf von $ggT()$ dazu, indem die Reihenfolge der beiden Zahlen "berichtigt", also in sofern angepasst wird, dass die Funktion ab dann normal ausgeführt wird, so wie als würde $a \leq b$ gelten.
+
+\end{document}

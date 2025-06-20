@@ -1,0 +1,245 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{ALGO-1\\Sommersemester 2024}
+\chead{\bfseries{Übungsblatt 7}\\}
+\rhead{7987847\\Jonas Werner}
+
+\begin{document}
+\section*{Aufgabe 8.1}
+Gegeben sind die Funktionen $f (x) = (3 \cdot x) mod 5$ und $g(x) = 4 - (x mod 4)$. Fügen Sie die Zahlen $58, 93, 15, 41, 27$ in dieser Reihenfolge in eine Hashtabelle der Größe 5 ein. Dabei sollen die Zahlen mit.
+
+\subsection*{a)}
+Verketten, d.h., $h(x) = f (x)$,\\
+
+\begin{tabular}{c|c|c|c|c}
+     0 & 1 & 2 & 3 & 4 \\
+     15 & 27 &  & 41 & 58 \\
+     & & & & 93
+\end{tabular}\\
+\begin{itemize}
+    \item $h(58) = f(58) = (3 \cdot 58) \mod 5 = 4$\\
+    \item $h(93) = f(93) = (3 \cdot 93) \mod 5 = 4$\\
+    \item $h(15) = f(15) = (3 \cdot 15) \mod 5 = 0$\\
+    \item $h(41) = f(41) = (3 \cdot 41) \mod 5 = 3$\\
+    \item $h(27) = f(27) = (3 \cdot 27) \mod 5 = 1$\\
+\end{itemize}
+
+\subsection*{b)}
+linearem Austesten, d.h., $h_i(x) = (f (x) + i) \mod 5$,\\
+
+\begin{tabular}{c|c|c|c|c}
+     0 & 1 & 2 & 3 & 4 \\
+     93 & 15 & 27 & 41 & 58
+\end{tabular}\\
+
+\begin{itemize}
+    \item $h_0(58) = (f(x) + i) \mod 5 = ((3 \cdot 58) \mod 5) + 0 = 4$
+    \item $h_0(93) = (f(x) + i) \mod 5 = ((3 \cdot 93) \mod 5) + 0 = 4 \xrightarrow{i + 1} h_1(93) = 5 \xrightarrow{\text{max 4 daher zurück zu 0}} 0$
+    \item $h_0(15) = (f(x) + i) \mod 5 = ((3 \cdot 15) \mod 5) + 0 = 0 \xrightarrow{i + 1} h_1(15) = 1$
+    \item $h_0(41) = (f(x) + i) \mod 5 = ((3 \cdot 41) \mod 5) + 0 = 3$
+    \item $h_0(27) = (f(x) + i) \mod 5 = ((3 \cdot 27) \mod 5) + 0 = 1 \xrightarrow{i + 1} h_1(27) = 2$
+\end{itemize}
+
+\subsection*{c)}
+doppeltem Hashing, d.h., $h_i(x) = (f (x) + i \cdot g(x)) mod 5$,\\
+
+\begin{tabular}{c|c|c|c|c}
+     0 & 1 & 2 & 3 & 4 \\
+     15 & 27 & 93 & 41 & 58
+\end{tabular}\\
+
+\begin{itemize}
+    \item $h_0(58) = (3 \cdot 58) \mod 5 + 0 \cdot (4 - (58 \mod 4)) = 4$
+    \item $h_0(93) = (3 \cdot 93) \mod 5 + 0 \cdot (4 - (93 \mod 4)) = 2$
+    \item $h_0(15) = (3 \cdot 15) \mod 5 + 0 \cdot (4 - (15 \mod 4)) = 0$
+    \item $h_0(41) = (3 \cdot 41) \mod 5 + 0 \cdot (4 - (41 \mod 4)) = 3$
+    \item $h_0(27) = (3 \cdot 58) \mod 5 + 0 \cdot (4 - (27 \mod 4)) = 3 \\\xrightarrow{i + 1} h_1(27) = (3 \cdot 27) \mod 5 + 1 \cdot (4 - (27 \mod 4)) = 4 \\\xrightarrow{i + 1} h_2(27) = (3 \cdot 27) \mod 5 + 1 \cdot (4 - (27 \mod 4)) = 0 \\\xrightarrow{i + 1} h_3(27) = (3 \cdot 27) \mod 5 + 1 \cdot (4 - (27 \mod 4)) = 1$
+\end{itemize}
+
+
+\section*{8.2}
+
+Gegeben ist eine leere Hashtabelle H der Größe m = 2 zusammen mit den Hashfunktionen $hi(x) = (7 · x + i) \mod m$. Fügen Sie die folgende Sequenz von Schlüsseln in der gegebenen Reihenfolge in die Hashtabelle ein und vergrößern Sie die Hashtabelle, wann immer der Auslastungsfaktor $\lambda$ wenigstens $\frac{1}{2}$ erreicht. Stellen Sie die Hashtabelle vor und nach jeder Reorganisation sowie nach der Einfügung aller Schlüssel dar. Wenn Sie die Hashtabelle vergrößern müssen, wählen Sie als neue Größe die kleinste Primzahl, sodass sich die Größe wenigstens verdoppelt. Fügen Sie Schlüssel, die bereits in der Hashtabelle waren, in der ursprünglichen Reihenfolge in die größere Tabelle ein, in der sie in der kleineren Tabelle standen (vom kleinen zum großen Index).
+
+\begin{center}
+    15, 78, 34, 91, 66, 48, 25, 53, 80, 9.
+\end{center}
+
+$Hinweis$: Für eine bessere Übersicht können Sie leere Indizes der Hashtabelle weglassen.\\
+
+\begin{tabular}{c|c}
+     0 & 1 \\
+     & 15
+\end{tabular}\\
+
+\begin{itemize}
+    \item $h_0(15) = (7 \cdot 15) \mod 2 = 1$
+\end{itemize}\\
+
+$\lambda$ erreicht $\xrightarrow{\text{nächstgrößere Primzahl}} m = 5$\\
+
+\begin{tabular}{c|c|c|c|c}
+     0 & 1 & 2 & 3 & 4 \\
+     15 & 78 & & 34
+\end{tabular}\\
+
+\begin{itemize}
+    \item $h_0(15) = (7 \cdot 15) \mod 5 = 5$
+    \item $h_0(78) = (7 \cdot 78) \mod 5 = 1$
+    \item $h_0(34) = (7 \cdot 34) \mod 5 = 3$
+\end{itemize}\\
+
+$\lambda$ erreicht $\xrightarrow{\text{nächstgrößere Primzahl}} m = 11$\\
+
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
+     0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+     66 & & & & & & 15& 78 & 34 & 48 & 91
+\end{tabular}\\
+
+\begin{itemize}
+    \item $h_0(15) = (7 \cdot 15) \mod 11 = 6$
+    \item $h_0(78) = (7 \cdot 78) \mod 11 = 7$
+    \item $h_0(34) = (7 \cdot 34) \mod 11 = 7 \xrightarrow{i + 1} h_1(34) = 8$
+    \item $h_0(91) = (7 \cdot 91) \mod 11 = 10$
+    \item $h_0(66) = (7 \cdot 66) \mod 11 = 0$
+    \item $h_0(48) = (7 \cdot 48) \mod 11 = 6 \xrightarrow{i + 1 + 1 + 1} h_3(48) = 9$
+\end{itemize}\\
+
+$\lambda$ erreicht $\xrightarrow{\text{nächstgrößere Primzahl}} m = 23$\\
+
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+     0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & 21 & 22 \\
+     & & 66 & 53 & & & & & 34 & 80 & & & & 15 & 48 & 25 & 91 & 78 & 9
+\end{tabular}\\
+
+\begin{itemize}
+    \item $h_0(15) = (7 \cdot 15) \mod 23 = 13$
+    \item $h_0(78) = (7 \cdot 78) \mod 23 = 17$
+    \item $h_0(34) = (7 \cdot 34) \mod 23 = 8$
+    \item $h_0(91) = (7 \cdot 91) \mod 23 = 16$
+    \item $h_0(66) = (7 \cdot 66) \mod 23 = 2$
+    \item $h_0(48) = (7 \cdot 48) \mod 23 = 14$
+    \item $h_0(25) = (7 \cdot 25) \mod 23 = 14 \xrightarrow{i + 1} h_1(25) = 15$
+    \item $h_0(53) = (7 \cdot 53) \mod 23 = 3$
+    \item $h_0(80) = (7 \cdot 80) \mod 23 = 8 \xrightarrow{i + 1} h_1(80) = 9$
+    \item $h_0(9) = (7 \cdot 9) \mod 23 = 17 \xrightarrow{i + 1} h_1(9) = 18$
+\end{itemize}\\
+
+
+\section*{Aufgabe 8.4}
+Betrachten Sie den gerichteten Graphen G.
+
+\subsection*{a)}
+Bestimmen Sie die In- und Out-Grade aller Knoten in G.
+
+\begin{tabular}{ c c c c c c c c c }
+  & a & b & c & d & e & f & g & h \\ 
+ in & 0 & 1 & 2 & 1 & 2 & 2 & 1 & 3 \\  
+ out & 2 & 1 & 2 & 3 & 2 & 0 & 2 & 0    
+\end{tabular}
+
+
+\subsection*{b)}\
+Geben Sie eine topologische Sortierung für G an.
+
+Topologische Sortierung mithilfe von Kahn's Algorithmus:\\
+
+\begin{tabular}{ c|c|c|c|c|c|c|c|c|c}
+    a & \textbf{0} & -1 & -1 & -1 & -1 & -1 & -1 & -1 \\
+    b & 1 & 1 & \textbf{0} & -1 & -1 & -1 & -1 & -1 \\
+    c & 2 & 2 & 2 & 1 & \textbf{0} & -1 & -1 & -1 \\
+    d & 1 & \textbf{0} & -1 & -1 & -1 & -1 & -1 & -1 \\
+    e & 2 & 2 & 1 & 1 & 1 & \textbf{0} & -1 & -1 \\
+    f & 2 & 1 & 1 & 1 & 1 & 1 & \textbf{0} & -1 \\
+    g & 1 & 1 & \textbf{0} & -1 & -1 & -1 & -1 & -1 \\
+    h & 3 & 3 & 3 & 2 & 1 & \textbf{0} & -1 & -1 \\
+\end{tabular}\\
+
+
+Somit ist eine mögliche topologische Reihenfolge: a, d, b, g, c, e, f, h
+
+
+\subsection*{c)}
+Stellen Sie den Graphen G als Adjazenzliste dar. Die direkten Nachfolger jedes Knotens v sind
+dabei in lexikographisch aufsteigender Reihenfolge in die Liste von v einzutragen.
+
+\begin{itemize}
+    \item a: \{d,f\}
+    \item b: \{c\}
+    \item c: \{e,h\}
+    \item d: \{b,e\}
+    \item e: \{f,h\}
+    \item f: \{\}
+    \item g: \{c,h\}
+    \item h: \{\}
+\end{itemize}
+
+
+\subsection*{d)}
+
+
+
+\begin{tabular}{ c|c|c|c|c|c|c|c|c}
+     & a & b & c & d & e & f & g & h \\
+     \hline
+    a & 0 & 0 & 0 & \textbf{1} & 0 & \textbf{1} & 0 & 0 \\
+    \hline
+    b & 0 & 0 & \textbf{1} & 0 & 0 & 0 & 0 & 0 \\
+    \hline
+    c & 0 & 0 & 0 & 0 & \textbf{1} & 0 & 0 & \textbf{1} \\
+    \hline
+    d & 0 & \textbf{1} & 0 & 0 & \textbf{1} & 0 & \textbf{1} & 0 \\
+    \hline
+    e & 0 & 0 & 0 & 0 & 0 & \textbf{1} & 0 & \textbf{1} \\
+    \hline
+    f & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    \hline
+    g & 0 & 0 & \textbf{1} & 0 & 0 & 0 & 0 & \textbf{1} \\
+    \hline
+    h & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\end{tabular}\\
+
+
+\end{document}
