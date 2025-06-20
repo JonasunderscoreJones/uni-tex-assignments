@@ -1,0 +1,63 @@
+name: build-latex
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: docker
+
+    steps:
+      - name: checkout repository
+        uses: https://code.forgejo.org/actions/checkout@v4
+
+      - name: restore cached apt lists
+        uses: https://code.forgejo.org/actions/cache/restore@v4
+        with:
+          path: /var/lib/apt/lists
+          key: ${{ runner.os }}-texlive-full
+
+      - name: install full TeX Live
+        run: |
+          apt-get update
+          apt-get install -y texlive-full
+
+      - name: compile all main.tex files
+        run: |
+          find . -type f -name main.tex | while read file; do
+            dir=$(dirname "$file")
+            relpath=$(realpath --relative-to=. "$dir")
+            name=$(echo "$relpath" | sed 's|/|-|g')
+            (
+              cd "$dir"
+              pdflatex -interaction=nonstopmode main.tex || true
+              pdflatex -interaction=nonstopmode main.tex || true
+              if [ ! -f main.pdf ]; then
+                echo "PDF not generated in $dir"
+                exit 1
+              fi
+              mv main.pdf "$name.pdf"
+            )
+          done
+
+      - name: move PDFs back to original dirs
+        run: |
+          find . -type f -name '*.pdf' -not -path './*.pdf' | while read pdf; do
+            mv "$pdf" "$(dirname "$pdf")/$(basename "$pdf")"
+          done
+
+      - name: capture all PDFs as artifacts
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with:
+          name: compiled-pdfs
+          path: '**/*.pdf'
+          if-no-files-found: error
+
+      - name: cache apt lists
+        if: ${{ github.ref_name == github.event.repository.default_branch }}
+        uses: https://code.forgejo.org/actions/cache/save@v4
+        with:
+          path: /var/lib/apt/lists
+          key: ${{ runner.os }}-texlive-full
