@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegray}{rgb}{0.9,0.9,0.9}
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{codegray},
+    basicstyle=\ttfamily\footnotesize,
+    language=Python,
+    frame=single,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{red}
+}
+
+\begin{document}
+
+\title{Python Übungsaufgaben: Funktionen, Iteration und Rekursion}
+\date{28. Februar, 2025}
+\maketitle
+
+\section*{Aufgabe 1: Einfache Funktionen}
+
+\subsection*{Quadrat einer Zahl}
+Schreibe eine Funktion, die das Quadrat einer Zahl berechnet.
+
+\begin{lstlisting}[style=pythonstyle]
+def square(n):
+    return n*n
+\end{lstlisting}
+
+\subsection*{Maximalwert zweier Zahlen}
+Schreibe eine Funktion, die den größeren von zwei gegebenen Zahlen zurückgibt.
+
+\begin{lstlisting}[style=pythonstyle]
+def min_value(a,b)
+    return min(a,b)
+\end{lstlisting}
+
+\subsection*{Umwandlung von Celsius in Fahrenheit}
+Schreibe eine Funktion, die eine Temperatur in Celsius in Fahrenheit umwandelt.
+
+\begin{lstlisting}[style=pythonstyle]
+def convert_c_to_f(n):
+    return n*(9/5)+32
+\end{lstlisting}
+
+\subsection*{Summation einer Liste}
+Schreibe eine Funktion, die die Summe aller Elemente in einer Liste berechnet.
+
+\begin{lstlisting}[style=pythonstyle]
+def convert_c_to_f(n):
+    sum = 0
+    for item in b:
+        sum += item
+    return sum
+\end{lstlisting}
+
+\section*{Aufgabe 2: Fakultät mit Iteration und Rekursion}
+Berechne die Fakultät einer Zahl $n$ sowohl iterativ als auch rekursiv.
+
+\subsection*{Iterative Lösung}
+Schreibe eine iterative Funktion zur Berechnung der Fakultät.
+
+\begin{lstlisting}[style=pythonstyle]
+def fakultaet_iterativ(n):
+    ergebnis = 1
+    for i in range(1, n + 1):
+        ergebnis *= i
+    return ergebnis
+\end{lstlisting}
+
+\subsection*{Rekursive Lösung}
+Schreibe eine rekursive Funktion zur Berechnung der Fakultät.
+
+\begin{lstlisting}[style=pythonstyle]
+def fakultaet_rekursiv(n):
+    if n == 0:
+        return 1
+    return n * fakultaet_rekursiv(n - 1)
+\end{lstlisting}
+
+\section*{Aufgabe 3: Fibonacci-Zahlen}
+Berechne die Fibonacci-Zahlen $F(n)$ mit $F(0) = 0$, $F(1) = 1$ und $F(n) = F(n-1) + F(n-2)$ für $n \geq 2$.
+
+\subsection*{Iterative Lösung}
+Schreibe eine iterative Funktion zur Berechnung der Fibonacci-Zahlen.
+
+\begin{lstlisting}[style=pythonstyle]
+def fakultaet_rekursiv(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+\end{lstlisting}
+
+\subsection*{Rekursive Lösung}
+Schreibe eine rekursive Funktion zur Berechnung der Fibonacci-Zahlen.
+
+\begin{lstlisting}[style=pythonstyle]
+def fibonacci_rekursiv(n):
+    if n <= 1:
+        return n
+    return fibonacci_rekursiv(n - 1) + fibonacci_rekursiv(n - 2)
+\end{lstlisting}
+
+\end{document}
