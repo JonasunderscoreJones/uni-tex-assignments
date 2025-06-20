@@ -1,0 +1,139 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} % Linienbreite anpassen, falls gewünscht
+\renewcommand{\headrule}{
+    \makebox[\textwidth]{\rule{1.0\textwidth}{0.5pt}} 
+}
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=3cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Analysis und Numerik\\Sommersemester 2025}
+\chead{\bfseries{\vspace{0.5\baselineskip}Übungsblatt 3}}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+\fancyheadoffset[R]{0cm}
+
+\begin{document}
+\setcounter{section}{3}
+\subsection{Multiple Choice}
+Kreuzen Sie bei den folgenden Fragen jeweils die zutreffende Antwort an. Korrekte Kreuze bringen +0.5 Punkte. Falsche Kreuze -0.5 Punkte. Sie bekommen auf diese Aufgabe mindestens 0 Punkte.
+
+\begin{enumerate}[label=(\alph*)]
+    \item Jede konvergente reelle Folge ist bereits eine Cauchy-Folge. \begin{flushright} wahr $\square \quad$ falsch $\boxtimes$ \end{flushright}
+    \item Seien $a \in \mathbb{R}$ und $(a_n)_n \in \mathbb{N} \subset \mathbb{R}$ eine reelle Folge. Seien des Weiteren die Teilfolgen $(a_{3n})_n \in \mathbb{N}$, $(a_{3n+1})_n \in \mathbb{N}$, $(a_{3n+2})_n \in \mathbb{N} \subset \mathbb{R}$ konvergent mit
+    \[
+    \lim\limits_{n \to \infty} a_{3n} = \lim\limits_{n \to \infty} a_{3n + 1} = \lim\limits_{n \to \infty} a_{3n + 2} = a
+    \]
+    Dann konvergiert $(a_n)_n \in \mathbb{N}$ gegen a.
+    \begin{flushright} wahr $\boxtimes \quad$ falsch $\square$ \end{flushright}
+    \item Seien $(a_n)_n \in \mathbb{N}$, $(b_n)_n \in N \subset \mathbb{R}$ reelle Folgen mit $c_n := a_n + b_n$ für alle $n \in \mathbb{N}$. Dann gilt
+    \[
+        sup\{c_n : n \in \mathbb{N}\} = sup\{a_n : n \in \mathbb{N}\} + sup\{b_n : n \in \mathbb{N}\}.
+    \]
+    \begin{flushright} wahr $\square \quad$ falsch $\boxtimes$ \end{flushright}
+    \item Seien $(a_n)_n \in \mathbb{N}$, $(b_n)_n \in N \subset \mathbb{R}$ reelle Folgen mit $c_n := a_n - b_n$ für alle $n \in \mathbb{N}$. Dann gilt
+    \[
+        sup\{c_n : n \in \mathbb{N}\} \leq sup\{a_n : n \in \mathbb{N}\} - inf\{b_n : n \in \mathbb{N}\}.
+    \]
+    \begin{flushright} wahr $\boxtimes \quad$ falsch $\boxtimes$ \end{flushright}
+\end{enumerate}
+\bigskip
+\subsection{Schriftliche Aufgabe}
+\begin{enumerate}[label=(\alph*)]
+    \item Zeigen Sie durch Verwendung von Defnition und Satz 1.19, dass die Folge
+    \[
+        a_{n+1} = \frac{1}{2} \left(a_n + \frac{2}{a_n} \right) \text{ mit } a_1 = 1
+    \]
+    konvergiert und berechnen Sie dann mit Hilfe der Rechenregeln für Grenzwerte $\lim\limits_{n \to \infty}$.\\\\
+    Laut dem Satz 1.19 aus dem Skript gilt $a_{n + 1} \leq a_n$ und wenn die Folge ins positive konvergiert, ist sie begrenzt:\\
+    \[
+        a_{n + 1} \leq a_n
+    \]
+    \[
+        \frac{1}{2}\left(a_n + \frac{2}{a_n}\right) \leq a_n
+    \]
+    \[
+        a_n + \frac{2}{a_n} \leq 2a_n 
+    \]
+    \[
+        \frac{2}{a_n} \leq a_n
+    \]
+    \[
+        2 \leq a_n^2
+    \]
+    \[
+        \sqrt{2} \leq a_n
+    \]
+Somit ist klar, dass die Folge gegen $\sqrt{2}$ konvergiert für $n \to \infty$ und von $> \sqrt{2}$ nach $\sqrt{2}$. Die Folge ist daher monoton fallend.
+    \item Auf Aufgabenblatt 1 haben Sie gezeigt, dass $\sqrt{2}$ eine irrationale Zahl ist, ohne ihre Existenz zu beweisen. Zeigen Sie, dass es eine reelle Zahl $x \in \mathbb{R}$ gibt mit $x^2 = 2$.\\\\
+    Die Folge $a_n$ konvergiert gegen $\sqrt{2}$ (also für $n = \infty \to a_n = \sqrt{2}$) und daher existiert ein $x \in \mathbb{R}$ mit $x^2 = 2 \Rightarrow x = \sqrt{2}$.
+\end{enumerate}
+\bigskip
+\subsection{Rechenaufgabe}
+Bestimmen Sie für die Menge
+\[
+    M =  \left\{ \frac{1}{m} + \frac{1}{3^n} : m, n \in \mathbb{N} \right\}
+\]
+das Supremum, Infmum, Maximum und Minimum, sofern jeweils existierend. Tragen Sie das Endergebnis in die Kästen ein. Im Falle der Nicht-Existenz schreiben Sie NaN in das entsprechende Kästchen. Bitte geben Sie nur die Endergebnisse an.\\
+\begin{itemize}
+    \item $sup M = \frac{4}{3}$
+    \item $max M = \frac{4}{3}$
+    \item $inf M = 0$
+    \item $min M = NaN$
+\end{itemize}
+\bigskip
+\subsection{Votieraufgabe}
+Es seien A, B nicht leere, beschränkte Teilmengen von R und $A + B := \{a + b : a \in A, b \in B\}$ ihre (elementweise) Summe. Zeigen Sie: A + B ist beschränkt, und es gilt
+\[
+    sup(A + B) = sup A + sup B,
+\]
+\[
+    inf(A + B) = inf A + inf B.
+\]
+
+\end{document}

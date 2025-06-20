@@ -1,0 +1,125 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} % Linienbreite anpassen, falls gewünscht
+\renewcommand{\headrule}{
+    \makebox[\textwidth]{\rule{1.0\textwidth}{0.5pt}} 
+}
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=3cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Analysis und Numerik\\Sommersemester 2025}
+\chead{\bfseries{\vspace{0.5\baselineskip}Übungsblatt 2}}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+\fancyheadoffset[R]{0cm}
+
+\begin{document}
+\setcounter{section}{2}
+\subsection{Multiple Choice}
+Kreuzen Sie bei den folgenden Fragen jeweils die zutreffende Antwort an. Korrekte Kreuze bringen +0.5 Punkte. Falsche Kreuze -0.5 Punkt. Sie bekommen auf diese Aufgabe mindestens 0 Punkte.
+
+\bigskip
+\noindent Seien $(a_n)_{n\in\mathbb{N}}, (b_n)_{n\in\mathbb{N}},(c_n)_{n\in\mathbb{N}} \subset \mathbb{R}$ reelle Folgen.
+\begin{enumerate}[label=(\alph*)]
+    \item Sei $(a_n)_{n\in\mathbb{N}}\subset \mathbb{N}$ eine Folge mit ausschließlich natürlichen Folgegliedern. Falls $(a_n)_{n\in\mathbb{N}}$ konvergiert, ist $(a_n)_{n\in\mathbb{N}}$ bereits konstant. \begin{flushright} wahr $\boxtimes \quad$ falsch $\square$ \end{flushright}
+    \textcolor{gray}{Da alle Folgenglieder nach Aufgabenstellung natürliche Zahlen seien müssen und die Folge gegen einen Wert konvergiert, wissen wir, dass die Folge konstant sein muss. Man kann sich mit natürlichen Zahlen keinem Grenzwert annähern, ohne diesen auch in einer endlichen Anzahl an Schritten zu erreichen.}
+    \item Seien $c \in \mathbb{R}$ und $a_n\leq b_n\leq c_n$ für alle $n \in \mathbb{N}$. Es gilt:
+    \[\lim\limits_{n\to\infty}a_n= \lim\limits_{n\to\infty}c_n=c. \text{ Dann folgt } \lim\limits_{n\to\infty}b_n=c.\]\begin{flushright} wahr $\boxtimes \quad$ falsch $\square$ \end{flushright}
+    \textcolor{gray}{Sandwichkriterium bei Reihen kann analog verwendet werden}
+    \item Konvergiert die Summe der Folgen $(a_n+b_n)_{n\in\mathbb{N}}\subset \mathbb{R}$, dann konvergieren auch die Folgen $(a_n)_{n\in\mathbb{N}}$ und $(b_n)_{n\in\mathbb{N}}$\begin{flushright} wahr $\square \quad$ falsch $\boxtimes$ \end{flushright} \textcolor{gray}{Für $a_=n$ und $b_n=-n$ konvergiert die Summe bei 0, die Folgen selber divergieren jedoch.}
+    \item Falls $(a_n)_{n\in\mathbb{N}}$ nicht konvergiert, dann ist $(a_n)_{n\in\mathbb{N}}$ nicht beschränkt.\begin{flushright} wahr $\square \quad$ falsch $\boxtimes$ \end{flushright}
+    \textcolor{gray}{Für $a_n=(-1)^n$ (oder jede alternierende Folge bei der gilt $a_n = a_{n+2}$) ist dieses Kriterium nicht erfüllt.}
+\end{enumerate}
+\subsection{Votieraufgabe}
+Zeigen Sie
+\begin{enumerate}[label=(\alph*)]
+    \item $\lim\limits_{n\to\infty}\sum\limits^n_{k=1}\frac{1}{k(k+1)}=1$.
+    \bigskip
+    \item $\sum\limits^n_{k=1}k\cdot \binom{n}{k}=n\cdot 2^{n-1}, \forall n\in \mathbb{N}$.
+    \bigskip
+    \item $\lim\limits_{n\to\infty}\sum\limits^n_{k=1}k\cdot \binom{n}{k}=\infty$.
+    \bigskip
+    \item $\lim\limits_{n\to\infty}\sum\limits^n_{k=1}\frac{k}{n^2}=\frac{1}{2}, \forall n\in\mathbb{N}$.
+    \bigskip
+\end{enumerate}
+\subsection{Rechenaufgabe}
+Untersuchen Sie die Folgen auf Konvergenz. Tragen Sie die Grenzwerte ein. Im Falle der Divergenz schreiben Sie NaN in das entsprechende Kästchen. Bitte geben Sie nur die Endergebnisse an. Korrekte Lösungen bringen +0.5 Punkte, falsche Lösungen 0 Punkte.
+\bigskip
+\begin{enumerate}
+    \item $a_n=\sqrt{n}$\\
+    $\lim\limits_{n\to\infty}a_n= \infty$ (\textbf{NaN})\\
+    $\sqrt{n+1}>\sqrt{n} \Rightarrow a_{n+1}>a_n \rightarrow$ streng monoton steigend 
+    \bigskip
+    \item $b_{n+2}=b_{n+1}+b_n$ mit $b_1=b_2=1$\\
+    $\lim\limits_{n\to\infty}n_n=\infty$ (\textbf{NaN})\\
+    $b_{n+1}+b_n > b_{n+1} \Rightarrow b_{n+2}\geq b_{n+1} \Rightarrow $ monoton steigend\\
+    \textcolor{gray}{\textit{\textbf{Verständnisfrage}: Dürfen wir hier mit $b_{n+2}$ und $b_{n+1}$ begründen, weil wir fangen die Fibonacci-Folge ja eigentlich bei $n=1$ an und $min\{n+2\}$ ist nicht mehr im Basisfall $b_1=b_2=1$ enthalten. Damit würde bei dieser Begründung ja eigentlich $b_{n+2}>b_{n+1}$ gelten und die Folge wäre streng monoton wachsend? Reicht es, dass wir begründen können, dass bei $b_1=b_2=1$ keine Steigung vorliegt und die Folge deshalb nicht streng monoton sondern nur monoton wächst?}}
+    \bigskip
+    \item $c_n=\frac{1}{10^n}$\\
+    $\lim\limits_{n\to\infty}c_n=$ \textbf{0}\\
+    \textcolor{gray}{Abwandlung der harmonischen Folge, die laut Definition immer gegen 0 konvergiert}
+    \bigskip
+    \item $d_n=(-1)^n\cdot \frac{1}{n^2}$\\
+    $\lim\limits_{n\to\infty}d_n=$ \textbf{0}\\
+    \textcolor{gray}{Konstrukt aus einer alternierenden Folge ($(-1)^n$) und einer eindeutig konvergierenden Folge $\left(\frac{1}{n^2} = \left( \frac{1}{n} \right)^2\right)$ welche wieder eine Abwandlung der harmonischen Folge ist, ergibt eine alternierende konvergierende Folge.}
+\end{enumerate}
+\subsection{Schriftliche Aufgabe}
+Seien $(a_n)_{n\in\mathbb{N}}, (b_n)_{n\in\mathbb{N}}, \subset \mathbb{R}$ reelle Folgen. Zeigen Sie folgende Aussagen:
+\begin{enumerate}[label=(\alph*)]
+    \item Sei $a_n\neq 0$ für alle $n \in \mathbb{N}$ und $\lim\limits_{n\to\infty}a_n=a \neq 0 \Rightarrow \lim\limits_{n\to\infty} \frac{1}{a_n}=\frac{1}{a}$.\\
+    Aus der Vorlesung wissen wir:\\
+    $\lim\limits_{n \to \infty} \frac{a}{b} = \frac{\lim\limits_{n \to \infty} a}{\lim\limits_{n \to \infty} b}$\\
+    Demnach gilt:\\
+    $\lim\limits_{n \to \infty} \frac{1}{a_n} = \frac{\lim\limits_{n \to \infty} 1}{\lim\limits_{n \to \infty} a_n} = \frac{1}{a}$
+    \bigskip
+    \item $\lim\limits_{n\to\infty}a_n=\infty$ und $\lim\limits_{n\to\infty}b_n=b>0, \Rightarrow \lim\limits_{n\to\infty}a_nb_n=\infty$.\\
+    $\infty$ ist nur dann nicht mehr unendlich, wenn es mit $\frac{1}{\infty}$ oder 0 multipliziert wird.\\
+    Es gilt: $\lim\limits_{n\to\infty}\frac{1}{n}=0$ und $\frac{1}{0} \notin \mathbb{R}$.\\
+    Aus $\lim\limits b_n=b>0$ und $(b_n) \subset \mathbb{R}$ können wir also schließen, dass $\lim\limits_{n\to\infty}a_n b_n=\infty$.
+\end{enumerate}
+\end{document}

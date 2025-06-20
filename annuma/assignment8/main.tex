@@ -1,0 +1,206 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} % Linienbreite anpassen, falls gewünscht
+\renewcommand{\headrule}{
+    \makebox[\textwidth]{\rule{1.0\textwidth}{0.5pt}} 
+}
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=3cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Analysis und Numerik\\Sommersemester 2025}
+\chead{\bfseries{\vspace{0.5\baselineskip}Übungsblatt 8}}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+\fancyheadoffset[R]{0cm}
+
+\begin{document}
+\setcounter{section}{8}
+\subsection{Votieraufgabe}
+Eine Geradengleichung $T: \mathbb{R} \rightarrow \mathbb{R}$ ist im Allgemeinen gegeben durch
+\[
+T(x) = ax + b
+\]
+mit Steigung $a \in \mathbb{R}$ und $y$-Achsenabschnitt $b$. Die Tangente einer differenzierbaren FUnktion $f$ an einer Stelle $x_0$ ist die Gerade, welche $f$ mit Steigung $f'(x_0)$ in $x_0$ berührt. Berechnen Sie die Tangenten der folgenden Funktionen in einem beliebigen Punkt $x_0 \in \mathbb{R}$:
+\begin{enumerate}[label=(\alph*)]
+    \item $f(x) = x^3$
+    \item $f(x) = \frac{1 - x^2}{1 + x^2}$
+    \item $f(x) = x^x$
+\end{enumerate}
+\textit{Hinweis zu (c)}: Umschreiben mittels Exponentialfunktion
+\subsection{Schriftliche Aufgabe}
+Gegeben sei die Sigmoid-Funktion:
+\[
+\sigma(x) = \frac{1}{1 + e^{-x}}
+\]
+\begin{enumerate}[label=(\alph*)]
+    \item Bestimmen Sie die Ableitung $\sigma'(x)$.\\\\
+    \(\Rightarrow\sigma(x) = (1 + e^{-x})^{-1} \rightarrow\) Kettenregel\\
+    Aus der Vorlsung wissen wir:\\
+    Die Kettenregel ist wie folgt definiert: sei
+    \[
+    f(x) = g(h(x)) \rightarrow f'(x) = g'(h(x)) \cdot h'(x)
+    \]
+    Somit mit den Teilfunktionen
+    \[
+    g(x) = x^{-1} \text{und} h(x) = (1 + e^{-x}) \text{dann} \sigma'(x) = -1 \cdot (1 + e^{-x})^{-2} \cdot (-e^{-x})
+    \]
+    \[
+    \Rightarrow \sigma'(x) = \frac{(-e^{-x})}{-1 \cdot (1 + e^{-x})^{2}}
+    \]
+    \item Zeigen Sie, dass $\sigma$ der folgenden Gleichug genügt:
+    \[
+    \sigma'(x) = \sigma(x) \cdot (1 - \sigma(x)) \quad \text{für alle} x \in \mathbb{R}.
+    \]
+    Wir leiten $\sigma(x)$ mit der Kettenregel ab. Schreibe zuerst:
+    \[
+    \sigma(x) = (1 + e^{-x})^{-1}.
+    \]
+    Dann gilt:
+    \[
+    \sigma'(x) = -1 \cdot (1 + e^{-x})^{-2} \cdot \frac{d}{dx}(1 + e^{-x}) = \frac{e^{-x}}{(1 + e^{-x})^2}.
+    \]
+    Andererseits gilt auch:
+    \[
+    \sigma(x) = \frac{1}{1 + e^{-x}} \quad \Rightarrow \quad 1 - \sigma(x) = \frac{e^{-x}}{1 + e^{-x}}.
+    \]
+    \[
+    \sigma(x) \cdot (1 - \sigma(x)) = \frac{1}{1 + e^{-x}} \cdot \frac{e^{-x}}{1 + e^{-x}} = \frac{e^{-x}}{(1 + e^{-x})^2}.
+    \]
+    Also gilt:
+    \[
+    \sigma'(x) = \sigma(x)(1 - \sigma(x)) \quad \text{für alle } x \in \mathbb{R}.
+    \]
+    \item Zeigen Sie, dass \(\quad 0 \leq \sigma(x) \leq 1 \quad \text{für alle} \quad x \in \mathbb{R}\)
+    Da \( e^{-x} > 0 \) für alle \( x \in \mathbb{R} \), gilt:
+    \[
+    1 + e^{-x} > 1 \quad \Rightarrow \quad \frac{1}{1 + e^{-x}} < 1.
+    \]
+    Andererseits ist der Nenner stets positiv:
+    \[
+    1 + e^{-x} > 0 \quad \Rightarrow \quad \sigma(x) = \frac{1}{1 + e^{-x}} > 0.
+    \]
+    Somit:
+    \[
+    0 < \sigma(x) < 1 \quad \text{für alle } x \in \mathbb{R}.
+    \]
+    Da der Grenzwert von \( \sigma(x) \) bei \( x \to -\infty \) gegen \( 0 \) und bei \( x \to \infty \) gegen \( 1 \) geht, ergibt sich:
+    \[
+    0 \leq \sigma(x) \leq 1 \quad \text{für alle } x \in \mathbb{R}.
+    \]
+\end{enumerate}
+
+\subsection{Multiple Choice}
+Kreuzen Sie bei den folgenden Fragen jeweils die zutreffende Antwort an. Korrekte Kreuze bringen +0.5 Punkte. Falsche Kreuze -0.5 Punkte. Sie bekommen auf diese Aufgabe mindestens 0 Punkte.
+\begin{enumerate}[label=(\alph*)]
+    \item Jede Funktion $f:\mathbb{R}\to\mathbb{R}$ mit $|f(x)-f(y)|\leq |x-y|$ für alle $x,y \in \mathbb{R}, x\neq y$, besitzt einen Fixpunkt.
+    \begin{flushright}
+        wahr $\square\quad$ falsch $\boxtimes$
+    \end{flushright}
+    \item Ist eine Funktion $f: \mathbb{R} \to \mathbb{R}$ differenzierbar, so ist sie auch Lipschitz-stetig.
+    \begin{flushright}
+        wahr $\boxtimes\quad$ falsch $\square$
+    \end{flushright}
+    \item Die Funktion $f: \mathbb{R}\to \mathbb{R}$
+    \[f(x) = \begin{cases}
+        \sin \left(\frac{1}{x}\right), & x\neq 0\\
+        0, & x=0\\
+    \end{cases}\] ist stetig.
+    \begin{flushright}
+        wahr $\boxtimes\quad$ falsch $\square$
+    \end{flushright}
+    \item Die Funktion $f: \mathbb{R}\to \mathbb{R}$
+    \[f(x)=\begin{cases}
+        x^2, & x\leq 0\\
+        0, & 0\leq x\leq 1\\
+        x-1, & 1\leq\\
+    \end{cases}\]
+    ist differenzierbar.
+    \begin{flushright}
+        wahr $\boxtimes\quad$ falsch $\square$
+    \end{flushright}
+\end{enumerate}
+\subsection{Rechenaufgabe}
+Untersuchen Sie die folgenden Funktionen auf Differenzierbarkeit: Bestimmen Sie jeweils das maximale $n \in \mathbb{N}_0 \cup\{\infty\}$, sodass die gegebene Funktion n-mal differenzierbar ist und tragen Sie diese in das entsprechende Kästchen ein. Für beliebig oft differenzierbare Funktionen ist $n = \infty$, ist eine Funktion in mindestens einem $x \in \mathbb{R}$ nicht differenzierbar ist $n = 0$. Bitte geben Sie nur die Endergebnisse an. Korrekte Lösungen bringen $+0.5$ Punkte, falsche Lösungen 0 Punkte.\\\\
+\(f(x) = \left| x \right|^3\)\\\\
+\fbox{\parbox{\linewidth}{
+\[f \text{ ist n} = 3\text{-mal differenzierbar}\]
+}}\vspace*{2mm}
+\textcolor{gray}{kritische Stelle x = 0 $\rightarrow 3x^2 \rightarrow 6x \rightarrow 6$}\\\\
+\(f(x) =
+\begin{cases}
+1, & x \geq 0 \\
+0, & x < 0
+\end{cases}
+\)\\\\
+\fbox{\parbox{\linewidth}{
+\[f \text{ ist n} = \text{0-mal differenzierbar}\]
+}}\vspace*{2mm}
+\textcolor{gray}{Ist nicht stetig, kann also auch nicht differenziert werden.}\\\\
+\(f(x) =
+\begin{cases}
+x^2 \sin(\frac{1}{x}), & x \neq 0 \\
+1 - e^{1 - x}, & x = 0
+\end{cases}
+\)\\\\
+\fbox{\parbox{\linewidth}{
+\[f \text{ ist n} = 0\text{-mal differenzierbar}\]
+}}\vspace*{2mm}
+\textcolor{gray}{Ableitungen: $x^2 \cdot \sin(\frac{1}{x}) \rightarrow 2x \cdot \sin(\frac{1}{x}) -\cos(\frac{1}{x}) \rightarrow ...$ Die Trigonometrische Funktion wird nie verschwinden.\\Ebenso kann $1-e^{1 - x} \rightarrow e^{1 - x} \rightarrow -e^{1 - x}$. Ist alles aber eh irrelevant weil der Fall nur für $x = 0$ ist und $1 - e^{1 - 1}$ ist dann nicht mehr stetig.}\\\\
+\(f(x) =
+\begin{cases}
+\ln(x), & x \geq 1 \\
+1 - e^{1 - x}, & x < 1
+\end{cases}
+\)\\\\
+\fbox{\parbox{\linewidth}{
+\[f \text{ ist n} = 2\text{-mal differenzierbar}\]
+}}\vspace*{2mm}
+\textcolor{gray}{3. Ableitung nicht mehr stetig}\\
+\end{document}

@@ -1,0 +1,183 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} % Linienbreite anpassen, falls gewünscht
+\renewcommand{\headrule}{
+    \makebox[\textwidth]{\rule{1.0\textwidth}{0.5pt}} 
+}
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=3cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Analysis und Numerik\\Sommersemester 2025}
+\chead{\bfseries{\vspace{0.5\baselineskip}Übungsblatt 1}}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+\fancyheadoffset[R]{0cm}
+
+\begin{document}
+\setcounter{section}{1}
+\subsection{Schriftliche Aufgabe}
+Zeigen Sie, dass die Zahl $\sqrt[k]{2}$ für alle natürlichen Zahlen $k \geq 2$ irrational ist.\\\\
+Wir definieren: \(\mathbb{I}=\mathbb{R}\setminus \mathbb{Q}\)\\
+Wir wissen: \(a^m\cdot a^n = a^{m+n}\) und \(a^{m^n}=a^{m\cdot n}\)\\
+Generelles Konzept: \(\sqrt[k]{2}=2^\frac{1}{k}\)\\
+\hspace*{3,56cm}\(k=2: 2^\frac{1}{2} \in \mathbb{I}\)\\
+\hspace*{3,56cm}\(k=3: 2^\frac{1}{3}=2^\frac{1}{2}\cdot\frac{1}{2^\frac{1}{6}}=2^\frac{1}{2}\cdot 2^6\)\\\\
+\textcolor{gray}{$2^\frac{1}{2} \in \mathbb{I}$ (irrational) \& $2^6 \in \mathbb{R}$ (rational) $\Rightarrow \mathbb{I} \cdot \mathbb{R}=\mathbb{I}$ (mit einem Ausnahmefall)}\\\\
+Daher gilt allgemein:\\
+$\sqrt[k]{2} = 2^\frac{1}{2} \cdot i \quad, i \in \mathbb{R}\quad$ Ob $i$ in diesem Fall rational oder irrational ist, ist egal, weil $\mathbb{I} \cdot \mathbb{R} = \mathbb{I}$\\\\
+Folgender Randfall muss jedoch betrachtet werden:\\
+Für denn Fall, dass $i = 2^\frac{1}{2}$ gilt, wäre dann $2^\frac{1}{2} \cdot 2^\frac{1}{2} = (2^\frac{1}{2})^2 = 2 \notin \mathbb{I}$\\
+Hier wird aber sichtbar, dass dieser Fall für $n \geq 2$ nicht eintreten kann:\\
+$2^1 \overset{!}{=} \sqrt[k]{2} \quad \Rightarrow k = 1$\\
+Dieser Fall kann somit nicht erreicht werden. \qed
+
+\bigskip
+\subsection{Votieraufgabe}
+Zeigen Sie die folgenden Aussagen mit natürlicher Induktion.\\
+\begin{enumerate}[label=(\alph*)]
+    \item $\sum\limits_{k=1}^n k = \frac{n(n + 1)}{2} \quad \forall n \in \mathbb{N}$\\\\
+        \textbf{Induktionsanfang:} $n=1$: $\sum\limits^1_{k=1}k=1$ und $\frac{1(1+1)}{2}=1$. \checkmark\\
+    \textbf{Induktionsschritt:} $n \mapsto n+1$:
+    \begin{itemize}
+        \item Wir gehen davon aus, dass $\sum\limits^n_{k=1}=\frac{n(n+1)}{2}$ gilt.
+        \item \(\sum\limits^{n+1}_{k=1}k=\sum\limits^n_{k=1}k+(n+1)=\frac{n(n+1)}{2}+(n+1)=\frac{n(n+1)}{2}+\frac{2(n+1)}{2}=\frac{n^2+n+2n+2}{2}=\frac{(n+1)(n+2)}{2}\) und das war zu zeigen. \checkmark
+    \end{itemize}
+\end{enumerate}
+(b) Den binomischen Lehrsatz:
+\[
+(x + y)^n = \sum\limits_{k=0}^n \binom{n}{k} x^ky^{n-k} \quad \forall x,y \in \mathbb{R}, n \in \mathbb{N}
+\]
+Induktionsanfang ($n = 1$):\\
+\[
+(a + b)^0 = 1 \quad\text{und}\quad \sum_{k=0}^{0} \binom{0}{k} a^{0-k} b^k = \binom{0}{0} a^0 b^0 = 1
+\]
+Induktionsvorraussetzung:\\
+\[
+(x + y)^n = \sum\limits_{k=0}^n \binom{n}{k} x^ky^{n-k} \quad \forall x,y \in \mathbb{R}, n \in \mathbb{N}
+\]
+Induktionsschritt ($n \Rightarrow n + 1$):\\
+\[
+(x + y)^{n + 1} = \sum\limits_{k=0}^{n + 1} \binom{n + 1}{k} x^ky^{n + 1 -k}
+\]
+\[
+(x+y)^n (x+y) = \sum\limits_{k=0}^{n + 1} \binom{n + 1}{k} x^ky^{n + 1 -k}
+\]
+\[
+\left( \sum\limits_{k=0}^{n} \binom{n}{k} x^k y^{n-k} \right) (x+y) = \sum\limits_{k=0}^{n + 1} \binom{n + 1}{k} x^ky^{n + 1 -k}
+\]
+\[
+\left( \sum\limits_{k=0}^{n} \binom{n}{k} x^k y^{n-k} \right) (x+y) = \sum\limits_{k=0}^{n} \binom{n + 1}{k} x^ky^{n + 1 -k}
+\]
+\[
+\left( \sum\limits_{k=0}^{n} \binom{n}{k} x^k y^{n-k} \right) (x+y) = \sum\limits_{k=0}^{n+1} \left( \binom{n}{k} + \binom{n}{k-1} \right) x^k y^{n+1-k}
+\]
+\[
+\left( \sum\limits_{k=0}^{n} \binom{n}{k} x^k y^{n-k} \right) (x+y) = \sum\limits_{k=0}^{n+1} \binom{n}{k} x^k y^{n+1-k} + \sum\limits_{k=0}^{n+1} \binom{n}{k-1} x^k y^{n+1-k}
+\]
+Zwischenschritt:
+\[
+\sum\limits_{k=0}^{n+1} \binom{n}{k-1} x^k y^{n+1-k} = \sum\limits_{k'=-1}^{n} \binom{n}{k'} x^{k'+1} y^{n-k'}
+\]
+\[
+\left( \sum\limits_{k=0}^{n} \binom{n}{k} x^k y^{n-k} \right) (x+y) = \sum\limits_{k=0}^{n} \binom{n}{k} x^{k+1} y^{n-k}
+\]
+\[
+\left( \sum\limits_{k=0}^{n} \binom{n}{k} x^k y^{n-k} \right) (x+y) = \sum\limits_{k=0}^{n} \binom{n}{k} x^k y^{n+1-k} + \sum\limits_{k=0}^{n} \binom{n}{k} x^{k+1} y^{n-k}
+\]
+\[
+\left( \sum\limits_{k=0}^{n} \binom{n}{k} x^k y^{n-k} \right) (x+y) = (x+y) \sum\limits_{k=0}^{n} \binom{n}{k} x^k y^{n-k}
+\]
+\[
+1 = 1
+\] \qed
+\bigskip
+\subsection{Multiple Choice}
+Kreuzen Sie bei den folgenden Fragen jeweils die zutreffende Antwort an. Korrekte Kreuze bringen\\
++0.5 Punkte, falsche Kreuze -0.5 Punkte. Sie bekommen auf diese Aufgabe mindestens 0 Punkte.\\\\
+(a) \(\sum\limits^n_{k=0}\binom{n}{k}=2^n\quad \forall n \in \mathbb{N}\).\\\\
+wahr $\quad \boxtimes\quad\quad$ falsch $\quad \square$\\\\
+(b) \(\sum\limits^n_{k=0} (-1)^k\binom{n}{k} = 0 \quad \forall n \in \mathbb{N}\).\\\\
+wahr $\quad \boxtimes\quad\quad$ falsch $\quad \square$\\\\
+(c) Erfüllt eine reelle Folge $a_{n+1} = a_n + a_{n-1}$ für alle $n \geq 2$ und $a_1 = 1$, so ist $(a_n)_{n\in N}$ die Fibonacci Folge.\\\\
+wahr $\quad \square\quad\quad$ falsch $\quad \boxtimes$\\\\
+(d) Erfüllt eine reelle Folge $a_{n+1} = \frac{n}{n+1}a_n$ für alle $n \geq 2$ und $a_1 = 1$, so ist $(a_n)_{n\in N}$ die harmonische Folge.\\\\
+wahr $\quad \boxtimes\quad\quad$ falsch $\quad \square$
+
+\bigskip
+\subsection{Rechenaufgabe}
+Formulieren Sie für die rekursiven Folgen eine geschlossene Form und tragen Sie diese in das entsprechende Kästchen ein. Korrekte Lösungen bringen +0.5 Punkte, falsche Lösungen 0 Punkte.
+
+\begin{enumerate}
+    \item $a_1 = 2$ und $a_{n+1} = a_n + 2$ für alle $n \in \mathbb{N}$\\
+    \textcolor{gray}{$a_2=a_{1+1}=2+2=4=a_2$}\\
+    \textcolor{gray}{$a_3=a_{2+1}=4+2=6=a_3$}\\
+    \textcolor{gray}{$a_4=a_{3+1}=6+2=8=a_4$}\\
+    \textcolor{gray}{\dots}\\
+    \(a_n=2n\)
+    \item $a_1 = 1$ und $a_{n+1} = a_n + 2$ für alle $n \in \mathbb{N}$\\
+    \textcolor{gray}{$a_2=a_{1+1}=1+2=3$}\\
+    \textcolor{gray}{$a_3=a_{2+1}=3+2=5$}\\
+    \textcolor{gray}{$a_4=a_{3+1}=5+2=7$}\\
+    \textcolor{gray}{\dots}\\
+    \(a_n=2n-1\)
+    \item $a_1 = 1$ und $a_{n+1} = na_n$ für alle $n \in \mathbb{N}$\\
+    \textcolor{gray}{$a_2=a_{1+1}=1\cdot 1=1$}\\
+    \textcolor{gray}{$a_3=a_{2+1}=2\cdot 1=2$}\\
+    \textcolor{gray}{$a_4=a_{3+1}=3\cdot 2=6$}\\
+    \textcolor{gray}{$a_5=a_{4+1}=4\cdot 6=24$}\\
+    \textcolor{gray}{\dots}\\
+    \(a_n=(n-1)!\)
+    \item $a_1 = 1$ und $a_{n+1} = a_n + (n + 1)$ für alle $n \in \mathbb{N}$\\
+    \textcolor{gray}{$a_2=a_{1+1}=1+(1+1)=3$}\\
+    \textcolor{gray}{$a_3=a_{2+1}=3+(2+1)=6$}\\
+    \textcolor{gray}{$a_4=a_{3+1}=6+(3+1)=10$}\\
+    \textcolor{gray}{$a_5=a_{4+1}=10+(4+1)=15$}\\
+    \textcolor{gray}{\dots}\\
+    \(a_n=\sum\limits^n_{i=1}i=\frac{n\cdot (n+1)}{2}\)
+\end{enumerate}
+\end{document}

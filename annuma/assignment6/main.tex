@@ -1,0 +1,217 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} % Linienbreite anpassen, falls gewünscht
+\renewcommand{\headrule}{
+    \makebox[\textwidth]{\rule{1.0\textwidth}{0.5pt}} 
+}
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=3cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Analysis und Numerik\\Sommersemester 2025}
+\chead{\bfseries{\vspace{0.5\baselineskip}Übungsblatt 6}}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+\fancyheadoffset[R]{0cm}
+
+\begin{document}
+\setcounter{section}{6}
+\subsection{Rechenaufgabe}
+Bestimmen Sie die Grenzwerte und tragen Sie diese in die Kästchen ein. Im Falle der Nicht-Existenz schreiben Sie NaN in das entsprechende Kästchen. Bitte geben Sie nur die Endergebnisse an.\\\\
+\fbox{\parbox{\linewidth}{
+\[\lim\limits_{x_\to 0}\frac{x-3}{x-4}=\frac{3}{4}\]
+}}\vspace*{5mm}
+Seien $p,q \in \mathbb{N}$\\
+\fbox{\parbox{\linewidth}{
+\[\lim\limits_{x_\to 1}\frac{x^p-1}{x^q-1}=\frac{p}{q}\]
+}}\\\\
+\textit{Hinweis:} Verwenden Sie die geometrische Summenformel.\\
+\textcolor{gray}{$\frac{x^{p-1}}{x^{q-1}} = \frac{x^{p-1} + x^{p-2} + ... + x^{2} + x^{1} + 1}{x^{q-1} + x^{q-2} + ... + x^{2} + x^{1} + 1} = \frac{\sum\limits_{k = 0}^{p - 1} x^k}{\sum\limits_{k = 0}^{q - 1} x^k} \rightarrow \frac{\lim\limits_{x \rightarrow 1} \sum\limits_{k = 0}^{p - 1} x^k}{\lim\limits_{x \rightarrow 1} \sum\limits_{k = 0}^{q - 1} x^k} = \frac{p}{q}$}\\\\
+Sei $\lfloor x\rfloor$ die größte Zahl, welche kleiner als $x$ ist.\\
+\fbox{\parbox{\linewidth}{
+\[\lim\limits_{x_\downarrow 1}(x-\lfloor x\rfloor)=0\]
+}}\vspace*{5mm}
+\fbox{\parbox{\linewidth}{
+\[\lim\limits_{x_\uparrow 1}(x-\lfloor x\rfloor)=1\]
+}}\vspace*{5mm}
+
+\subsection{Multiple Choice}
+Kreuzen Sie bei den folgenden Fragen jeweils die zutreende Antwort an. Korrekte Kreuze bringen +0.5 Punkte. Falsche Kreuze -0.5 Punkte. Sie bekommen auf diese Aufgabe mindestens 0 Punkte.\\
+\begin{enumerate}[label=({\alph*})]
+    \item Für die Menge $D= \{1/n+(-1)^n|n\in \mathbb{N}\}\cup\{(-1)^m|m\in\mathbb{N}\}$ gilt $D= \overline{D}$.
+    \begin{flushright}
+        wahr $\boxtimes\quad$ falsch $\square$
+    \end{flushright}
+    \item Für die Menge $D= \{1/n+ (-1)^m|m,n\in\mathbb{N}\}$ gilt $D= \overline{D}$.
+    \begin{flushright}
+        wahr $\square\quad$ falsch $\boxtimes$
+    \end{flushright}
+    \item Die Funktion $f: \mathbb{R}\to \mathbb{R}$\\
+    \hspace*{4,57cm}\(f(x)=\begin{cases}
+        x^2, & \hspace*{0,65cm}x\leq 0,\\
+        0, & 0\leq x \leq 1,\\
+        x-1, & 1\leq x
+    \end{cases}\)\\
+    ist stetig in $x=0$.
+    \begin{flushright}
+        wahr $\boxtimes\quad$ falsch $\square$
+    \end{flushright}
+    \newpage
+    \item Die Funktion $f: \mathbb{R}\to \mathbb{R}$\\
+    \hspace*{4,57cm}\(f(x)=\begin{cases}
+        x^2, & \hspace*{0,65cm}x\leq 0,\\
+        0, & 0\leq x \leq 1,\\
+        x-1, & 1\leq x
+    \end{cases}\)\\
+    ist stetig in $x=1$.
+    \begin{flushright}
+        wahr $\square\quad$ falsch $\boxtimes$
+    \end{flushright}
+\end{enumerate}
+\subsection{Schriftliche Aufgabe}
+\begin{enumerate}[label=({\alph*})]
+    \item Zeigen Sie, dass die Funktion $f: \mathbb{R} \to \mathbb{R}, f(x) = 3x^3$ stetig ist in $x_0 \in\mathbb{R}$. Verwenden Sie hierfür das Folgenkriterium.\\
+    Wir verwenden das Folgenkriterium für Stetigkeit das wie folgt definiert ist:
+
+    Eine Funktion \( f: \mathbb{R} \to \mathbb{R} \) ist stetig in \( x_0 \), wenn für jede Folge \( (x_n) \) mit \( \lim_{n \to \infty} x_n = x_0 \) gilt:
+    \[
+    \lim_{n \to \infty} f(x_n) = f(x_0).
+    \]
+    
+    Sei \( f(x) = 3x^3 \) und \( x_n \to x_0 \). Da Potenzfunktionen stetig sind, folgt:
+    \[
+    \lim_{n \to \infty} f(x_n) = \lim_{n \to \infty} 3x_n^3 = 3 \cdot \lim_{n \to \infty} x_n^3 = 3x_0^3 = f(x_0).
+    \]
+
+    Daraus folgt, dass die Funktion \( f(x) = 3x^3 \) stetig ist in jedem \( x_0 \in \mathbb{R} \).
+    \item Zeigen Sie, dass die Funktion $f: \mathbb{R} \setminus \-2\}\to\mathbb{R}, f(x) =\frac{x}{2+x}$ stetig ist in $x_0 = 2$. Verwenden Sie hierfür das $\epsilon$-$\delta$-Kriterium.\\
+    Wir zeigen die Stetigkeit mittels des \(\varepsilon\)-\(\delta\)-Kriteriums.
+
+    Zunächst berechnen wir:
+    \[
+    f(2) = \frac{2^2 + 2}{2 + 2} = \frac{6}{4} = \frac{3}{2}.
+    \]
+    
+    Wir betrachten:
+    \[
+    \left| f(x) - f(2) \right| = \left| \frac{x^2 + x}{x + 2} - \frac{3}{2} \right|.
+    \]
+    
+    Rechne die Differenz aus:
+    \[
+    \left| \frac{2(x^2 + x) - 3(x + 2)}{2(x + 2)} \right| = \left| \frac{2x^2 + 2x - 3x - 6}{2(x + 2)} \right| = \left| \frac{2x^2 - x - 6}{2(x + 2)} \right|.
+    \]
+    
+    Zerlegung des Zählers:
+    \[
+    2x^2 - x - 6 = (2x + 3)(x - 2),
+    \]
+    daher:
+    \[
+    \left| f(x) - f(2) \right| = \left| \frac{(2x + 3)(x - 2)}{2(x + 2)} \right|.
+    \]
+    
+    Für \( x \in (1, 3) \) gilt:
+    \[
+    |2x + 3| \leq 9, \quad |x + 2| \geq 3 \Rightarrow \left| f(x) - f(2) \right| \leq \frac{9}{6} |x - 2| = \frac{3}{2} |x - 2|.
+    \]
+    
+    Damit wählen wir:
+    \[
+    \delta = \frac{2}{3} \varepsilon \Rightarrow |x - 2| < \delta \Rightarrow |f(x) - f(2)| < \varepsilon.
+    \]
+    
+    Somit gilt, dass \( f(x) = \frac{x^2 + x}{x + 2} \) stetig ist in \( x_0 = 2 \).\\
+    \item Entscheiden Sie (mit Begründung) für welche $\alpha\in[0,1]$ die Funktion $f_\alpha: [0,1] \to\mathbb{R}, f_\alpha(x) = x_\alpha$ Lipschitz-stetig ist.\\
+    Definition von Lipschitz Stetigkeit: Eine Funktion \( f: [0, 1] \to \mathbb{R} \) ist es, wenn ein \( L > 0 \) existiert, sodass für alle \( x, y \in [0,1] \) gilt:
+    \[
+    |f(x) - f(y)| \leq L |x - y|.
+    \]
+    
+    \textbf{Fall \( \alpha = 0 \):}
+    \[
+    f_0(x) = 1 \Rightarrow \text{konstant} \Rightarrow \text{Lipschitz-stetig mit } L = 0.
+    \]
+    
+    \textbf{Fall \( \alpha = 1 \):}
+    \[
+    f_1(x) = x \Rightarrow \text{linear} \Rightarrow \text{Lipschitz mit } L = 1.
+    \]
+    
+    \textbf{Fall \( \alpha \in (0,1) \):}
+    
+    Dann ist:
+    \[
+    f'_\alpha(x) = \alpha x^{\alpha - 1}.
+    \]
+    Da \( \alpha - 1 < 0 \), wird \( f'_\alpha(x) \to \infty \) für \( x \to 0^+ \), also ist die Steigung nahe 0 nicht beschränkt.
+    
+    Daraus folgt: für \( \alpha \in (0,1) \) ist \( f_\alpha \) \emph{nicht} Lipschitz-stetig auf \([0,1]\).
+\end{enumerate}
+
+\subsection{Votieraufgabe}
+Ein Kreditinstitut vergibt monatlich Zinsen auf ein gegebenes Startkapital $S \in\mathbb{R}_+$. Im ersten Monat werden 1\% Zinsen auf das Startkapital $S= G(0)$ ausgezahlt, im zweiten Monat 2\% auf das Gesamtkapital $G(1) \in \mathbb{R}$ nach einem Monat, usw. bis im $n$-ten Monat $n$\% Zinsen auf das Gesamtkapital $G(n-1)$ nach $(n-1)$ Monaten ausgezahlt wird.
+\begin{enumerate}[label=({\alph*})]
+    \item Berechnen für $S = 1$, wie hoch das Gesamtkapital $G(12)$ nach einem Jahr ist.\\
+    \(\prod\limits^{12}_{i=1} x \cdot (1+\frac{i}{100})=2,1157044115\approx 2,12\)
+    \item Berechnen Sie, wie hoch das Startkapital $S$ mindestens sein muss, sodass nach einem Jahr \[G(12) \geq 1000.\]\\
+    Für $G(12)\geq 1000 $ können wir die Gegenrechnung $\frac{1000}{2,12}=471,69811321 \approx 471,7 $ verwenden. Wir müssen also mit einem Startkapital $S\geq 471,70 $ beginnen, um nach einem Jahr ein Kapital von $1000 $ zu erhalten.
+    \item Berechnen Sie die Anzahl der Monate $n\in\mathbb{N}$, sodass das Gesamtkapital
+    \[G(n) \geq 100\]
+    bei einem Startkapital $S = 1$.\\
+    Für $G(n)=100$ betrachten wir in Intervallen, we sich $G$ verändert.\\
+    $G(12)\approx 2,12$\\
+    $G(20)\approx 7,17$\\
+    $G(30)\approx 69,29$\\
+    $G(31)\approx 90,77$\\
+    $G(32)\approx 119,82$\\
+    Wir wissen also: $G(n)\geq 100 \,\, \forall\, n\geq 32$
+\end{enumerate}
+\textit{Hinweis:} Verwenden Sie das Prinzip der Intervallschachtelung.
+\end{document}

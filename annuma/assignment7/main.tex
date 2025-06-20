@@ -1,0 +1,163 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} % Linienbreite anpassen, falls gewünscht
+\renewcommand{\headrule}{
+    \makebox[\textwidth]{\rule{1.0\textwidth}{0.5pt}} 
+}
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=3cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Analysis und Numerik\\Sommersemester 2025}
+\chead{\bfseries{\vspace{0.5\baselineskip}Übungsblatt 7}}
+\rhead{Lienkamp, 8128180\\Werner, 7987847}
+\fancyheadoffset[R]{0cm}
+
+\begin{document}
+\setcounter{section}{7}
+\subsection{Multiple Choice}
+Kreuzen Sie bei den folgenden Fragen jeweils die zutreffende Antwort an. Korrekte Kreuze bringen +0.5 Punkte. Falsche Kreuze -0.5 Punkte. Sie bekommen auf diese Aufgabe mindestens 0 Punkte.
+\begin{enumerate}[label=(\alph*)]
+    \item Sei $f: \mathbb{R} \rightarrow \mathbb{R}, f(x) = x^n + x^m$ für  $n, m \in \mathbb{N}_0$. Dann ist
+    \[f \in O\left(x^{max\{n, m\}}\right) \quad \text{für } x \rightarrow \infty\]
+    \begin{flushright}
+        wahr $\boxtimes\quad$ falsch $\square$
+    \end{flushright}
+    \textcolor{gray}{Bei Addition zweier Terme, kann der Term kleinerer Laufzeitklasse vernachlässigt werden. Somit zählt nur der größere. die Funktion $max\{n, m\}$ wählt den größeren der beiden Werte und somit die größere der beiden Laufzeitklassen}
+
+    \item Die Funktion $f: \mathbb{R} \rightarrow \mathbb{R}, f(x) = x^3 - x$ ist injektiv
+    \begin{flushright}
+        wahr $\square\quad$ falsch $\boxtimes$
+    \end{flushright}
+    \textcolor{gray}{Die Injektivität ist erfüllt, wenn eine Funktion nie für zwei oder mehr Eingabewerte den selben Funktionswert liefert. $x^3 - x$ erfüllt diese Aussage allerdings nicht. (Im grob abgeschätzten Interval $-2 \leq x \leq 2$ gibt es doppelte Funktionswerte)}
+
+    \item Die Funktion $f: \mathbb{R} \rightarrow \mathbb{R}, f(x) = x^3 - x$ ist surjektiv
+    \begin{flushright}
+        wahr $\boxtimes\quad$ falsch $\square$
+    \end{flushright}
+    \textcolor{gray}{Die Surjektivität ist erfüllt, wenn eine Funktion alle Werte in $\mathbb{R}$ erreichen kann}
+
+    \item Die Funktion $f: \mathbb{R} \rightarrow \mathbb{R},$
+    \[f(x) = \begin{cases}
+        \frac{1}{x}, & x \neq 0,\\
+        0, & x = 0
+    \end{cases}\]
+    ist bijektiv
+    \begin{flushright}
+        wahr $\boxtimes$ falsch $\square\quad$
+    \end{flushright}
+    \textcolor{gray}{Die Funktion ist Surjektiv, da der Fall $\frac{1}{x}$ das Bild $\mathbb{R}/\{0\}$ abdeckt und der Fall $0$ die Bildmenge $\{0\}$. Somit gilt $\mathbb{R}/\{0\} \,\cap \,\{0\} = \mathbb{R}$. Die Bijektivität ist gegeben, da keine 2 Eingabewerte den gleichen Funktionswert erreichen.}
+\end{enumerate}
+\clearpage
+\subsection{Rechenaufgabe}
+Für die folgenden Funktionen $f: \mathbb{R} \rightarrow \mathbb{R}$ bestimmen Sie das minimale $n \in \mathbb{N}_0$, sodass
+\[f \in O\left(x^n\right) \quad \text{für} \rightarrow \infty\]
+Falls $f \notin O\left(x^n\right)$ für alle $n \in N_0$, tragen Sie NaN in das entrsprechende Kästchen. Bitte geben SIe nur die Endergebnisse an. Korrekte Lösungen bringen +0.5 Punkte, falsche Lösungen 0 Punkte.\\
+\(f(x) = \sum\limits^7_{k=1} \frac{x^k}{k!}\)\\\\
+\fbox{\parbox{\linewidth}{
+\[f \in O(x^n) \quad \text{für} \, n = 7\]
+}}\vspace*{2mm}
+\textcolor{gray}{Die höchste Potenz ist $x^7$, also ist das asymptotische Verhalten $O(x^7)$.}\\
+
+\(f(x) = e^x\)\\\\
+\fbox{\parbox{\linewidth}{
+\[f \in O(x^n) \quad \text{für} \, n = \text{NaN}\]
+}}\vspace*{2mm}
+\textcolor{gray}{$e^x$ wächst schneller als jede Potenz, also ist $f \notin O(x^n)$ für endliches $n$.}\\
+
+\(f(x) = \text{sin}(x)\)\\\\
+\fbox{\parbox{\linewidth}{
+\[f \in O(x^n) \quad \text{für} \, n = 0\]
+}}\vspace*{2mm}
+\textcolor{gray}{$\sin(x)$ ist beschränkt, also ist $f \in O(1) = O(x^0)$.}\\
+
+\(f(x) = (2 \, \text{ln} \, x - \text{ln}(x^2 + 2))\)\\\\
+\fbox{\parbox{\linewidth}{
+\[f \in O(x^n) \quad \text{für} \, n = 0\]
+}}\vspace*{2mm}
+\textcolor{gray}{Für große $x$ ist $f(x) \approx 2\ln x - 2\ln x = 0$, also beschränkt $\Rightarrow O(1) = O(x^0)$.}
+\clearpage
+\subsection{Schriftliche Aufgabe}
+\begin{enumerate}
+    \item $f: [0, 1] \rightarrow [0, 1]$ eine stetige Funktion. Zeigen Sie, dass $f$ einen Fixpunkt besitzt, d.h., es gibt ein $a \in [0, 1]$ mit $f(a) = a$.
+
+    Wir definieren $g(x) := f(x) - x$. $g$ ist stetig, da $f$ stetig ist.
+    \begin{itemize}
+        \item $g(0) = f(0) - 0 \geq 0$
+        \item $g(1) = f(1) - 1 \leq 0$
+    \end{itemize}
+    Aus der Vorlesung kennen wir den Zwischenwertsatz, welcher besagt, dass $a \in [0,1]$ mit $g(a) = 0 \Rightarrow f(a) = a$ existiert.
+
+    \item Geben Sie ein Beispiel einer stetigen Funktion $f: (0, 1) \rightarrow (0,1 )$ an, die keinen Fixpunkt besitzt.
+
+    Beispiel: $f(x) = \frac{1}{2} + \frac{x}{2}$  
+    Diese Funktion ist auf $(0,1)$ stetig und für alle $x$ gilt: $f(x) > x$.  
+    Daher existiert kein $x$ mit $f(x) = x$.
+\end{enumerate}
+
+\subsection{Votieraufgabe}
+Sei $D \subseteq \mathbb{R}, f: D \rightarrow$. Beweisen oder wiederlegen Sie
+\begin{enumerate}[label=(\alph*)]
+\item Ist $f$ Lipschitz-stetig, so ist $f$ auch gleichmäßig stetig.
+
+\textbf{Wahr}.\\  
+Lipschitz-Stetigkeit impliziert gleichmäßige Stetigkeit, da $|f(x) - f(y)| \leq L |x - y|$ für alle $x,y \Rightarrow \varepsilon$-$\delta$-Kriterium gleichmäßig erfüllt.
+
+\item Ist $f$ gleichmäßig stetig, so ist $f$ auch Lipschitz-stetig.
+ 
+\textbf{Falsch.}\\  
+\textit{Gegenbeispiel}: $f(x) = \sqrt{x}$ auf $[0,1]$ ist gleichmäßig stetig, aber nicht Lipschitz-stetig (Ableitung wird unbeschränkt nahe $x = 0$).
+
+\item Ist $f$ stetig, so ist $f$ auch gleichmäßig stetig.
+
+\textbf{Falsch.}\\
+\textit{Gegenbeispiel}: $f(x) = \tan(x)$ auf $(-\frac{\pi}{2}, \frac{\pi}{2})$ ist stetig, aber nicht gleichmäßig stetig wegen Unbeschränktheit der Ableitung nahe den Randpunkten.
+\end{enumerate}
+\end{document}
