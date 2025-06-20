@@ -1,0 +1,129 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} % Linienbreite anpassen, falls gewünscht
+\renewcommand{\headrule}{
+    \makebox[\textwidth]{\rule{1.0\textwidth}{0.5pt}} 
+}
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+paper=a4paper, % Paper size, change to letterpaper for US letter size
+top=3cm, % Top margin
+bottom=3cm, % Bottom margin
+left=2.5cm, % Left margin
+right=2.5cm, % Right margin
+headheight=25pt, % Header height
+footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+headsep=1cm, % Space from the top margin to the baseline of the header
+%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Badan, 7418190\\Kneifel, 8071554}
+\chead{\bfseries{\vspace{0.5\baselineskip}HL-BPR Praktikum SS25\\Blatt 06}}
+\rhead{Wolf, 8019440\\Werner, 7987847}
+\fancyheadoffset[R]{0cm}
+
+\begin{document}
+\section*{Exercise 7.1}
+Here we use the tbb::parallel for function in order to parallelize our for loop, starting at 0 going until N and iteration over the int i.
+\begin{lstlisting}
+  TStopwatch timerITBB;
+  for( int ii = 0; ii < NIter; ii++ )
+      tbb::parallel_for(0, N,[](int i){
+      for( int j = 0; j < N; j+=Vc::float_v::Size ) {
+          Vc::float_v &aVec = (reinterpret_cast<Vc::float_v&>(a[i][j]));
+          Vc::float_v &cVec = (reinterpret_cast<Vc::float_v&>(c_tbb[i][j]));
+          cVec = f(aVec);
+      }
+      });
+  timerITBB.Stop();
+\end{lstlisting}
+\section*{Exercise 7.2}
+\subsection*{The class}
+The needed class for this calculation, does not need 4 constructors but is most efficient, if they are manually implemented.
+\begin{lstlisting}
+    // default constructor
+  PiCalc() : sum(0.0) {}
+
+  // main constructor 
+  PiCalc(double s_u, double s) :
+    sum(s_u), step(s) {}
+
+  // copy constructor
+  PiCalc(const PiCalc& other_sum) : sum(other_sum.sum), step(other_sum.step) {}
+
+  // split constructor
+  PiCalc(const PiCalc& other_sum, tbb::split) : sum(0.0) , step(other_sum.step) {} 
+\end{lstlisting}
+3 out 4 constructors are (if not manually implemented) automatically implemented by the compiler, as they need constructors to use instances of those classes. Only the \lstinline{split constructor} needs to be manually implemented, so the TBB can split the calculations across free threads.
+Each thread is then initialized with the \lstinline{sum = 0.0} so the new calculations can begin. The \lstinline{tbb::parallel_reduce} method can now automatically use the \lstinline{join} method to calculate the total sum (sum of all local sums).
+\subsection*{Parallelizing the loop}
+\begin{lstlisting}
+     PiCalc body(0.0, step);
+  tbb::parallel_reduce(tbb::blocked_range<int>(0, num_steps), body); 
+  pi = step * body.getSum();
+\end{lstlisting}
+The parallelizing of the loop happens within the use of the \lstinline{parallel_reduce} method. There are different methods to implement this method, with 2 arguments, 3 arguments or 4 arguments.
+You first define an instance of \lstinline{PiCalc}, as the \lstinline{parallel_reduce} method returns only a void. This method takes two arguments: \lstinline{range} and \lstinline{body} (basically an instance of a class to calculate something). The \lstinline{range} is defined with \lstinline{blocked_range}. This helps the \lstinline{parallel_reduce} method to split the whole range into blocks, so no miscalculations between threads can happen. At last you can use \lstinline{getSum()} to return the sum, so the calculation can be finished.
+
+\subsection*{Runtime}
+The scalar version (just using one thread) takes around 2626.27 ms. By using the most efficient parallelization, the runtime is of course faster, around 764.774 ms. Speedup is: 3.434 , so around three times faster.
+
+\clearpage
+\section*{Exercise 7.3}
+After implementing the required parts of the code, we get the following output:
+\begin{lstlisting}
+Scalar counter:     489566 	 Time: 61.3961
+TBB atomic counter: 489566 	 Time: 14.3781
+TBB mutex counter:  489566 	 Time: 42.5551
+\end{lstlisting}
+\subsubsection*{i) Atomic Counter}
+\textit{Please explain why an atomic counter is necessary here and explain its behavior.}\\\\
+An atomic counter is required in order to avoid race-conditioning errors. These can occur when multiple threads want to increment the counter simultaneously. This would lead to wrong results.\\
+An atomic counter however only allows one increment-computation simultaneously (as the name \textit{Atomic} implies). This results in safe threading and no race-conditioning. In addition, no locking is required.
+\subsubsection*{ii) Mutex}
+\textit{In which scope do you have to initialize your mutex and why?}\\\\
+The mutex must be initialized globally for all threads. It needs to at least be defined in the least-outer scope in which the threadding happens. This is needs to be the case because all threads require access to the same mutex, in order to be able to lock and unlock it. Otherwhise 2 threads might lock different mutex's at the same time while simultaneously incrementing the shared counter, possibly resulting in a race-condition.\\\\
+\textit{Additionally, why is the mutex locked but
+never unlocked explicity?}\\\\
+The used implementation is a RAII-variant, meaning it automatically locks on object-creation and auto-unlocks when The loop, etc. goes out of bounds and terminates. We can avoid some boilerplate code and make it safer by not explicitly having to lock and unlock, causing double-locking/unlocking or forgetting it in the first place.\\\\
+\textbf{Runtime Analysis}\\
+Now, given the explanation, we can further analyse our results.\\
+First of all, each implementation returns the same result, meaning all zeros are counted correctly and are therefore correctly implemented.\\
+Finally, we can compare the duration of each approach. The scalar approach is the slowest, as expected. TBB mutex is the second fastest one but still has some overhead for locking and unlocking. Thus it is not as fast as the atomic counter, which yields a 4x increase in time-efficiency
+\end{document}

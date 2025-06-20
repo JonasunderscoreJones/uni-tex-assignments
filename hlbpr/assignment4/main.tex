@@ -1,0 +1,152 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} % Linienbreite anpassen, falls gewünscht
+\renewcommand{\headrule}{
+    \makebox[\textwidth]{\rule{1.0\textwidth}{0.5pt}} 
+}
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+paper=a4paper, % Paper size, change to letterpaper for US letter size
+top=3cm, % Top margin
+bottom=3cm, % Bottom margin
+left=2.5cm, % Left margin
+right=2.5cm, % Right margin
+headheight=25pt, % Header height
+footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+headsep=1cm, % Space from the top margin to the baseline of the header
+%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Badan, 7418190\\Kneifel, 8071554}
+\chead{\bfseries{\vspace{0.5\baselineskip}HL-BPR Praktikum SS25\\Blatt 04}}
+\rhead{Wolf, 8019440\\Werner, 7987847}
+\fancyheadoffset[R]{0cm}
+
+\begin{document}
+
+\section*{Exercise 4.1: Fast Element-Wise Unary Operations}
+The results in the console look as follows:
+\begin{lstlisting}[caption={"Output of Matrix.cpp"}]
+Time scalar: 83.2429 ms 
+Time SIMD:   24.0281 ms, speed up 3.4644
+SIMD and scalar results are the same.
+\end{lstlisting}
+Although these results vary a little, the general speedup is between \texttt{3.4} and \texttt{3.8}.\\\\
+The expected speedup on first thought would be x4 because the \texttt{F32vec4} uses the \texttt{\_\_m128} datatype family and a float being 32bit in size, results in \texttt{4 x 32b = 128b}.\\\\
+More accurately, the runtime time would be: \[\mathcal{O}\left(\lfloor\frac{n}{4}\rfloor + (n \mod 4)\right)\] since unless inserting $4 - (n \mod 4)$ dummy elements to do another SIMD-whise computation, these last few elements need to be computed in a scalar manor.\\
+In this case, our Matrix with \texttt{N = 1000} has 1000000 entries. Therefore:\\
+\(
+N = 1000000 \overset{\wedge}{=} 28.2429ms
+\)\\
+\(
+N = 1 \overset{\wedge}{=} \text{8.32429e-05}ms
+\)
+Based on that, the runtime for \texttt{N = 1000000} should have been\\
+$T = \left(\lfloor\frac{1000000}{4}\rfloor + (1000000 \mod 4)\right) \cdot \text{8.32429e-05}ms$
+$\approx 20.810724ms$\\\\
+The actual result is quite close to the theoretical speedup. Other parameters influencing the time are for example parts of the function that take constant amount of time or random delays and uncertainties during the process execution that change every time.
+
+\section*{Exercise 4.2}
+In this experiment, several implementations of a quadratic root calculation algorithm were evaluated, comparing a traditional scalar version with four different SIMD variants labeled SIMD1 through SIMD4. The scalar version served as the baseline for both correctness and performance, completing in 325.824 milliseconds.\\
+SIMD1 is an implementation with a faster clear time than anything else in the line up.\\
+Scalar	325.824	1.00×\\
+SIMD1	0.285	1142.65×\\
+\\
+
+In contrast, SIMD2 exhibited an extreme decline in performance, with a total execution time of 1492.1 milliseconds—significantly slower than even the scalar version.\\
+\\
+Scalar	325.824	1.00×\\
+SIMD2	1492.1	0.22×\\
+\\
+SIMD3 offered a more balanced result, achieving a moderate improvement over the scalar baseline by completing in 180.083 milliseconds.\\
+Scalar	325.824	1.00×\\
+SIMD3	180.083	1.81×\\
+\\
+
+SIMD4, however, followed a similar trend to SIMD2, performing poorly with an execution time of 1105.47 milliseconds, being a little bit faster than the scalar process. \\
+Scalar	325.824	1.00×\\
+SIMD4	1105.47	0.29×\\
+\\
+
+The different SIMD usages lead to different results. All of them proving that SIMD approach is faster than our scalar approach. Although admitedly through the huge despair between SIMD1 and the rest one can assume its depenedant on how the code is implemented and if its the correct use case of the code. 
+
+\section*{Exercise 4.3}
+\subsection*{Integer version}
+\begin{lstlisting}
+
+// post processing
+sumI = static_cast<unsigned char>(
+        (temp_sumI & 0xFF) ^
+        ((temp_sumI >> 8) & 0xFF) ^
+        ((temp_sumI >> 16) & 0xFF) ^
+        ((temp_sumI >> 24) & 0xFF)
+    );
+\end{lstlisting} 
+We first use the \verb|reinterpret_cast| function to convert our string into a ptr to our integer, we use our intPtr in the sum function with N/4 iterations because an integer can fit 4 bytes while a char only fits one, so one int can fir 4 of our chars.\\
+\\
+lastly we have to post process to convert our result back to an unsigned char, to do this we use a \verb|static_cast| and we XOR the 4 bytes of the int with eachother as that is the part that we leave out of the sum function.
+\subsection*{SIMD}
+After we convert our type via \verb|reinterpret_cast| we then use the sum functions with N/16 iterations as one float can fit 4 bytes (i.e. 4 chars) and one of our Vectors can fit 4 floats (4x4=16).
+\begin{lstlisting}
+// converting into ints for further processing
+int* iptr = reinterpret_cast<int*>(&temp_sumV);
+
+// Post proccesing
+// going through all the ints in the vector
+// performing xor operations to get it into single byte format
+int finalint =0;
+for(int i=0;i<4;++i){
+
+    finalint= finalint ^
+        (iptr[i] & 0xFF) ^
+        ((iptr[i] >> 8) & 0xFF) ^
+        ((iptr[i] >> 16) & 0xFF) ^
+        ((iptr[i] >> 24) & 0xFF);
+}
+\end{lstlisting}
+We do our post Proccesing by first converting to integers so that we can use a similar technique to the previous version only that this time we xor the 4 bytes of all the 4 integers in the vector with each other.
+
+
+\section*{Exercise 4.4}
+
+The Affine Transformation is a calculation, which is based on the function $y = A*x+b.$
+With the help of SIMD we can reduce the runtime by about 3/4 (only 3/4 of the runtime of AffineTransform). Here you can see the following difference: by using MatVecMul, i.e. the scalar version, the runtime for each epoch is just under 67 seconds.
+The runtime is reduced by almost 30 seconds if you use the SIMD version of the MatVecMul function. The speedup would be calculated with the function: $
+\text{Speedup} := \frac{T_{\text{without SIMD}}}{T_{\text{with SIMD}}} = \frac{68s}{37s} = 1.8108 $. In conclusion, the function with the help of SIMD runs approx. 1,8 times faster than without using SIMD.
+\end{document}

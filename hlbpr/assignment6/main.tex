@@ -1,0 +1,353 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} % Linienbreite anpassen, falls gewünscht
+\renewcommand{\headrule}{
+    \makebox[\textwidth]{\rule{1.0\textwidth}{0.5pt}} 
+}
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+paper=a4paper, % Paper size, change to letterpaper for US letter size
+top=3cm, % Top margin
+bottom=3cm, % Bottom margin
+left=2.5cm, % Left margin
+right=2.5cm, % Right margin
+headheight=25pt, % Header height
+footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+headsep=1cm, % Space from the top margin to the baseline of the header
+%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Badan, 7418190\\Kneifel, 8071554}
+\chead{\bfseries{\vspace{0.5\baselineskip}HL-BPR Praktikum SS25\\Blatt 06}}
+\rhead{Wolf, 8019440\\Werner, 7987847}
+\fancyheadoffset[R]{0cm}
+
+\begin{document}
+\section*{Exercise 6.1}
+\subsection*{i}
+There is a assumption to be made when answering this problem. That is the work required to turn a program to a multi threaded code is not ignorable. \\
+A loop with two different iterations which are independent from each other fullfills the usecase of multithreading. \\
+The biggest issue with multithreading is the information dependency of two tasks. If it is given that two tasks are independent from each other and are made can be solved in any order, this type of problem fullfills any condition needed for multithreading to work better than the usual code. The runtime complexity will always be smaller equal to the original code.\\
+\\
+There is a discussion to be made. If like in the question mentioned the loop is so short by runtime complexity that the time invested in parallelising the code and the time gain of said parallelising is not worth it. \\
+\\
+\\
+\subsection*{ii}
+Concurrency uses one core but finishes every task at the same time meaning while it shows the behaviour of parallelism that it finishes task at the same time. The actual runtime resembels the behaviour of running the problem as usual.
+\\
+Parallelism uses multiple cores to make work on the different tasks at the same time. To be more accurat different to concurrency parallelism gets more work done at the same time frame usually needing as long as the longest dependant tasks in the threads. The easiest exampels are data collection and management. Lets assume the programm is required to collect information of different sources. Then it should be assummed that those datas are numerical. After a day it should output all collected data. Collecting the data from one day takes one day would mean using concurrency it would take 8 days to output the data of a single day. \\
+Parallelization is can independently collect data from each source at the same time. With 8 possible threads for example. The fact of the matter is that this is simply untrue.If a computer has the ability to keep 8 threads running at the same time. Only 6 will be used for purely computing. Since stuff like the Operating System. Datamanagement and keeping the threads in check needs computing time so while in a perfect world it could be assummed the 8 threads would reduce the workload to 1 day. In truth we can at best reduce 6 Days. This is good results just not perfect.
+
+\\
+
+\subsection*{iii}
+Dependencies between Tasks leads to the state of race conditions. Simply said if two tasks need to first write acces two different strings of information into the same memory cell. Then they read from that same cell , that can lead to a problem if a information loss happens. This would lead to errors. With this in mind you would have to control the time data is read/written then extract it. This leads to a slow down of the speed up.
+\\
+\\
+Read access does not lead to problems if multiple tasks only take read accesses the order of execution does not matter since the tasks are by nature independent. \\
+\\
+Write acces is problematic by the fact that the information loss happens once a memory cell is overwritten and the managing thread needs to properly manage the different tasks then in order for no error to happen.
+\\
+\\
+Race condition is an unstable state that happens if informational dependent tasks are paralleled. This state requires careful planning and preparation and shoould be avoided. It also is a reason for reducing the possible speed up programs should have.
+\\
+\sub section*{iv}
+
+Suppose we have an array with \(n\) elements and \(n\) CPU cores available. We want to find the sum of all elements using multiple threads in parallel, without using OpenMP's built-in reduction feature.\\ \\
+
+The main idea is to use a \textbf{parallel pairwise reduction} method. This means that in each step, threads add pairs of elements at the same time, cutting the number of elements to sum in half.\\ \\
+
+At the start, each thread works on one element. In the first step, threads with even indices add their element to the next element. This reduces the problem size from \(n\) to \(n/2\). In the next step, threads with indices that are multiples of 4 add their element to the one two positions away, halving the size again. We keep doing this, doubling the distance each time, until only one element is left — the total sum.\\ \\
+
+Since the number of elements is cut in half each step, the total number of steps is \(\log_2 n\). Because all additions in each step happen at the same time across the cores, and assuming the overhead (like thread management) takes constant time, the total running time is \(O(\log_2 n)\).
+\\ \\
+This method avoids problems because each thread works on separate elements without interfering with others. After all steps are done, the final sum is stored in the first element of the array.\\ \\
+\subsection*{v}
+This CPU Model is intel Core i5 - 9400 cpu @ 2.90HZ\\
+We have 6 of those cores and each core supports 2 threads meaning we have 12 threads.\\
+In this case the best number of threads would be 10 to use. We need 2 threads for the operating system and thread management. Since ignoring them could either to a significant lowering of the sped up or even leading to an error. 
+
+\section{Exercise 6.2}
+\subsection*{Uncontrolled Multithreading}
+
+Each thread attempts to print at the same time. Since access to the standard output is not synchronized, the output may appear jumbled due to race conditions:\\
+
+\begin{verbatim}
+Hello, World! from thread 0
+HelHello, World! from thread 2
+lo, World! from thread 1
+Hello, WorHello, World! from thread 3
+ld! from thread 4
+\end{verbatim}
+
+\subsection*{Using \texttt{\#pragma omp critical}}
+
+To ensure that only one thread prints at a time, we can use a critical section.\\
+
+This forces each thread to wait its turn to enter the critical section, resulting in clean, ordered output:\\
+
+\begin{verbatim}
+Hello, World! from thread 0
+Hello, World! from thread 1
+Hello, World! from thread 2
+Hello, World! from thread 3
+Hello, World! from thread 4
+\end{verbatim}
+
+\subsection*{Conclusion}
+
+Without synchronization, thread outputs can overlap and produce unreadable results. Using \texttt{\#pragma omp critical} prevents such issues by allowing only one thread to access the output stream at a time.
+\section*{Exercise 6.3}
+\subsection*{Bug 1}
+Part of code before: 
+\lstinline{#pragma omp parallel private(n) num_threads(N_THREADS)} \\
+Part of code after:
+\lstinline{#pragma omp parallel firstprivate(n) num_threads(N_THREADS)} \\
+
+This definition takes a variable n, but without the initialized part, that is, n could be anything, is randomly searched in memory to find what value it will be. (a number, a letter, etc.)
+One solution here is to change the \lstinline{private(n)} to a \lstinline{firstprivate(n)}, so that the \lstinline{#pragma} definition takes the initialized variable n. However, the program also runs if the \lstinline{private(n)} is omitted completely.
+
+\subsection*{Bug 2}
+Part of code before: 
+\begin{lstlisting}
+ tmp = 0;
+  #pragma omp parallel num_threads(N_THREADS)
+  {
+    #pragma omp for
+    for (int i = 1; i < n; ++i) {
+        tmp += i;
+        output_parallel[i] = static_cast<float>(tmp) / i;
+    }
+}
+\end{lstlisting}
+Part of code after:
+\begin{lstlisting}
+    tmp = 0;
+  #pragma omp parallel num_threads(N_THREADS)
+  {
+    #pragma omp for ordered
+    for (int i = 1; i < n; ++i) {
+      #pragma omp ordered
+        tmp += i;
+        output_parallel[i] = static_cast<float>(tmp) / i;
+    }
+  }
+\end{lstlisting}
+The extra definition of \lstinline{ordered} lets the thread work independently, but in order of the "i", as the calculation needs the "i" it is important the threads don´t stand in each others ways, so they each get their own "i".
+
+
+\subsection*{Bug 3}
+Part of code before: 
+\begin{lstlisting}
+#pragma omp parallel firstprivate(n) num_threads(N_THREADS)
+  {
+    #pragma omp for nowait
+    for (int i = 0; i < n; ++i) {
+      #pragma omp atomic
+      sum += input[i];
+    }
+\end{lstlisting}
+Part of code after:
+\begin{lstlisting}
+ #pragma omp parallel firstprivate(n) num_threads(N_THREADS)
+  {
+    #pragma omp for 
+    for (int i = 0; i < n; ++i) {
+      #pragma omp atomic
+      sum += input[i];    
+    }
+\end{lstlisting}
+The  \lstinline{nowait} makes all threads act like there are no barriers in place (like this \lstinline{atomic}). But the calculation of \lstinline{sum} needs the atomic so different threads don´t override each others calculation.
+
+\subsection*{Bug 4}
+Part of code before: 
+\begin{lstlisting}
+#pragma omp atomic
+    sum += local_sum;
+
+    #pragma omp for
+    for (int i = 0; i < n; ++i) {
+        output_parallel[i] = input[i] / sum;
+    }
+\end{lstlisting}
+Part of code after:
+\begin{lstlisting}
+ #pragma omp atomic
+    sum += local_sum;
+
+    #pragma omp barrier 
+    #pragma omp for
+    for (int i = 0; i < n; ++i) {
+        output_parallel[i] = input[i] / sum;
+    }
+\end{lstlisting}
+Before the code is changed, each thread calculates the \lstinline{output_parallel[i]} only with his own sum, not using the whole sum.
+By including a barrier, all threads need to be done with the calculation of \lstinline{sum}, so in the next step each thread can calculate \lstinline{output_parallel[i]} with the whole/real \lstinline{sum}.
+
+\section*{Exercise 6.4}
+Basically both functions do the same thing/return the same value, an estimate of pi. The scalar version is not included here.
+\subsection*{i) OpenMP without Reduction-Statement}
+Code of function (without comments):
+\begin{lstlisting}
+double calculatePiThreadSums() 
+{
+    double sum = 0.0;
+    #pragma omp parallel num_threads(NUM_THREADS)
+    {
+        double local_sum = 0.0;
+        #pragma omp for
+        for(size_t i = 1; i <= NUM_STEPS; ++i){
+            double x = (i-0.5) * STEP;
+            local_sum += 4.0 / (1.0 + x * x);
+        }
+        #pragma omp critical
+        sum += local_sum;
+    }
+    return sum * STEP;
+}
+\end{lstlisting}
+Each thread saves its own \lstinline{local_sum}, so the sum can be calculated without overlapping different threads, each with its own \lstinline{local_sum}.
+
+With the use of OpenMP the operations do not have to be performed one after the other, but 4 operations can be calculated simultaneously (each on one thread).
+It was to be expected that a function that calculates the same thing but is improved with OpenMP would be faster. The speedup here is between 2.7 and 3.2 (the speedups differ in different runs), compared to the scalar version.
+
+\subsection*{ii) OpenMP with Reduction-Statement}
+Code of function (without comments):
+\begin{lstlisting}
+double calculatePiReduction() 
+{
+    double sum = 0.0;
+    #pragma omp parallel reduction(+:sum) num_threads(NUM_THREADS)
+    {
+        #pragma omp for
+        for(size_t i = 1; i <= NUM_STEPS; ++i){
+            double x = (i-0.5) * STEP;
+            sum += 4.0 / (1.0 + x * x);
+        }
+    }
+    return sum * STEP;
+}
+\end{lstlisting}
+This function is structured like the “thread-local”-function with the difference that the saving of the \lstinline{local_sum} is already implemented internally in the logic of OpenMP.
+
+Depending on how large the overhead is, it is possible that this function runs just as fast (possibly even slower) than the “thread-local”-function. But basically the speedup compared to the scalar version is about 3.7 to 4.9 . 
+
+
+\section*{Exercise 6.5}
+We take the SIMD version of our matrix computation and we parallelize the second for loop by using the "parallel for" pragma, thus each cpu gets to calculate one iteration of the 3rd for loop, this yeilds a speedup of approx 7 (while testing on a i5-1235U and 16gb ram). We expected a bigger speedup as this is isnt even double of the simd only version (approx speedup of 4). When testing on a better machine thoughm we get a speedup of 11, this is  Due to the cpu having more cores and thus being able to complete more computations at once.
+\\
+We make use of the parallel for pragma because we need to parallelize a for loop. If we decided to parallelize the last for loop instead of the second one we would split the individual sqrt operations among the cpus this could lead to a huge overhead and when testing we find that it actually slows our function by a factor of ten compared to the scalar verison.
+\begin{lstlisting}
+TStopwatch timerOMP;
+for (int ii = 0; ii < NIter; ++ii) {
+#pragma omp parallel for 
+for (int i = 0; i < N; ++i) {
+  for (int j = 0; j < N; j += Vc::float_v::Size) {
+    Vc::float_v& aVec = reinterpret_cast<Vc::float_v&>(a[i][j]);
+    Vc::float_v& cVec = reinterpret_cast<Vc::float_v&>(c_omp[i][j]);
+    cVec = Vc::sqrt(aVec);
+  }
+}
+}
+\end{lstlisting}
+\clearpage
+\section*{Exercise 6.6}
+While trying to optimize the Code from Assignment 2, an approach of a single 1D vector was used with relative indexing for each new step. This approach was written in a way that made it impossible to multi-thread. Due to time constraints, I wasn't able to explore this concept further, with a slightly less optimized scalar code base. The following are the recorded times for the provided \textbf{100x100} \textit{p67\_snark\_loop.txt} file:
+\begin{itemize}
+    \item \textbf{Scalar Implementation from Assignment 2}:
+    \begin{lstlisting}
+        Loop took 4183 milliseconds.
+    \end{lstlisting}
+    \item \textbf{OpenMP-applied Implementation with Assignment 2 code-base}:
+    \begin{lstlisting}
+        Loop took 1364 milliseconds.
+    \end{lstlisting}
+    \item \textbf{Heavily Optimized Scalar Implementation with 1D Vector approach}:
+    \begin{lstlisting}
+        Loop took 1024 milliseconds.
+    \end{lstlisting}
+\end{itemize}
+The results show a 3x increase in time-efficiency on the OpenMP-ized version, hinting towards a lot of scalar overhead. The code was tested on 16 threads on 8 physical cores and should in a perfectly threadable implementation, be 8 times as fast. Looking at the result we can see why that isn't the case in this implementation:
+\begin{lstlisting}
+    void Game::evolve() {
+        // define variables up front to allow threads to exist (independant)
+        size_t rows = board.size();
+        if (rows == 0) return;
+        size_t cols = board[0].size();
+
+        // Use thread-local flip lists to avoid race conditions
+        #pragma omp parallel
+        {
+            vector<tuple<int, int>> threadFlipList;
+
+            #pragma omp for collapse(2) schedule(static)
+            for (size_t i = 0; i < rows; ++i) {
+                for (size_t j = 0; j < cols; ++j) {
+                    // [...] loop contents
+                    }
+                }
+            }
+
+            // Safely merge local flip lists into the shared one
+            #pragma omp critical
+            flipList.insert(
+                flipList.end(), threadFlipList.begin(), threadFlipList.end()
+            );
+        }
+
+        // Flip the marked cells in parallel
+        #pragma omp parallel for
+        for (size_t k = 0; k < flipList.size(); ++k) {
+            int i = std::get<0>(flipList[k]);
+            int j = std::get<1>(flipList[k]);
+            board[i][j] = !board[i][j];
+        }
+
+        secondTolastFlipList = lastFlipList;
+        lastFlipList = flipList;
+        flipList.clear();
+
+        if (!exercise4Enabled) {
+            print();
+        }
+    }
+\end{lstlisting}
+The function after initializing the dimensions and other constants used for all threads is now using local flipLists to avoid race condition errors with \texttt{'\# pragma omp parallel'}. We are then threading the nested loop with \texttt{\# pragma omp for collapse (2) schedule ( static )} by merging both into a single loop and splitting the loop-itarations between threads evenly. \texttt{\# pragma omp critical} ensures that only a single thread merges its local flippList into the global one. Now we are executing the loop in a paralellized matter (\texttt{\# pragma omp parallel for}).\\\\
+The different cmake project directories are named $GameOfLife\_unchanged$ (unchanged),\\ $GameOfLife\_scalar_optimized$ (1D Vector Scalar Optimization for reference) and $GameofLife\_omp$ (The OMP version). All are prebuilt, and to be executed from the project directory and not the build directory if the default snark loop file should be used. To rebuild, empty the build folder, run the cmake and make commands, then from the parent directory, run the exectutable.
+\end{document}

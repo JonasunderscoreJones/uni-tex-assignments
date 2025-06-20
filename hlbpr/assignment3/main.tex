@@ -1,0 +1,262 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} % Linienbreite anpassen, falls gewünscht
+\renewcommand{\headrule}{
+    \makebox[\textwidth]{\rule{1.0\textwidth}{0.5pt}} 
+}
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=3cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lstset{
+  language=C++,
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  rulecolor=\color{black},
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+  keywordstyle=\color{blue},
+  commentstyle=\color{purple},
+  stringstyle=\color{red}
+}
+\lhead{Badan, 7418190\\Kneifel, 8071554}
+\chead{\bfseries{\vspace{0.5\baselineskip}HL-BPR Praktikum SS25\\Blatt 03}}
+\rhead{Wolf, 8019440\\Werner, 7987847}
+\fancyheadoffset[R]{0cm}
+
+\begin{document}
+
+
+\section*{Exercise 2.1: Learning more about Neural Networks}
+
+\subsection*{Depth of a network}
+A neuronal network consists of 3 different classes of layers:
+\begin{itemize}
+    \item Input layer: accepts raw data
+    \item Hidden layers: Those layers are responsible for processing the given data
+    \item Output layer: returns an "answer" for the processed data
+\end{itemize}
+The depth is calculated by adding all the layers. But the input layer is not included in the calculation of the layers. If the hidden layer consists of 6 different layers, the depth of the neural network would be 7.
+
+\subsection*{Width of a layer}
+The width of a layer implies the width of a hidden layer. It is the number of neurons inside one layer. A neuron is the smallest computing unit that has the responsibility of processing the input it receives, weighting it and adding it up. The activation function is then used on this sum to decide what to pass on.
+
+\subsection*{Training vs. Testing}
+Training and testing are two different phases within the learning of a neural network:
+\subsubsection*{Training}
+During training, a neural network is given a lot of sample data. The network changes its weights within its layers in order to make correct outputs.
+\subsubsection*{Testing}
+In testing, the skills learned (from the training) are applied to a new set of data. There it is possible to check the generality of the learning.
+
+\subsection*{batch size}
+A batch describes a packet of data, i.e. a part of the large amount of data that is transferred to the neural network. All packets are gradually passed to the network until the entire quantity has been processed.
+
+
+The batch size describes the size of a packet. For a network that checks images, for example, this would be 50 images per batch.
+
+\subsection*{epoch}
+An epoch describes a pass through the entire data set until each batch has been processed.
+Generally, several epochs are completed to support the learning of the network.
+
+\subsection*{feed forward}
+The term feed forward basically describes a concept of data transmission in which the information in a network is transmitted “straight ahead” in the direction of the output player (via each hidden layer, of course). Information can therefore not be sent in the other direction.
+
+\subsection*{backpropagation}
+Backpropagation is precisely the concept with which a neural network can “learn”.
+This concept (usually) consists of three steps:
+Using the loss function to calculate the value of how wrong the network is. This is followed by the calculation of how much which weights need to be changed.
+The last step is to simply change the weights.
+
+\subsection*{loss}
+“Loss” here describes a function that calculates how wrong the network is. The values can be between 0 and 1.
+
+\subsection*{learning rate}
+The learning rate describes approximately the step size in which the gradient goes in the direction of the lowest point (the loss function).
+The ultimate goal is to find the lowest point of the loss function in order to keep the error rate as low as possible.
+
+\section*{exercise 2.3}
+Our Shuffel function works by first creating a vector filled with ints from 0 to the size of our input matrix, we then shuffel this vector to randomize its order. \\
+We use this Randomized list of ints as the indeces for our new Vectors. I.E \verb|new_vector[0] = old_vector[first randomized vector elment]|, we make sure that both the lables and inputFeatures are sorted the same way by sorting them in the same for list using the same iterator for the indeces.
+Our Shuffel function works by first creating a vector filled with ints from 0 to the size of our input matrix, we then shuffel this vector to randomize its order. \\
+We use this Randomized list of ints as the indeces for our new Vectors. \\I.E \verb|new_vector[0] = old_vector[first randomized vector elment]|, we make sure that both the lables and inputFeatures are sorted the same way by sorting them in the same for list using the same iterator for the indeces.
+
+\section*{Exercise 2.5: Learning more about Neural Networks}
+In this experiment, four configurations of a multilayer perceptron (MLP) were tested by varying both the network architecture—whether or not it included a hidden layer—and the learning rate, using values of 0.01 and 0.001. Each configuration was trained for ten epochs, and performance was measured based on training and testing accuracy, loss, and the time taken per epoch.
+
+The first configuration, which used no hidden layer and a learning rate of 0.01, delivered the most consistent and high-performing results. The training accuracy increased steadily across epochs, ultimately reaching 88.24\%, while the testing accuracy peaked at 90.46\%. Both training and testing losses decreased progressively and ended at 11.76 and 7.88, respectively. This model demonstrated rapid convergence, stable generalization, and required negligible training time per epoch. It was the most efficient and effective configuration in this set of experiments.
+
+The second configuration, which also excluded a hidden layer but used a smaller learning rate of 0.001, performed slightly worse in terms of speed but remained competitive in accuracy. The testing accuracy gradually improved over the epochs, reaching a high of 89.55\%. The training accuracy similarly increased to 87.75\% by the final epoch. Although convergence was slower compared to the first configuration, loss values still declined steadily over time. This model was more stable but slightly less performant in both accuracy and efficiency than its counterpart using the higher learning rate.
+
+The third configuration introduced a hidden layer and used a learning rate of 0.001. This version significantly increased training time, taking approximately 58 seconds per epoch, but did not yield a substantial improvement in accuracy. The highest training accuracy achieved was 86.03\%, while testing accuracy fluctuated and peaked at 86.54\%. However, testing accuracy showed instability, dropping to 74.72\% at one point before recovering. Testing loss followed a similar pattern of inconsistency. While this model showed some learning ability, the increased complexity and training time were not justified by a notable improvement in performance, and the results suggest signs of overfitting or insufficient optimization.
+
+The final configuration, which combined a hidden layer with a high learning rate of 0.01, performed the worst. Training accuracy decreased steadily to 16.47\%, and testing accuracy never surpassed 30\%, dropping to 20.00\% by the tenth epoch. Both training and testing losses were erratic and remained extremely high throughout the training process, ending at 29.92 and 20.30, respectively. These results indicate that the model failed to converge and possibly diverged due to an excessively high learning rate that destabilized the training process when paired with a deeper network.
+
+In summary, the model without a hidden layer and a learning rate of 0.01 provided the best combination of speed, stability, and accuracy. Reducing the learning rate to 0.001 improved stability but slightly hindered convergence speed. Adding a hidden layer did not provide measurable benefits under either learning rate and introduced significant training time and instability. The combination of a hidden layer with a high learning rate led to complete training failure. Therefore, for this task and dataset, a simple architecture without hidden layers and a moderate learning rate is clearly the most effective approach.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Configuration} & \textbf{Train Acc.} & \textbf{Test Acc.} & \textbf{Train Loss} & \textbf{Test Loss} \\
+\hline
+No Hiddenlayer($0,0001$) & $84.42\%$ & $88.16\%$ & $14.20\%$ &  $0.42$\\
+No Hiddenlayer($0,0001$) & $87.03\%$ & $84.39\%$ & $11.83\%$ &  $0.50$\\
+No Hiddenlayer($0,0001$) & $87.37\%$ & $84.55\%$ & $11.52\%$ &  $0.50$\\
+No Hiddenlayer($0,0001$) & $87.71\%$ & $88.21\%$ & $11.22\%$ &  $0.38$\\
+No Hiddenlayer($0,0001$) & $87.75\%$ & $86.76\%$ & $11.13\%$ &  $0.44$\\
+No Hiddenlayer($0,0001$) & $88.04\%$ & $88.59\%$ & $10.95\%$ &  $0.42$\\
+No Hiddenlayer($0,0001$) & $88.06\%$ & $89.60\%$ & $110.91\%$ &  $0.36$\\
+No Hiddenlayer($0,0001$) & $88.13\%$ & $85.70\%$ & $10.83\%$ &  $0.47$\\ 
+No Hiddenlayer($0,0001$) & $88.21\%$ & $88.01\%$ & $10.73\%$ &  $0.41$\\
+No Hiddenlayer($0,0001$) & $88.30\%$ & $89.23\%$ & $10.67\%$ &  $0.36$\\
+
+\hline
+\end{tabular}
+\caption{Results for MLP with no hidden layer using learning rate $0{,}0001$ over 10 epochs}
+\label{tab:example_table}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Configuration} & \textbf{Train Acc.} & \textbf{Test Acc.} & \textbf{Train Loss} & \textbf{Test Loss} \\
+\hline
+1 Hidden Layer ($0{,}0001$) Epoch 1 & $88{,}66\%$ & $90{,}03\%$ & $0{,}43$ & $1{,}23$ \\
+1 Hidden Layer ($0{,}0001$) Epoch 2 & $93{,}14\%$ & $90{,}05\%$ & $0{,}25$ & $1{,}11$ \\
+1 Hidden Layer ($0{,}0001$) Epoch 3 & $94{,}39\%$ & $90{,}50\%$ & $0{,}21$ & $1{,}02$ \\
+1 Hidden Layer ($0{,}0001$) Epoch 4 & $94{,}98\%$ & $90{,}86\%$ & $0{,}18$ & $0{,}96$ \\
+1 Hidden Layer ($0{,}0001$) Epoch 5 & $95{,}53\%$ & $90{,}71\%$ & $0{,}16$ & $0{,}92$ \\
+1 Hidden Layer ($0{,}0001$) Epoch 6 & $95{,}89\%$ & $90{,}30\%$ & $0{,}15$ & $0{,}88$ \\
+1 Hidden Layer ($0{,}0001$) Epoch 7 & $96{,}28\%$ & $90{,}69\%$ & $0{,}14$ & $0{,}85$ \\
+1 Hidden Layer ($0{,}0001$) Epoch 8 & $96{,}42\%$ & $90{,}22\%$ & $0{,}13$ & $0{,}82$ \\
+1 Hidden Layer ($0{,}0001$) Epoch 9 & $96{,}73\%$ & $90{,}37\%$ & $0{,}12$ & $0{,}79$ \\
+1 Hidden Layer ($0{,}0001$) Epoch 10 & $96{,}89\%$ & $91{,}10\%$ & $0{,}11$ & $0{,}78$ \\
+\hline
+\end{tabular}
+\caption{Results for MLP with 1 hidden layer using learning rate $0{,}0001$ over 10 epochs}
+\label{tab:one_hidden_layer_results}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Configuration} & \textbf{Train Acc.} & \textbf{Test Acc.} & \textbf{Train Loss} & \textbf{Test Loss} \\
+\hline
+No Hidden Layer ($0{,}001$) Epoch 1 & $84{,}40\%$ & $88{,}26\%$ & $15{,}41$ & $2{,}30$ \\
+No Hidden Layer ($0{,}001$) Epoch 2 & $86{,}98\%$ & $84{,}40\%$ & $12{,}89$ & $3{,}44$ \\
+No Hidden Layer ($0{,}001$) Epoch 3 & $87{,}46\%$ & $84{,}19\%$ & $12{,}43$ & $3{,}30$ \\
+No Hidden Layer ($0{,}001$) Epoch 4 & $87{,}64\%$ & $86{,}21\%$ & $12{,}25$ & $2{,}92$ \\
+No Hidden Layer ($0{,}001$) Epoch 5 & $87{,}90\%$ & $88{,}43\%$ & $11{,}97$ & $2{,}65$ \\
+No Hidden Layer ($0{,}001$) Epoch 6 & $87{,}99\%$ & $86{,}72\%$ & $11{,}92$ & $2{,}83$ \\
+No Hidden Layer ($0{,}001$) Epoch 7 & $88{,}10\%$ & $87{,}49\%$ & $11{,}79$ & $2{,}81$ \\
+No Hidden Layer ($0{,}001$) Epoch 8 & $88{,}06\%$ & $89{,}48\%$ & $11{,}83$ & $2{,}35$ \\
+No Hidden Layer ($0{,}001$) Epoch 9 & $88{,}13\%$ & $90{,}04\%$ & $11{,}76$ & $2{,}31$ \\
+No Hidden Layer ($0{,}001$) Epoch 10 & $88{,}24\%$ & $88{,}28\%$ & $11{,}64$ & $2{,}77$ \\
+\hline
+\end{tabular}
+\caption{Results for MLP without hidden layer using learning rate $0{,}001$ over 10 epochs}
+\label{tab:no_hidden_001_results}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Configuration} & \textbf{Train Acc.} & \textbf{Test Acc.} & \textbf{Train Loss} & \textbf{Test Loss} \\
+\hline
+No Hidden Layer ($0{,}01$) Epoch 1 & $84{,}51\%$ & $88{,}46\%$ & $15{,}46$ & $9{,}17$ \\
+No Hidden Layer ($0{,}01$) Epoch 2 & $86{,}98\%$ & $89{,}04\%$ & $13{,}01$ & $8{,}78$ \\
+No Hidden Layer ($0{,}01$) Epoch 3 & $87{,}48\%$ & $86{,}93\%$ & $12{,}51$ & $10{,}58$ \\
+No Hidden Layer ($0{,}01$) Epoch 4 & $87{,}61\%$ & $86{,}89\%$ & $12{,}38$ & $10{,}25$ \\
+No Hidden Layer ($0{,}01$) Epoch 5 & $87{,}81\%$ & $87{,}79\%$ & $12{,}19$ & $9{,}45$ \\
+No Hidden Layer ($0{,}01$) Epoch 6 & $88{,}08\%$ & $88{,}67\%$ & $11{,}91$ & $9{,}04$ \\
+No Hidden Layer ($0{,}01$) Epoch 7 & $88{,}21\%$ & $88{,}18\%$ & $11{,}78$ & $9{,}29$ \\
+No Hidden Layer ($0{,}01$) Epoch 8 & $88{,}14\%$ & $88{,}24\%$ & $11{,}84$ & $9{,}67$ \\
+No Hidden Layer ($0{,}01$) Epoch 9 & $88{,}17\%$ & $86{,}39\%$ & $11{,}82$ & $11{,}26$ \\
+No Hidden Layer ($0{,}01$) Epoch 10 & $88{,}24\%$ & $90{,}46\%$ & $11{,}76$ & $7{,}88$ \\
+\hline
+\end{tabular}
+\caption{Results for MLP without hidden layer using learning rate $0{,}01$ over 10 epochs}
+\label{tab:no_hidden_01_results}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Configuration} & \textbf{Train Acc.} & \textbf{Test Acc.} & \textbf{Train Loss} & \textbf{Test Loss} \\
+\hline
+With Hidden Layer ($0{,}01$) Epoch 1 & $19{,}35\%$ & $21{,}07\%$ & $25{,}01$ & $28{,}79$ \\
+With Hidden Layer ($0{,}01$) Epoch 2 & $22{,}70\%$ & $30{,}89\%$ & $22{,}75$ & $16{,}24$ \\
+With Hidden Layer ($0{,}01$) Epoch 3 & $20{,}69\%$ & $20{,}83\%$ & $25{,}92$ & $20{,}99$ \\
+With Hidden Layer ($0{,}01$) Epoch 4 & $23{,}66\%$ & $23{,}52\%$ & $18{,}50$ & $14{,}71$ \\
+With Hidden Layer ($0{,}01$) Epoch 5 & $23{,}09\%$ & $27{,}55\%$ & $19{,}51$ & $19{,}52$ \\
+With Hidden Layer ($0{,}01$) Epoch 6 & $21{,}19\%$ & $13{,}87\%$ & $21{,}72$ & $21{,}55$ \\
+With Hidden Layer ($0{,}01$) Epoch 7 & $18{,}65\%$ & $19{,}25\%$ & $24{,}79$ & $19{,}33$ \\
+With Hidden Layer ($0{,}01$) Epoch 8 & $18{,}16\%$ & $19{,}16\%$ & $25{,}58$ & $23{,}32$ \\
+With Hidden Layer ($0{,}01$) Epoch 9 & $17{,}59\%$ & $17{,}43\%$ & $26{,}96$ & $25{,}20$ \\
+With Hidden Layer ($0{,}01$) Epoch 10 & $16{,}47\%$ & $20{,}00\%$ & $29{,}92$ & $20{,}30$ \\
+\hline
+\end{tabular}
+\caption{Results for MLP with one hidden layer using learning rate $0{,}01$ over 10 epochs}
+\label{tab:with_hidden_01_results}
+\end{table}
+
+\end{document}

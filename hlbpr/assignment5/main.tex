@@ -1,0 +1,163 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} % Linienbreite anpassen, falls gewünscht
+\renewcommand{\headrule}{
+    \makebox[\textwidth]{\rule{1.0\textwidth}{0.5pt}} 
+}
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+paper=a4paper, % Paper size, change to letterpaper for US letter size
+top=3cm, % Top margin
+bottom=3cm, % Bottom margin
+left=2.5cm, % Left margin
+right=2.5cm, % Right margin
+headheight=25pt, % Header height
+footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+headsep=1cm, % Space from the top margin to the baseline of the header
+%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Badan, 7418190\\Kneifel, 8071554}
+\chead{\bfseries{\vspace{0.5\baselineskip}HL-BPR Praktikum SS25\\Blatt 05}}
+\rhead{Wolf, 8019440\\Werner, 7987847}
+\fancyheadoffset[R]{0cm}
+
+\begin{document}
+\section*{Exercise 5.1}
+We use a parallel vector to calculate our result, we can use the sqrt fucntion as it is predefined in simd.
+
+\section*{Exercise 5.2}
+In this task, we looked at the three different types of memory: AOS (arrays of structs), SOA (structs of arrays) and AOSOA (arrays of structs of arrays).
+We performed 4 different types of calculations, the three types already mentioned and one scalar calculation. \\
+Once used with the help of compiler-flag AVX (Advanced Vector Extensions):
+\begin{lstlisting}
+g++ quadratic_equation.cpp -O3 -fno-tree-vectorize -mavx -o quadratic_equation.out && ./quadratic_equation.out
+Time scalar:     2799.81 ms.
+Time stdx AOS:   5112.58 ms, speed up 0.547632.
+Time stdx SOA:   9.90828 ms, speed up 282.572.
+Time stdx AOSOA: 1546.49 ms, speed up 1.81042.
+SIMD using AOS and scalar results are the same.
+SIMD using SOA and scalar results are the same.
+SIMD using AOSOA and scalar results are the same.
+\end{lstlisting}
+
+Once used with the help of compiler-flag SSE (Streaming SIMD Extensions):
+\begin{lstlisting}
+make run-sse
+g++ quadratic_equation.cpp -O3 -fno-tree-vectorize -msse -o quadratic_equation.out && ./quadratic_equation.out
+Time scalar:     2777.7 ms.
+Time stdx AOS:   6700.41 ms, speed up 0.414557.
+Time stdx SOA:   12.0778 ms, speed up 229.984.
+Time stdx AOSOA: 2054.76 ms, speed up 1.35184.
+SIMD using AOS and scalar results are the same.
+SIMD using SOA and scalar results are the same.
+SIMD using AOSOA and scalar results are the same.
+\end{lstlisting}
+There are almost no differences in the scalar version. 
+With the calculations AOS, SOA and AOSOA with AVX, the runtime is just under 75 percent of the runtime of SSE.
+\subsection*{AOS}
+In general you would expect by using SIMD logic, the runtime would decrease exponentially. But in compiler flags the runtime increases by almost 100 \% .
+The reason for this could be storage. In runtime, the data is saved twice, once to save the data in a vector and then again to save exactly this data in a SIMD vector. \\
+That takes even more time than just calculating with the scalar version.
+\subsection*{SOA}
+By using "reinterpret\_cast", the original data can be saved immediately in a SIMD vector without saving it twice from memory.
+
+The calculation of the function $a*x^2 +b*x+c = 0$ is now possible, 8 calculations (AVX) / 4 elements (SSE) simultaneously. (Reason: 256 bit register size for AVX, and only 128 bit register size for SSE).
+
+The calculations can thus be performed in a very short time.
+
+\subsection*{AOSOA}
+Perhaps the reason why AOSOA is slower overall than SOA is the prefetching. During an operation (here: a loop of the for-loop) 8 elements are calculated simultaneously. When prefetching, the cache can already “prefetch” (or load the next elements into the cache) so that the next iteration of the for-loop can be calculated faster. However, this only works if you have a long chain at an element (here: element a, for example), as the next elements are directly next to each other in the memory. However, only SOA is arranged in this way. AOSOA has the theoretically perfect arrangement for SIMD calculations, but you would have to jump in the memory in order to have the same prefetching effects as with SOA. Jumping within the memory is not efficient. This is why SOA works faster than AOSOA.
+
+\section*{Exercise 5.3}
+After correctly implementing the SIMD version of Newtons Method, we get the following terminal output:
+\begin{verbatim}
+Scalar part:
+Results are correct!
+Time: 14.695 ms
+SIMD part:
+Results are the same!
+Time: 4.12138 ms
+Speed up: 3.56555
+\end{verbatim}
+The expected speedup, as already discussed in exercise 4.1 of the previous assignment, should be x4 since we use $4 \cdot 32$ Bits (size of float) $= 128$ Bits which is the size of the \texttt{\_\_m128} Datatype. Due to un-paralellizable parts of the code and general random factors, this speedup cannot be achieved in practice. This approach was done with scalar iterations over the SIMD packages but not over the elements themselves and therefore holds up to the set constraints of the exercise.\\
+When iterating over all the elements, the speedup would be significantly less but the preferred approach, was the first one implemented.\\
+The implementation also already yields the same results as the given scalar implementation.t
+
+\section*{Exercise 5.4}
+We use the built in gather function of the Vc library to gather our values from the input.
+
+\begin{lstlisting}
+      tmp.gather(input,index);
+\end{lstlisting}
+
+For the masked gather we create a makse and give it to our gather function.
+
+\begin{lstlisting}
+  // gather with masking
+  float_v tmp2;
+  //TODO gather data with indices "index" from the array "input" into float_v tmp2, if the value of "input" is larger than 0.5
+  // Use void gather (const float *array, const uint_v &indexes, const float_m &mask)
+
+  // begin your code here:
+
+  // Createing a mask with the following condition input[index[i]] > 0.5 
+  float_v inputValues;
+  inputValues.gather(input, index);
+  float_m mask = inputValues > 0.5f;
+
+  // Masked gather: only gater where mask is true
+  tmp2.gather(input, index, mask);
+  // end of your code
+\end{lstlisting}
+
+As for the scatter we make use of the built in scatter function and create a mask to use in it.
+
+\begin{lstlisting}
+    
+  float_m scatter_mask = tmp < 0.5f;
+  tmp.scatter(output, index, scatter_mask);
+  // end of your code
+\end{lstlisting}
+
+
+
+
+
+\end{document}
