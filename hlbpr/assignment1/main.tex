@@ -1,0 +1,129 @@
+\documentclass[a4paper]{article}
+%\usepackage[singlespacing]{setspace}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{geometry} % Required for adjusting page dimensions and margins
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb,mathtools,dsfont} % Math packages
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{changepage,titlesec,fancyhdr} % For styling Header and Titles
+\usepackage{amsmath}
+\pagestyle{fancy}
+\usepackage{diagbox}
+\usepackage{xfrac}
+
+\usepackage{enumerate} % Custom item numbers for enumerations
+
+\usepackage[ruled]{algorithm2e} % Algorithms
+
+\usepackage[framemethod=tikz]{mdframed} % Allows defining custom boxed/framed environments
+
+\usepackage{listings} % File listings, with syntax highlighting
+\lstset{
+	basicstyle=\ttfamily, % Typeset listings in monospace font
+}
+
+\usepackage[ddmmyyyy]{datetime}
+
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=3cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=25pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1cm, % Space from the top margin to the baseline of the header
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\lhead{Praktikum Hochleinstungs-\\rechnerarchitekturen}
+\chead{\bfseries{Übungsblatt 0}\\}
+\rhead{Sommersemester 2025\\Jonas Werner, 7987847}
+
+\begin{document}
+\setcounter{section}{0}
+\subsection*{Exercise 0.3 Programming Knowledge}
+\subsubsection{i) General Programming Knowledge}
+\begin{enumerate}
+    \item \textbf{What does compiling \textit{source code} into machine code mean?}\\
+    It means to transform the high-level human-readable code (like C++) into low-level machine code so that a computer's processor can execute it through the means of a compiler program.
+
+    \item \textbf{What is the difference between compiling and interpreting source code?}\\
+    Compiling transforms the entire code-base into machine-code before executing it (and then running the generated binary file) while interpreting only runs one line at a time.
+
+    \item \textbf{What are the primitive/fundamental data types in programming languages?}\\
+    Primitive data types are the most basic data-types. These often include: \texttt{char}, \texttt{int}, \texttt{float}, \texttt{bool}, and \texttt{double}.
+
+    \item \textbf{What is the purpose of conditional statements?}\\
+    These allow for conditions and off-branching which allows decision making on runtime.
+
+    \item \textbf{What is branch prediction and what types of it exist in computing?}\\
+    Way of optimizing the code when compiling it. The compiler can predict the outcome of a branch and take optimization steps.
+    Types include:
+    \begin{itemize}
+        \item Static prediction
+        \item Dynamic prediction
+    \end{itemize}
+
+    \item \textbf{What is branchless programming? How can it help to reduce the runtime of the application?}\\
+    It is a way of programming without using branches. It improves CPU instruction flow, therefore optimizing the programm itself.
+
+    \item \textbf{Explain the concept of class inheritance.}\\
+    Using Inheritance, a class can inherit aka copy attributes and methods and structure from another class (its parent class). It improves code structure.
+
+    \item \textbf{What is encapsulation in the context of object-oriented programming?}\\
+    With encapsulation, specific methods and attributes, meaning also data, can be inaccessible to certain other classes (e.g. public/private).
+
+    \item \textbf{Describe the concepts of function- and operator-overloading.}\\
+    \begin{itemize}
+        \item \textbf{Function overloading}: multiple functions/methods with the same name but different parameters
+        \item \textbf{Operator overloading}: redifining operators for custom types
+    \end{itemize}
+
+    \item \textbf{What is memory allocation and why is it necessary?}\\
+    Allocating memory is the process of reserving space in the memory for storing data for the program.
+
+    \item \textbf{In compiler-based programming languages, what are the differences between run-time and compile-time evaluations? How does this impact high-performance computing?}\\
+    \begin{itemize}
+        \item \textbf{Compile-time}: the operations that are evaluated during compilation
+        \item \textbf{Run-time}: the operations that are evaluated during runtime
+    \end{itemize}
+    Compile-Time evaluation is better for high-performance computing (reduces runtime overhead).
+
+    \item \textbf{Name a programming language of your choice and list 5 primitive/fundamental data types of that language.}\\
+    In \texttt{C++}, five primitive types are:
+    \begin{itemize}
+        \item \texttt{char}
+        \item \texttt{int}
+        \item \texttt{float}
+        \item \texttt{double}
+        \item \texttt{bool}
+    \end{itemize}
+
+    \item \textbf{What is a namespace and how is it useful?}\\
+    Its an identifier that is usually a pre-/suffix to a name, grouping multiple together and keeping the program readable.
+
+    \item \textbf{Explain the concept of variable scope.}\\
+    Variable Scopes are the places where variables can be accessed from. by default a variable defined in a scope is not accessible from the parent scope. e.g. global can be used to make a variable accessible in all scopes of the program. these are often defined at the root of the program but dont necessarily have to be.
+
+    \item \textbf{Explain the concept of variable lifetime.}\\
+    the time for which a variable exists in memory. e.g. variables defined in the root scope usually exist throughout the runtime of the program while variables defined in a function only exist for the function call.
+
+    \item \textbf{Explain Call-by-Value, Call-by-Reference, and Call-by-Pointer.}\\
+    \begin{itemize}
+        \item \textbf{Call-by-Value}: copies the value of the argument to the function
+        \item \textbf{Call-by-Reference}: passes the reference of the argument, making it able to change the original variable
+        \item \textbf{Call-by-Pointer}: passes the memory address of the variable, making it possible to modify indirectly.
+    \end{itemize}
+\end{enumerate}
+\end{document}
